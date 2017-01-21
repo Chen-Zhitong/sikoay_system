@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link rel="stylesheet" href="css/jquery.raty.css">
+    <link rel="stylesheet" type="text/css" href="css/class.css" />
+    <script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+    <script type="text/javascript" src="js/class.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script src="js/jquery.raty.js" type="text/javascript"></script>
+    <style>
+        a{
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body style="width:100%;min-width:100%">
+    <div class="class-download-list tab-pane fade" id="tab-4">
+        <div class="classword">
+            <table>
+                {fzw:search table="sl_wendang_wenjian" number="10" id="p1" order="dtime" orderby="desc" sqlvalue="id&nbsp;in&nbsp;(select&nbsp;kejian&nbsp;from&nbsp;sl_jie&nbsp;where&nbsp;laiyuanbianhao&nbsp;in&nbsp;(select&nbsp;kechengjie&nbsp;from&nbsp;sl_kecheng&nbsp;where&nbsp;id={fzw:url:lingshi1/}))"}
+                <tr>
+                    <td><span class="num">1</span></td>
+                    <td>{fzw:p1:biaoti/}</td>
+                    <td><img src="img/class-time.png">{fzw:p1:dtime datetime="yyyy-MM-dd"/}</td>
+                    {if value1="{fzw:sql="select * from sl_wd_order where yonghuming='{fzw:cookie:name="user_name"/}' and zhuangtai='已付款' and laiyuanbianhao={fzw:p1:id/}" id="p2"}{fzw:p2:id/}{/fzw:sql}" value2="" bi="=="}
+                    <td><a onclick="alert({fzw:p1:id/})"><i class="fa fa-download" aria-hidden="true"></i>{fzw:p1:xiazai/}</a></td>
+                    <td><a onclick="alert({fzw:p1:id/})"><i class="fa fa-eye" aria-hidden="true"></i>浏览</a></td>
+                    {else}
+                    <td><a href="{fzw:p1:wenjiandizhi/}" target="_blank" onclick="addxiazai({fzw:p1:id/})"><i class="fa fa-download" aria-hidden="true"></i>{fzw:p1:xiazai/}</a></td>
+                    <td><a href="/single.aspx?m=kejian&id={fzw:p1:id/}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i>浏览</a></td>
+                    {/if}
+                </tr>
+                {/fzw:search}
+            </table>
+            <div class="classhome-right-page">
+                {fzw:search:page id="p1" size="8"/}
+            </div>
+        </div>
+    </div>
+    <script>
+        for(var i=0;i<$(".num").length;i++){
+            $(".num").eq(i).html(i+1);
+        }
+        function addxiazai(id) {
+            $.ajax({
+                type: "get", 
+                url: "/single.aspx?t=ajax_addxiazai&id="+id,
+                success: function(data) {
+                    console.log("下载成功");
+                },error: function(data){
+                    console.log("下载错误");
+                }
+            });
+        }
+        function alert(id){
+            parent.layer.confirm('请先购买该课件',{
+                btn: ['立即购买','取消'],closeBtn: 0
+            },function(index){
+                parent.window.location.href='/Single.aspx?m=goumai&id='+id+'&t=wd_order'
+                
+            },function(index){
+                parent.layer.close(index);
+            })
+        }
+    </script>
+</body>
+</html>

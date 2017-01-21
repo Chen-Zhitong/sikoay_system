@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wangEditor.min.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/wangEditor.min.js"></script>
+		<script src="/inc/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+		<title>我要发帖_学院论坛</title>
+		<style type="text/css">
+			button{
+				font-family: "微软雅黑"
+			}
+			.forum-post-left .edui-container{
+				float: right;
+				margin-bottom: 20px;
+				z-index: 9 !important;
+			}
+		</style>
+		{if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+	</head>
+	<body>
+			<div class="forum-post-left" style="padding-left: 20px;">
+				<p>发私信</p>
+				<form id="fatie-form">
+				标题：<input type="text" name="biaoti">
+				
+				<input type="hidden" name="fasongren" value='{fzw:cookie:name="user_name"/}'>
+				<input type="hidden" name="yonghuming" value='{if value1="{fzw:url:id/}" value2="" bi="!="}{fzw:sql="select * from sl_laoshi where id={fzw:url:id/}" id="p1"}{fzw:p1:yonghuming/}{/fzw:sql}{else}{fzw:sql="select * from sl_user where id={fzw:url:userid/}" id="p1"}{fzw:p1:yonghuming/}{/fzw:sql}{/if}'>
+				<input type="hidden" name="zhuangtai" value="未读">
+				<input type="hidden" name="leixing" value="私信">
+				<input type="hidden" name="dingdanhao" value="{fzw:key:bianhao/}">
+				<br>内容：
+				<textarea id="neirong" name="neirong" style="width: 650px;height: 300px;"></textarea>
+				{fzw:server type="Editor" id="neirong" user="{fzw:cookie name="user_name" /}" width="650px" height="180" /}
+				<!-- <div id="ask-input" style="height:360px;margin-bottom: 20px;">
+							    	
+				</div> -->
+				<div class="clear"></div>
+				<!-- <input type="text" name="yzm" placeholder="请输入验证码">
+				<img src="img/check.png">
+				<img src="img/check-icon.png"> -->
+				<button id="forum-post" type="button">发送</button>
+				</form>
+			</div>
+			<script type="text/javascript">
+				var index = parent.layer.getFrameIndex(window.name);
+			    $("#forum-post").click(function(){
+					if ($("#fatie-form").find("input").val()=='') {
+						layer.msg("请输入标题！");
+						return false;
+					}
+					var a = $("#fatie-form").find("textarea").val();
+					if (a=='') {
+						layer.msg("请输入内容！");
+						return false;
+					}
+					var formData = $("#fatie-form").serialize();
+					$.ajax({
+						type: "POST", 
+						url: "/Execution.aspx?t=sms&type=add",
+						data: formData,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							parent.layer.msg("发送成功！");
+							parent.layer.close(index);
+						},error: function(data){
+							parent.layer.msg("发送失败！请重试");
+						}
+					});
+				})    
+			</script>
+</body>
+</html>			

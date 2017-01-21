@@ -1,0 +1,423 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/jquery.raty.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+        <link rel="stylesheet" type="text/css" href="css/wangEditor.min.css">
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script src="js/jquery.raty.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/wangEditor.min.js"></script>
+		<title>老师主页_{fzw:key:sitename/}</title>
+	</head>
+	<body>
+<!--history-->
+<p style="display: none;" class="laoshi_liulan" data-yuan="{fzw:sql="select * from sl_history where yonghuming='{fzw:cookie name="user_name"/}' and laiyuanbianhao={fzw:url:id/} and leixing='老师浏览' " id="p1"}{fzw:p1:id/}{/fzw:sql}"></p>	
+<form method="post" action="" id="laoshi_liulan">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:id/}' />
+	<input type="hidden" name="leixing" value="老师浏览" />
+    {if value1="{fzw:cookie:name="user_name"/}" value2="" bi="=="}
+    {fzw:setcookie:name="user_id" value="{fzw:key:bianhao/}"}
+    {else}
+    {/if}
+    {if value1="{fzw:cookie:name="user_name"/}" value2="" bi="=="}
+    <input type="hidden" name="yonghuming" value='{fzw:cookie name="user_id"/}' />
+    {else}
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+    {/if}
+    
+</form>
+<script language="javascript" type="text/javascript"> 
+	function shipin_xuexi(){
+		var yuan=$('.laoshi_liulan').data('yuan');
+		if(yuan==''){
+			var formData = $("#laoshi_liulan").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=history&type=add",
+				data: formData,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					
+				}
+			});
+		}
+   	}
+	shipin_xuexi();
+</script>
+<!--动态-->
+<p style="display: none;" class="laoshi_dongtai" data-yuan="{fzw:sql="select * from sl_dongtai where yonghuming='{fzw:cookie name="user_name"/}' and laiyuanbianhao={fzw:url:id/} and leixing='老师' " id="p1"}{fzw:p1:id/}{/fzw:sql}"></p>	
+<form method="post" action="" id="laoshi_dongtai">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:id/}' />
+	<input type="hidden" name="leixing" value="老师" />
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+</form>
+<script type="text/javascript">
+	function laoshi_dongtai(){
+		var yuan=$('.laoshi_dongtai').data('yuan');
+		var yhm = '{fzw:cookie name="user_name"/}';
+		var id = '{fzw:url:id/}';
+			var formData = $("#laoshi_dongtai").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=dongtai&type=add",
+				data: "&leixing=老师&laiyuanbianhao="+id+"&yonghuming="+yhm,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					
+				},error:function(data){
+					
+				}
+			});
+		
+   	}
+	laoshi_dongtai();
+</script>
+		{fzw:inside src="顶部.html"/}
+		
+		<!-- teacher-page -->
+		<div class="teacher-top">
+			<div class="max-width">
+				<div class="teacher-top-left">
+					{fzw:sql="select *,(select avg(fen) from sl_pinglun as pl where pl.laoshi=ls.yonghuming and pl.leixing='老师') as pingfen from sl_laoshi as ls where ls.id={fzw:url:id/}" id="p1"}
+					{if value1="{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}" value2="" bi="=="}
+					<img src="img/user-touxiang.png">    
+				    {else}
+				    <img src='{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}'>
+				    {/if}
+					<a href="">{if value1="{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}{/if}</a><br>
+					职称：{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}<br>
+					学历：{fzw:p1:xueli/}<br>
+					{fzw:p1:jianjie nohtml="yes" size="120"/}<br>
+					<div class="clear"></div>
+					<ul>
+						<li>教龄：{fzw:p1:jiaoling/}年</li>
+						<li>课程数：{fzw:p1:yonghuming sql="sl_kecheng|where&nbsp;yonghuming='&dangqian'|count"/}</li>
+						<li>人气：<span id="renqi"></span></li><script type="text/javascript">{ajax:table="sl_laoshi" id="{fzw:url:id/}" type="+" span_id="renqi" value="renqi"/}</script>
+						<li>{if value1="{fzw:p1:pingfen/}" value2="" bi="=="}0.0分{else}{fzw:p1:pingfen/}.0分{/if}<span id="teacher-top-rating" data-score='{fzw:p1:pingfen/}'></span></li>
+					</ul>
+					{/fzw:sql}
+					<div class="clear">
+						{fzw:sql="select * from sl_bbs where yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/})" id="p1"}
+						<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="img/teacher-icon1.png">TA的圈子</a>
+						{/fzw:sql}
+						<a href="javascript:void(0)" onclick="zixun()"><img src="img/teacher-icon2.png">咨询老师</a>
+                        {if value1="{fzw:sql="select * from sl_history where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='老师收藏' and laiyuanbianhao={fzw:url:id/}" id="p1"}{fzw:p1:id/}{/fzw:sql}" value2="" bi="=="}
+						<a href="javascript:void(0);" onclick="shoucang()"><img src="img/teacher-icon3.png">收藏</a>
+                        {else}
+                        <a ><img src="img/teacher-icon3.png">已收藏</a>
+                        {/if}
+					</div>
+				</div>
+                <div style="float:right;">
+                    {fzw:sql="select top 1 * from sl_xiangche where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='视频'" id="p1"}
+                    <video src="{fzw:p1:wenjiandizhi/}" controls="controls" width="490" height="283"></video>
+                    {/fzw:sql}
+                </div>
+				<script type="text/javascript">
+
+					function shoucang(){
+						var id = {fzw:url:id/};
+						var yhm = '{fzw:cookie:name="user_name"/}';
+						if (yhm=='') {
+							layer.alert("您还没有登录哦！请先登录！");
+							return false
+						}
+						var a = "";
+						$.ajax({
+							type: "get",
+							async:false,
+							url: "/single.aspx?m=ajax_chaxunshoucang&leixing=老师收藏&id="+id+"&yonghuming="+yhm,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								a = data;
+							},error:function(data){
+								layer.msg("网络错误请重试！");
+								return false;
+							}
+						});
+						if (a!="") {
+							layer.alert("您已经收藏过该老师！");
+							return false
+						}
+						$.ajax({
+							type: "POST",
+							url: "/Execution.aspx?t=history&type=add",
+							data: "&leixing=老师收藏&laiyuanbianhao="+id+"&yonghuming="+yhm,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								layer.msg("收藏成功！");
+							},error:function(data){
+								layer.msg("网络错误请重试！");
+								return false;
+							}
+						});
+					}
+				</script>
+{if value1="{fzw:sql="select * from sl_user where yonghuming in (select yonghuming from sl_laoshi where yonghuming='{fzw:cookie name="user_name"/}') " id="p1"}{fzw:p1:leixing/}{/fzw:sql}" value2="老师" bi="=="}
+{else}
+<!--history-->
+<p style="display: none;" class="laoshi_shoucang" data-yuan="{fzw:sql="select * from sl_history where yonghuming='{fzw:cookie name="user_name"/}' and laiyuanbianhao={fzw:url:id/} and leixing='老师收藏' " id="p1"}{fzw:p1:id/}{/fzw:sql}"></p>	
+<form method="post" action="" id="laoshi_shoucang">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:id/}' />
+	<input type="hidden" name="leixing" value="老师收藏" />
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+</form>
+<script language="javascript" type="text/javascript"> 
+	function laoshi_shoucang(){
+		var yuan=$('.laoshi_shoucang').data('yuan');
+		if(yuan==''){
+			var formData = $("#laoshi_shoucang").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=history&type=add",
+				data: formData,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+				}
+			});
+		}
+   }
+</script>
+{/if}				
+				
+				<div class="teacher-top-bottom clear">
+					<ul>
+						{if value1="{fzw:url:leixing/}" value2="" bi="=="}
+						<li id="teacher-on">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}">老师主页</a><em></em>
+						</li>    
+					    {else}
+					    <li>
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}">老师主页</a><em></em>
+						</li>
+					    {/if}
+					    
+					    {if value1="{fzw:url:leixing/}" value2="geren" bi="=="}
+						<li id="teacher-on">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=geren">个人资料</a><em></em>
+						</li>    
+					    {else}
+					    <li>
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=geren">个人资料</a><em></em>
+						</li>
+					    {/if}
+					    {if value1="{fzw:url:leixing/}" value2="kecheng" bi="=="}
+					    <li id="teacher-on">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=kecheng">TA的课程</a><em></em>
+						</li>  
+						{else}
+						<li>
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=kecheng">TA的课程</a><em></em>
+						</li>  
+						{/if}
+						{if value1="{fzw:url:leixing/}" value2="xiangche" bi="=="}
+						<li class="xiangche_AB" id="teacher-on">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=xiangche">视频/相册</a><em></em>
+						</li>    
+					    {else}
+					    <li class="xiangche_AB">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=xiangche">视频/相册</a><em></em>
+						</li>
+						<script type="text/javascript">
+					    	function xiangche_AB(){
+					    		var xc='{fzw:url:leixing/}';
+					    		if(xc=='xiangcheA'||xc=='xiangcheB'){
+					    			$('.xiangche_AB').attr('id','teacher-on');
+					    		}
+					    	}
+					    	xiangche_AB();
+					    </script>
+					    {/if}
+						{if value1="{fzw:url:leixing/}" value2="pinglun" bi="=="}
+						<li id="teacher-on">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=pinglun">学员评价</a><em></em>
+						</li>    
+					    {else}
+					    <li>
+							<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=pinglun">学员评价</a><em></em>
+						</li>
+					    {/if}
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		
+		{if value1="{fzw:url:leixing/}" value2="" bi="=="}
+		    {fzw:inside src="teacher_detail_home.html"/}
+	    {else}{/if}
+	    {if value1="{fzw:url:leixing/}" value2="geren" bi="=="}
+		    {fzw:inside src="teacher_detail_geren.html"/}
+	    {else}{/if}
+	    {if value1="{fzw:url:leixing/}" value2="kecheng" bi="=="}
+	    <div style="width: 1200px;margin: 0 auto;">
+	        <iframe src="/search.aspx?m=teacher_detail_kecheng&classid=37&lingshi1={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="ifm_kecheng" name="ifm_kecheng" onload="javascript:dyniframesize('ifm_kecheng');">
+</iframe>
+	    </div>
+		    
+	    {else}{/if}
+	    {if value1="{fzw:url:leixing/}" value2="xiangche" bi="=="}
+		    {fzw:inside src="teacher_detail_xiangche.html"/}
+	    {else}{/if}
+	    {if value1="{fzw:url:leixing/}" value2="xiangcheA" bi="=="}
+	    <div style="width: 1200px;margin: 0 auto;">
+	        <iframe src="/search.aspx?m=teacher_detail_xiangche_list&leixing=视频&lingshi1={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="xiangcheA" name="xiangcheA" onload="javascript:dyniframesize('xiangcheA');">
+</iframe>
+	    </div>
+	    {else}{/if}
+	    {if value1="{fzw:url:leixing/}" value2="xiangcheB" bi="=="}
+	    <div style="width: 1200px;margin: 0 auto;">
+	        <iframe src="/search.aspx?m=teacher_detail_xiangche_list&leixing=照片&lingshi1={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="xiangcheB" name="xiangcheB" onload="javascript:dyniframesize('xiangcheB');">
+</iframe>
+	    </div>
+	    {else}{/if}
+	    {if value1="{fzw:url:leixing/}" value2="pinglun" bi="=="}
+		    {fzw:inside src="teacher_detail_pinglun.html"/}
+	    {else}{/if}
+		
+		
+		{fzw:inside src="底部.html"/}{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+function dyniframesize(down) { 
+var pTar = null; 
+if (document.getElementById){ 
+pTar = document.getElementById(down); 
+} 
+else{ 
+eval('pTar = ' + down + ';'); 
+} 
+if (pTar && !window.opera){ 
+//begin resizing iframe 
+pTar.style.display="block" 
+if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){ 
+//ns6 syntax 
+pTar.height = pTar.contentDocument.body.offsetHeight +20; 
+pTar.width = pTar.contentDocument.body.scrollWidth+20; 
+} 
+else if (pTar.Document && pTar.Document.body.scrollHeight){ 
+//ie5+ syntax 
+pTar.height = pTar.Document.body.scrollHeight; 
+pTar.width = pTar.Document.body.scrollWidth; 
+} 
+} 
+} 
+</script>
+<script type="text/javascript">
+	$('#teacher-top-rating').raty({ 
+		starType: 'i',
+		readOnly: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$('#classvideo-detail-top-word-rating').raty({ 
+		starType: 'i',
+		readOnly: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$('#classvideo-detail-left-rating').raty({ 
+		starType: 'i',
+		readOnly: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$("#classplay-user-rating").raty({
+		starType: 'i',
+		hints: ['1', '2', '3', '4', '5'],
+		half: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$(".classvideo-detail-user-list .user-rating").each(function(){
+		$(this).raty({ 
+			starType: 'i',
+			readOnly: true,
+			score: function() {
+	    		return $(this).attr('data-score');
+	  		}
+		})
+	})
+</script>
+<script type="text/javascript">  
+    //剩余字数计算  
+    function checkMaxInput(obj, maxLen) {  
+        if (obj == null || obj == undefined || obj == "") {  
+                return;  
+            }  
+        if (maxLen == null || maxLen == undefined || maxLen == "") {  
+            maxLen = 100;  
+        }  
+      	var strResult;  
+        var $obj = $(obj);  
+        var newid = $obj.attr("id") + 'msg';  
+        if (obj.value.length > maxLen) { //如果输入的字数超过了限制  
+            obj.value = obj.value.substring(0, maxLen); //就去掉多余的字
+            $(obj).parent().children("span").html(obj.value.length+"/"+maxLen);  
+        }  
+        else {  
+            $(obj).parent().children("span").html(obj.value.length+"/"+maxLen);  
+        }    
+        var $msg = $("#" + newid);  
+        if ($msg.length == 0) {  
+            $obj.after(strResult);  
+        }  
+        else {  
+            $msg.html(strResult);  
+        }  
+    }  
+    function zixun(){
+    	var yhm = '{fzw:cookie:name="user_name"/}';
+    	var bianhao = '{fzw:sql="select * from sl_bbs where yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/})" id="p1"}{fzw:p1:id/}{/fzw:sql}'
+    	if (yhm=='') {
+    	    layer.alert("请先登录！");
+    	    return false;
+    	}
+    	layer.confirm('请选择咨询方式',{
+  		btn: ['私信老师', '圈子发帖','取消'],closeBtn: 0
+  		},function(index){
+    		layer.open({
+				type: 2,
+				skin: 'layui-layer-rim', 
+				area: ['800px', '600px'], 
+				content: '/single.aspx?m=ajax_sixin&id={fzw:url:id/}'
+			});
+			layer.iframeAuto(index)
+    	},function(index){
+    		if (bianhao=='') {
+    			layer.alert("抱歉该老师并未创建圈子，请稍后再试");
+    			return false;
+    		}else{
+    			layer.open({
+				  	type: 2,
+				  	skin: 'layui-layer-rim', 
+				  	area: ['800px', '600px'], 
+				  	content: '/single.aspx?m=ajax_fatie&quanzibianhao='+bianhao
+				});
+				layer.iframeAuto(index)
+    		}
+    	},function(index){
+    		layer.close(index);
+    	})
+  	}
+</script>		
+        <script>
+            var id ='';
+            {fzw:sql="select * from sl_kc_order where yonghuming='{fzw:cookie:name="user_name"/}' and zhuangtai='已付款' and laoshi in (select yonghuming from sl_laoshi where id={fzw:url:id/})" id="p1"}id={fzw:p1:id/}{/fzw:sql}
+            if(id==''){
+                $("#pinglunbox").hide();
+            }
+        </script>
+	</body>
+</html>

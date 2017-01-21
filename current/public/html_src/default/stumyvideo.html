@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>我的视频_个人设置</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+        	.add-info input {
+			    font-size: 14px;
+			    line-height: 30px;
+			    color: #fff;
+			    border: 0;
+			    outline: medium;
+			    width: 100%;
+			    padding: 0 10px;
+			    font-family: "微软雅黑";
+			    background-color: transparent;
+			    -webkit-box-sizing: border-box;
+			    -moz-box-sizing: border-box;
+			    box-sizing: border-box;
+			}
+			.addpic2 {
+			    width: 100%;
+			    height: 100%;
+			    position: fixed;
+			    z-index: 200;
+			    background: rgba(0,0,0,0.5);
+			    display: none;
+			}
+			.addpic3 {
+			    width: 100%;
+			    height: 100%;
+			    position: fixed;
+			    z-index: 200;
+			    background: rgba(0,0,0,0.5);
+			    display: none;
+			}
+        </style>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+                $(".gerenshezhi").addClass("lefton");
+            </script>
+			<!--添加视频模块-->
+			<div class="addpic" style="top: 0;left: 0;">
+				<div class="add-box" style="margin: 20% auto;width: auto;max-width: 720px;">
+					<div class="add-title">
+						<p>添加视频</p>
+						<img src="img/tc56.png" id="close" />
+					</div>
+					<div class="shangc-box">
+						<img src="img/shangchuanvideo.png" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/videouploader.aspx?type=soft&editname=wenjiandizhi&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+						<input type="hidden" name="suoluetu" class="uppic" value="" id="suoluetu"/>
+					</div>
+					<g id="photolist"></g>
+					
+					
+					<div class="clear"></div>
+					<div class="add-save">
+						<a href="javascript:void(0)" onclick="savephoto()">保存视频</a>
+					</div>
+				</div>
+			</div>
+			<!--添加视频模块 	END-->
+			<div class="addpic2" style="top: 0;left: 0;">
+				<div class="add-box" style="margin: 20% auto;width: auto;max-width: 720px;display: table;">
+					<div class="add-title">
+						<p>修改视频名</p>
+						<img src="img/tc56.png" id="close" />
+					</div>
+					<div class="shangc-box" style="width: 100%;height: auto;">
+						<img src="img/shangchuanpic.png" style="width: 100%;height: 100%;margin: 0;" id="lingshitu" />
+					</div>
+					<form id="xiugai-form">
+					<input type="text" name="biaoti" value="" style="margin: 10px 0;width: 100%;padding: 5px;box-sizing: border-box;">
+					<input type="hidden" name="id">
+					</form>
+					<div class="clear"></div>
+					<div class="add-save">
+						<a href="javascript:void(0)" onclick="xiugaibiaoti()" style="margin-top: 0">确定修改</a>
+					</div>
+				</div>
+			</div>
+			<div class="addpic3" style="top: 0;left: 0;">
+				<div class="add-box" style="margin: 5% auto;width: auto;max-width: 720px;display: table;height: 500px;">
+					<div class="add-title">
+						<p>视频播放</p>
+						<img src="img/tc56.png" id="close" />
+					</div>
+					<video src="" controls="controls" style="width: 100%;max-height: 480px;" id="playvideo">
+				</div>
+			</div>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>我的视频</p>
+					<span>视频最多可以上传6个我的视频浏览主页</span>
+				</div>
+				<div class="creatsp">
+					<a href="javascript:void(0)" onclick="scbox()">＋ 上传视频</a>
+					
+					<span>请上传自我介绍、课程短片、才艺展示等有利于学生了解您的视频，不能包含推广信息（广告、联系方式、网站链接等）哦</span>
+				</div>
+				<form id="shipin-form">
+					<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+					<input type="hidden" name="leixing" value="视频">
+					<input type="hidden" name="suoluetu">
+					<input type="hidden" name="wenjiandizhi" id="wenjiandizhi">
+					<input type="hidden" name="biaoti">
+				</form>
+				{fzw:sql="select top 6 * from sl_xiangche where yonghuming='{fzw:cookie:name="user_name"}' and leixing='视频' order by dtime desc" id="p1"}
+				<div class="video-lbox">
+					<div class="video-pic">
+						<img src="{fzw:p1:suoluetu/}"/>
+					</div>
+					<a href="javascript:void(0)" onclick="spplay(this)" data-src="{fzw:p1:wenjiandizhi/}">
+						<div class="video-ico">
+							<img src="img/tc54.png"/>
+						</div>
+					</a>
+					<div class="video-info">
+						<p>{fzw:p1:biaoti/}</p>						
+						<a href="javascript:void(0)" onclick="del({fzw:p1:id/})">删除</a>
+						<a href="javascript:void(0)" onclick="rename(this,{fzw:p1:id/})" data-src="{fzw:p1:suoluetu/}" data-biaoti="{fzw:p1:biaoti/}">重命名</a>
+					</div>
+				</div>
+				{/fzw:sql}
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			function scbox(){
+				$(".addpic").show();
+			}
+			function spplay(e){
+				$(".addpic3").show();
+				var src = $(e).data("src")
+				$("#playvideo").attr("src",src)
+			}
+			$(".add-title img").click(function() {
+				$(".addpic").hide();
+				$(".addpic2").hide();
+				$(".addpic3").hide();
+			})
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有任何视频'));
+			function del(id){
+				$.ajax({
+					type: "POST",
+					url: "/Execution.aspx?t=xiangche&type=del&id="+id,
+					success: function(data) {
+						layer.msg("删除成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+					}
+				});
+				return false;
+			}
+			function get_video_img(imgurl){
+				var src;
+				$.ajax({
+					type: "get",
+					url: "/inc/tool/Comment.aspx?fileurl=" + imgurl + "",
+					async:false,
+					success: function (data) {
+						src = data;
+					},error:function(data){
+					    console.log("nopic")
+					}
+				});
+				return src;
+			}
+			function videoadress(id,url){
+				var dizhi = new Array;
+				dizhi = url.split("|");
+				for (var i = 0; i < dizhi.length; i++) {
+					document.getElementById(id).value=url;
+					var tusrc = get_video_img(dizhi[i]);
+					$("#photolist").append("<form class=\"photo-form\"><div class=\"add-photo\"><img src='"+tusrc+"'/><div class=\"delete1\"><a href=\"javascript:void(0)\" onclick=\"delphoto(this)\"><img src=\"/template/default/img/tc64.png\"/></a></div><div class=\"add-info\"><input type=\"text\" name=\"biaoti\" placeholder=\"添加描述，最多12字\" maxlength=\"24\"><input type=\"hidden\" name=\"yonghuming\" value=\"\"><input type=\"hidden\" name=\"suoluetu\" value='"+tusrc+"'><input type=\"hidden\" name=\"wenjiandizhi\" value='"+dizhi[i]+"'><input type=\"hidden\" name=\"leixing\" value=\"视频\"></div></div></form>")
+				}
+			}
+			function savephoto(){
+				if ($("#photolist").html()=='') {
+					layer.msg("请上传视频！");
+					return false;
+				}
+				var yonghuming='{fzw:cookie:name="user_name"}';
+				$(".photo-form input[name=yonghuming]").val(yonghuming);
+				var x = $("#photolist").children(".photo-form").length;
+				if ($(".photo-form input[name=biaoti]").val()=='') {
+					layer.alert("请为每个视频添加描述！");
+					return false;
+				}
+				for(var i = 0;i<x;i++){
+					var formData = $("#photolist").children(".photo-form").eq(i).serialize();
+					$.ajax({
+						type: "POST",
+						async:false,
+						url: "/Execution.aspx?t=xiangche&type=add",
+						data: formData,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							console.log("y")
+						},error:function(data){
+							layer.msg("第"+i+1+"个保存失败！稍后请重试");
+							location.reload(true);
+							return false;
+						}
+					});
+				}
+				layer.msg("保存成功！");
+				/*$("#close").click();
+				$("#photolist").html("");*/
+				location.reload(true);
+				return false;
+			}
+			function delphoto(e){
+				$(e).parent().parent().parent("form").remove();
+			}
+			function rename(e,id){
+				$(".addpic2").show();
+				var biaoti = $(e).data("biaoti");
+				var src = $(e).data("src");
+				$("#xiugai-form input[name=id]").val(id);
+				$("#xiugai-form input[name=biaoti]").val(biaoti);
+				$("#lingshitu").attr("src",src);
+			}
+			function xiugaibiaoti(){
+				var id = $("#xiugai-form input[name=id]").val();
+				if ($("#xiugai-form input[name=biaoti]").val()=='') {
+					layer.msg("请输入标题！");
+					return false;
+				}
+				var formData2 = $("#xiugai-form").serialize();
+				$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=xiangche&type=edit&id="+id,
+					data: formData2,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("修改成功！");
+						location.reload(true);
+					},error:function(data){
+						layer.msg("修改失败！请重试");
+						return false;
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

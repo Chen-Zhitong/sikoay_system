@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>{fzw:sql="select * from sl_user where id={fzw:url:id/}" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}_成员管理_圈子管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <style type="text/css">
+        	.reply-text1{
+        		font-size: 14px;
+        	}
+        </style>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<!--头像栏-->
+		<div class="user-box">
+			<div class="user-main">
+				{fzw:sql="select * from sl_user where id={fzw:url:id/}" id="p1"}
+				<div class="user-pic">
+					<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+				</div>
+				<div class="user-info">
+					<p>{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</p>
+					<!-- <a href="">修改备注</a> -->
+					<div class="clear"></div>
+					<label>{fzw:p1:zuoyouming/}</label>
+				</div>
+				<div class="user-contact">
+					<a href="javascript:void(0)" onclick="zixun({fzw:p1:id/})"><img src="img/tc30.png"/>私聊TA</a>
+					<!--<a href=""><img src="img/tc31.png"/>删除TA</a>-->
+				</div>
+				{/fzw:sql}
+			</div>
+		</div>
+		<script>
+            function zixun(userid) {
+                var yhm = '{fzw:cookie:name="user_name"/}';
+                if (yhm == '') {
+                    layer.alert("请先登录！");
+                    return false;
+                }
+                layer.open({
+                    type: 2,
+                    skin: 'layui-layer-rim',
+                    area: ['800px', '600px'],
+                    content: '/single.aspx?m=ajax_sixin&userid=' + userid
+                });
+            }
+        </script>
+		<div class="content-main">
+			<div class="manger-title">
+				<p>TA的帖子<nobr>（{fzw:sql="select count(id) as count_id from sl_bbsshow where yonghuming in (select yonghuming from sl_user where id={fzw:url:id/})" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</nobr></p>
+			</div>
+			{fzw:for:sql="select * from sl_bbsshow as bs,sl_user as u where u.yonghuming=bs.yonghuming and u.id={fzw:url:id/} and bs.laiyuanbianhao=''" id="p1"}
+			<div class="conments1">
+				<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+				<div class="com-info1">
+					<label>TA</label>
+					<label>发布了</label>			
+					<p class="com-detail">{fzw:p1:neirong/}</p>
+					<p class="com-time">时间：{fzw:p1:dtime datetime="yyyy-MM-dd&nbsp;&nbsp;&nbsp;&nbsp;hh:mm"/}</p>
+					<p class="com-time">{fzw:for:sql="select count(id) as huifushu from sl_bbsshow where laiyuanbianhao={fzw:p1:id/}" id="p2"}{fzw:p2:huifushu/}{/fzw:for:sql}评/{fzw:p1:renqi/}阅</p>
+					<div class="clear"></div>
+				</div>
+				<div class="com-reply">
+					<a href="javascript:void(0)" data-id="{fzw:p1:id/}" onclick="del(this)">删除帖子</a>
+					<a class="reply1">回复帖子</a>
+				</div>
+				<div class="clear"></div>
+				<div class="reply">
+					<form class="huifu-form">
+						<textarea name="neirong" placeholder="回复..." class="reply-text1" rows="5"></textarea>
+						<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+						<input type="hidden" name="laiyuanbianhao" value="{fzw:p1:id/}">
+						<input type="hidden" name="tiezileibie" value="{fzw:p1:tiezileibie/}">
+						<input type="hidden" name="quanzibianhao" value="{fzw:p1:quanzibianhao/}">
+					</form>
+					<a href="javascript:void(0)" onclick="huifu(this)">回复</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+			{/fzw:for:sql}
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			function del(e){
+				var id = $(e).data("id");
+				$.ajax({
+					type: "POST", 
+					url: "/Execution.aspx?t=bbsshow&type=del&id="+id,
+					success: function(data) {
+						layer.msg("删除成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+					}
+				});
+			}
+			function huifu(e){
+				var a = $(e).parent().children().children("textarea").val();
+				if (a=='') {
+					layer.msg("请输入回复内容！");
+					return false;
+				}
+				var formData = $(e).parent().children(".huifu-form").serialize();
+				$.ajax({
+					type: "POST", 
+					url: "/Execution.aspx?t=bbsshow&type=add",
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("回复成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("回复失败！请重试");
+					}
+				});
+			}
+		</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

@@ -1,0 +1,200 @@
+<script src="/inc/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<!--top-->
+		{fzw:inside src="top.html"/}
+		<!--top end-->
+		<!--header-->
+		<div class="header">
+		    <div class="wrap">
+		        <div class="fl">
+		            <a href="/"><img src="images/logo.png" height="84"/></a>
+		        </div>
+		        <div class="h_search fl">
+		        	<form onkeydown="if(event.keyCode==13){fromSubmit();return false;}">
+		            <div class="toggle fl">
+		                <p class="tag"><span class="tag_txt" style="text-align: center;">课程</span><em class="icon-caret-down"></em></p>
+		                <div class="toggle_down" style="border: 1px solid rgb(238, 238, 238);">
+		                    <p class="t_d_txt" style="text-align: center;">课程</p>
+                            <p class="t_d_txt" style="text-align: center;">老师</p>
+		                    <p class="t_d_txt" style="text-align: center;">课件</p>
+		                    <p class="t_d_txt" style="text-align: center;">知识</p>
+		                    <p class="t_d_txt" style="text-align: center;">论坛</p>
+		                </div>
+		            </div>
+		            <input type="text" placeholder="请输入您想要的课程" class="h_s_input" id="key_value" style="color: #333" />
+		            <a href="javascript:void(0)" onclick="fromSubmit()" class="h_s_btn">搜索</a>
+		            </form>
+		            <script type="text/javascript">
+						function fromSubmit() {
+						   // alert(document.getElementById("key_value").value);
+						   if (document.getElementById("key_value").value==''){
+								layer.alert("请输入关键字!");
+								return false;
+						   }
+						   var a = $(".tag_txt").html();
+						   if (a=='课程') {
+							   	window.location.href = "/search.aspx?m=huayukecheng&all=" + document.getElementById("key_value").value;
+							    return false;
+							}else if (a=='课件') {
+								window.location.href = "/search.aspx?m=kejianyuelan&classid=55&all=" + document.getElementById("key_value").value;
+						    	return false;
+							}else if (a=='知识') {
+								window.location.href = "/search.aspx?m=kepuzhishi&classid=69&all=" + document.getElementById("key_value").value;
+						    	return false;
+							}else if (a=='论坛') {
+								window.location.href = "/search.aspx?m=quanzi_list&ordertype=shuxing&lingshi1=1&all=" + document.getElementById("key_value").value;
+						    	return false;
+							}else if (a=='老师') {
+							    window.location.href = "/search.aspx?m=shizizhenrong&all=" + document.getElementById("key_value").value;
+							    return false;
+							}
+						    
+						}
+					</script>
+		        </div>
+		        <div class="h_login">
+                    {if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+		            <a href="/single.aspx?m=login&tipurl={fzw:key:siteurl/}" class="btn_login"><em class="icon-user"></em> 用户登录</a>
+		            <a href="/single.aspx?m=xueshengzhuce&tipurl={fzw:key:siteurl/}" class="btn_reg">免费注册</a>
+                    {else}
+                    {/if}
+                    {fzw:sql="select * from sl_user where yonghuming='{fzw:cookie name="user_name"/}'" id="p1"}
+                    {if value1="{fzw:p1:nicheng/}" value2="" bi="=="} 
+                    欢迎登录：{fzw:p1:yonghuming string="shouji"/}，<a href="/inc/out_login.aspx" onclick="return confirm('您确认退出会员？');">退出</a>
+                    {else}
+                    欢迎登录：{fzw:p1:nicheng/}，<a href="/inc/out_login.aspx" onclick="return confirm('您确认退出会员？');">退出</a>
+                    {/if}
+                    {/fzw:sql}
+		        </div>
+		        <p class="clear"></p>
+		    </div>
+		</div>
+		<!--header end-->
+		<!--nav-->
+		<div class="nav_outer">
+		    <div class="wrap pos_relative">
+		    	<!--导航-->
+		        <div class="nav home-top-menu">
+		            <li><a href="/" style="width: 120px;">首页</a></li>
+		            <li><a href="/search.aspx?m=huayukecheng">华予课程</a></li>
+		            <li>
+		            	<a href="/single.aspx?m=ziliaocenter">资料中心</a>
+		            	<ul class="home-top-menu2">
+		            		<li><a href="/search.aspx?m=tiku">练习题库</a></li>
+		            		<li><a href="/search.aspx?m=kejianyuelan&classid=55">课件阅览</a></li>
+		            		<li><a href="/search.aspx?m=kepuzhishi&classid=69">科普知识</a></li>
+		            	</ul>
+		            </li>
+		            <li><a href="/search.aspx?m=shizizhenrong">师资阵容</a></li>
+		            <li><a href="/single.aspx?m=xueyuanluntan">学院论坛</a></li>
+		            <li><a href="/search.aspx?m=huayukecheng&jiage=0between0">全民健康学院<em class="nav_tag">免费</em></a></li>
+		            <li><a href="" id="gotouser">个人中心</a></li>
+		        </div>
+		        <script type="text/javascript">
+		        	var a = '{fzw:cookie:name="user_name"}';
+		        	var b;
+		        	{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+		        	b = "{fzw:p1:leixing/}"
+		        	{/fzw:sql}
+		        	if (a=='') {
+		        		$("#gotouser").attr("href","javascript:void(0)");
+		        		$("#gotouser").click(function(){
+		        			layer.alert("请您先登录！");
+		        		})
+		        		$("#xuexizhongxin").attr("href","javascript:void(0)");
+		        		$("#xuexizhongxin").click(function(){
+		        			layer.alert("请您先登录！");
+		        		})
+		        		$("#gotodingdan").attr("href","javascript:void(0)");
+		        		$("#gotodingdan").click(function(){
+		        			layer.alert("请您先登录！");
+		        		})
+		        		$("#gotokecheng").attr("href","javascript:void(0)");
+		        		$("#gotokecheng").click(function(){
+		        			layer.alert("请您先登录！");
+		        		})
+		        	}else if(b=='会员'){
+		        		$("#gotouser").attr("href","/single.aspx?m=stuusercenter");	
+		        		$("#xuexizhongxin").attr("href","/single.aspx?m=stuusercenter");
+		        		$("#gotodingdan").attr("href","/search.aspx?m=stukcdingdan");
+		        		$("#gotokecheng").attr("href","/search.aspx?m=stumysp&classid=37");
+		        	}else if(b=='老师'){
+		        		$("#gotouser").attr("href","/single.aspx?m=teacherusercenter");
+		        		$("#xuexizhongxin").attr("href","/single.aspx?m=teacherusercenter");
+		        		$("#gotodingdan").attr("href","/search.aspx?m=teacherdingdankc");
+		        		$("#gotokecheng").attr("href","/search.aspx?m=teachershipinguanli&lingshi1=1");
+		        	}else if(b=='代理'){
+		        		$("#gotouser").attr("href","/single.aspx?m=dailiusercenter");
+		        		$("#xuexizhongxin").attr("href","/single.aspx?m=dailiusercenter");
+		        		$("#gotodingdan").attr("href","/single.aspx?m=stuusercenter");
+		        		$("#gotokecheng").attr("href","/single.aspx?m=stuusercenter");
+		        	}
+		        </script>
+		        <!--导航 end-->
+		        
+		        <!--菜单-->
+		        <div class="menu">
+		            <div class="menu_h">
+		                <img src="images/icon_menu.png" class="icon"/>
+		                <div class="menu_txt">
+		                    <em class="icon-angle-down fr"></em>全部课程
+		                </div>
+		            </div>
+		            <ul class="menu_box">
+		                <!-- <li>
+		                    <img src="images/icon1.png" class="icon"/>
+		                    <div class="menu_txt">
+		                        <p class="title"><a href="#">新课上架</a></p>
+		                    </div>
+		                    <div class="menu_sub">
+		                
+		                    	<a href="#">分类1</a>
+		                    	<a href="#">分类1</a>
+		                    	<a href="#">分类1</a>
+		                    	<a href="#">分类1</a>
+		                    	<a href="#">分类1</a>
+		                    	<a href="#">分类1</a>
+		                    	<a href="#">分类1</a>
+		                    </div>
+		                </li> -->
+		                {fzw:for:sql="select * from sl_Parameter where classid=261 order by u4 asc,id asc" id="p1"}
+		                <li>
+		                    <img src="{fzw:p1:u4/}" class="icon"/>
+		                    <div class="menu_txt">
+		                        <p class="title"><a href="/search.aspx?m=huayukecheng&kechengfenlei={fzw:p1:id/}">{fzw:p1:u1/}</a></p>
+		                        <p class="second" style="width: 140px;height: 22px;overflow: hidden">
+		                    		<a href="/search.aspx?m=huayukecheng&kechengfenlei={fzw:p1:id/}&prope=推荐">推荐课程</a>
+		                    		<a href="#"></a>
+		                    		<a href="#"></a>
+		                    		<a href="#"></a>
+		                        </p>
+		                    </div>
+		                    <div class="menu_sub">
+		                    	{fzw:for:sql="select * from sl_Parameter where classid={fzw:p1:id/} order by u4 asc,id asc" id="p2"}
+		                    	<a href="/search.aspx?m=huayukecheng&kechengfenlei={fzw:p2:id/}">{fzw:p2:u1/}</a>
+		                    	{/fzw:for:sql}
+		                    </div>
+		                </li>
+		                {/fzw:for:sql}
+		                <li>
+		                	<!-- <a href="/search.aspx?m=huayukecheng">查看更多课程 >></a> -->
+		                </li>
+		            </ul>
+		        </div>
+		        <script type="text/javascript">
+			        $(".menu_box li").each(function(){
+			        	var a = new Array();
+			        	var b = new Array();
+			        	for(var i=0;i<$(this).children(".menu_sub").children("a").length;i++){
+			        		a[i] = $(this).children(".menu_sub").children("a").eq(i).html();
+			        		b[i] = $(this).children(".menu_sub").children("a").eq(i).attr("href");
+			        	}
+			        	for(var j=0;j<3;j++){
+			        		$(this).children().children(".second").children("a").eq(j+1).html(a[j]);
+			        		$(this).children().children(".second").children("a").eq(j+1).attr("href",b[j]);
+			        	}
+			        })	
+		        </script>
+		        <!--菜单 end-->
+		    </div>
+		</div>
+		<!--nav end-->

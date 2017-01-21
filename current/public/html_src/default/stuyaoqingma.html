@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>邀请码_个人中心</title>
+        <link href="css/teacher.css" rel="stylesheet">
+<style type="text/css">
+	.gongl p{
+		font-size: 15px;
+		color: #595959;
+		margin-bottom: 10px;
+	}
+</style> 
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/> 
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="js/class.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>      
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+                $(".zhanghuguanli").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>邀请码</p>
+				</div>
+				<div class="youh-title">
+					<img src="img/tc24.png"/>
+					<p>我的邀请码：{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:yaoqingma/}{/fzw:sql}</p>
+				</div>
+				<div class="myinvite">
+					<div class="ivt-text">
+						<p>我的邀请码</p>
+						<h4>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:yaoqingma/}{/fzw:sql}</h4>
+						<p>我的邀请二维码</p>
+						<span>华予学院老师真的很厉害，让我学到了很多知识，感谢学院老师！</span>
+						<span>这个地址就介绍给你了，点进去听听课。</span>
+						<img src="img/tc26.png"/>
+					</div>	
+				</div>
+				<div class="gongl">
+					<p>攻略：每日依次点击下方分享按钮到：QQ空间、腾讯微博、新浪微博、QQ好友及QQ群，即可邀请好友</p>
+					<div class="bdsharebuttonbox">
+						<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+						<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+						<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+						<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+					</div>
+
+				</div>
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>		
+	</body>
+</html>

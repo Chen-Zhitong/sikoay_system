@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<title>{fzw:sql="select * from sl_Parameter where id={fzw:url:quanzileibie/}" id="p1"}{fzw:p1:u1/}_{/fzw:sql}学院圈子_学院论坛</title>
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		
+		<!-- forum-group -->
+		<div class="forum-group-top">
+			<div class="max-width">
+				<p>{fzw:sql="select * from sl_Parameter where id={fzw:url:quanzileibie/}" id="p1"}{fzw:p1:u1/}-{/fzw:sql}学院圈子<span>GROUP</span></p>
+				<a href="/search.aspx?m=my_quanzi">我的圈子</a>
+				<a href="/search.aspx?m=quanzi_find&quanzileibie=297" class="group-on">发现圈子</a>
+			</div>		
+		</div>
+		<div class="max-width">
+			<div class="forum-find-group-top">
+				<a href="/search.aspx?m=quanzi_find"><img src="img/group-icon3-not.png">全部</a>
+				<a href="/search.aspx?m=quanzi_find&ordertype=dtime&quanzileibie={fzw:url:quanzileibie/}"><img src="img/group-icon4.png">最新</a>
+				<div class="forum-group-class">
+					<img src="img/group-icon5.png">
+					课程分类&nbsp;&nbsp;
+					<img src="img/down2.png" style="vertical-align: text-bottom">
+					<ul>
+						{fzw:sql="select * from sl_Parameter where classid=289 order by id desc" id="p1"}
+						<li><a href="/search.aspx?m=quanzi_find&quanzileibie={fzw:p1:id/}">{fzw:p1:u1/}</a></li>
+						{/fzw:sql}
+					</ul>
+				</div>
+				<a href="/search.aspx?m=quanzi_find&ordertype=renqi&quanzileibie={fzw:url:quanzileibie/}"><img src="img/group-icon6.png">热圈</a>
+				<form>
+					<input type="text" id="key_value" name="search" placeholder="搜索内容，回车跳转" onkeydown="onKeyDown_quanzi()">
+					<button onclick="return fromSubmit_quanzi()" type="button"><img src="img/search.png"></button>
+				</form>
+			</div>
+			<script type="text/javascript">
+				function fromSubmit_quanzi() {
+					if ($("#key_value").val()=='') {
+						layer.alert("请输入关键字！");
+						return false;
+					}
+				    window.location.href = "/search.aspx?m=quanzi_find&quanzileibie={fzw:url:quanzileibie/}&all=" + document.getElementById("key_value").value;
+				    return false;
+				}
+				function onKeyDown_quanzi() {
+				    var code = event.keyCode;
+				    if (code == 13) {
+				        fromSubmit_kepuzhishi();
+				        return false;
+				    }
+				}
+				var a;
+				a = '{fzw:url:ordertype/}';
+				if (a=='') {
+					$(".forum-find-group-top").children("a").eq(0).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(0).children("img").attr("src","/template/default/img/group-icon3.png")
+				}else if (a=='dtime'){
+					$(".forum-find-group-top").children("a").eq(1).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(1).children("img").attr("src","/template/default/img/group-icon4-on.png")
+				}else if (a=='renqi') {
+					$(".forum-find-group-top").children("a").eq(2).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(2).children("img").attr("src","/template/default/img/group-icon6-on.png")
+				}
+			</script>
+			<div class="forum-group-left forum-find-group">
+				<p>发现圈子（{fzw:sql="select count(id) as count_id from sl_bbs where quanzileibie={fzw:url:quanzileibie/}" id="p2"}{fzw:p2:count_id/}{/fzw:sql}）</p>
+				{fzw:search table="sl_bbs" number="20" order="{fzw:url:ordertype/}" orderby="desc" id="p1"}
+				<table>
+					<tr>
+						{if value1="{fzw:p1:suoluetu/}" value2="" bi="=="}
+						<td><img src="img/user-touxiang.png"></td>    
+					    {else}
+					    <td><img src="{fzw:p1:suoluetu/}"></td>
+					    {/if}
+						<td colspan="1" style="width: 300px;"><a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1">{fzw:p1:quanziming/}<span>（今日发帖：{fzw:sql="select count(id) as count_id from sl_bbsshow where quanzibianhao={fzw:p1:id/} and datediff(day,dtime,getdate())=0" id="p2"}{fzw:p2:count_id/}{/fzw:sql}）</span></a><br>{fzw:p1:jianjie size="50"/}</td>
+						<td colspan="2" style="width: 240px">主贴： {fzw:sql="select count(id) as count_id from sl_bbsshow where quanzibianhao={fzw:p1:id/} and laiyuanbianhao=0" id="p2"}{fzw:p2:count_id/}{/fzw:sql} /  回帖：  {fzw:sql="select count(id) as count_id from sl_bbsshow where quanzibianhao={fzw:p1:id/} and laiyuanbianhao<>0" id="p2"}{fzw:p2:count_id/}{/fzw:sql} /  成员：{fzw:sql="select count(id) as count_id from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='加入圈子'" id="p2"}{fzw:p2:count_id/}{/fzw:sql}</td>
+						<td colspan="2" style="width: 240px"><a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1" style="padding: 7px 17px;">进入圈子</a></td>
+					</tr>	
+				</table>
+				{/fzw:search}
+				
+			</div>
+			
+			<div class="forum-group-right">
+				<p>推荐圈子</p>
+				<ul>
+					{fzw:for:sql="select top 6 * from sl_bbs where prope like '%推荐%' order by id desc" id="p1"}
+					<li>
+						
+						{if value1="{fzw:p1:suoluetu/}" value2="" bi="=="}
+						<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="img/user-touxiang.png"></a>    
+					    {else}
+					    <a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="{fzw:p1:suoluetu/}"></a>
+					    {/if}
+						<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1">{fzw:p1:quanziming/}<span>（今日发帖：{fzw:for:sql="select count(id) as count_id from sl_bbsshow where quanzibianhao={fzw:p1:id/} and datediff(day,dtime,getdate())=0" id="p2"}{fzw:p2:count_id/}{/fzw:for:sql}）</span></a><br>
+						{fzw:p1:jianjie size="25"/}
+					</li>
+					{/fzw:for:sql}
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="classhome-right-page" style="margin: 10px 0;width: 888px;float: left">
+				{fzw:search:page id="p1" size="8"/}
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var el = $('.forum-find-group'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '该课程还没有任何圈子'));
+		</script>		
+	</body>
+</html>

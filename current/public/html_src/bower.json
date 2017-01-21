@@ -1,0 +1,21 @@
+{
+  "name": "html_src",
+  "authors": [
+    "Chen Zhitong <18681273276@163.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "datatables.net": "^1.10.12",
+    "rome": "^2.1.22"
+  }
+}

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<title>我的圈子_学院圈子_学院论坛</title>
+		{if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		
+		<!-- forum-group -->
+		
+		<div class="forum-group-top">
+			<div class="max-width">
+				<p>学院圈子<span>GROUP</span></p>
+				<a href="/search.aspx?m=my_quanzi" class="group-on">我的圈子</a>
+				<a href="/search.aspx?m=quanzi_find&quanzileibie=297">发现圈子</a>
+			</div>		
+		</div>
+		<div class="max-width">
+			<div class="forum-group-left">
+				<p>我的圈子（{fzw:sql="select count(id) as count_id from sl_history where yonghuming='{fzw:cookie:name="user_name"}' and leixing='加入圈子'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</p>
+				{fzw:search table="sl_history" sqlvalue="leixing='加入圈子'&nbsp;and&nbsp;yonghuming='{fzw:cookie:name="user_name"}'" number="5" id="p1"}
+				<table>
+					{fzw:sql="select *,(select count(id) from sl_bbsshow as bbs where bbs.quanzibianhao={fzw:p1:laiyuanbianhao/} and bbs.laiyuanbianhao=0 and datediff(day, dtime ,getdate()) = 0) as jinrishu,(select count(id) from sl_bbsshow as bbs where bbs.quanzibianhao={fzw:p1:laiyuanbianhao/} and bbs.laiyuanbianhao=0) as tiezishu,(select count(id) from sl_bbsshow as bbs where bbs.quanzibianhao={fzw:p1:laiyuanbianhao/} and bbs.laiyuanbianhao<>0) as huifushu,(select count(id) from sl_history where laiyuanbianhao={fzw:p1:laiyuanbianhao/}) as chengyuanshu from sl_bbs as bs,sl_user as u where u.yonghuming=bs.yonghuming and bs.id={fzw:p1:laiyuanbianhao/}" id="p2"}
+					<tr>
+						<td><img src="{fzw:p2:suoluetu/}"></td>
+						<td colspan="1" style="width: 300px;"><a href="">{fzw:p2:quanziming/}<span>（今日发帖：{fzw:p2:jinrishu/}）</span></a><br>{fzw:p2:jianjie/}</td>
+						<td colspan="2" style="width: 240px">主贴：{fzw:p2:tiezishu/}  /  回帖： {fzw:p2:huifushu/}  /  成员：{fzw:p2:huifushu/}</td>
+						<td colspan="2" style="width: 240px"><a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p2:id/}&ordertype=shuxing&lingshi1=1">进入圈子</a></td>
+					</tr>
+					{/fzw:sql}
+					{fzw:sql="select top 5 *,(select count(id) from sl_bbsshow as bbs2 where bbs2.laiyuanbianhao=bbs.id) as pinglunshu from sl_bbsshow as bbs,sl_user as u where bbs.quanzibianhao={fzw:p1:laiyuanbianhao/} and bbs.yonghuming=u.yonghuming and bbs.laiyuanbianhao=0 order by renqi desc" id="p2"}
+					<tr class="tiezilie">
+						<td rowspan="2" style="color: #1dbca6;font-size: 14px;">最热贴子<br><img src="img/group-icon1.png" style="width: auto;height: auto;margin-top: 5px;"></td>
+						<td colspan="2" style="text-align: left"><a href="/single.aspx?m=quanzi_detail&id={fzw:p2:id/}&quanzibianhao={fzw:p2:quanzibianhao/}" style="font-size: 13px;">{fzw:p2:biaoti/}</a></td>
+						<td colspan="1" style="width: 120px;text-align: right">{if value1="{fzw:p2:nicheng/} value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</td>
+						<td style="width: 120px">{fzw:p2:dtime string="shijian"/}</td>
+						<td style="width: 120px">{fzw:p2:pinglunshu/}评 / {fzw:p2:renqi/}阅</td>
+					</tr>
+					{/fzw:sql}
+					
+					<tr>
+						<td rowspan="2" style="color: #1dbca6;font-size: 14px;">圈子成员<br><img src="img/group-icon2.png" style="width: auto;height: auto;margin-top: 5px;"></td>
+						<td colspan="5" rowspan="2">
+							{fzw:sql="select top 6 * from sl_user where yonghuming in (select yonghuming from sl_history where leixing='加入圈子' and laiyuanbianhao={fzw:p1:laiyuanbianhao/}) order by dtime desc" id="p2"}
+							<a href="/single.aspx?m=user-homepage&id={fzw:p2:id/}"><img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"></a>
+							{/fzw:sql}
+						</td>
+					</tr>
+				</table>
+				{/fzw:search}
+				<div class="classhome-right-page" style="margin: 20px 0">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			<div class="forum-group-right">
+				<p>推荐圈子</p>
+				<ul>
+					{fzw:for:sql="select top 6 * from sl_bbs where prope like '%推荐%' order by id desc" id="p1"}
+					<li>
+						
+						{if value1="{fzw:p1:suoluetu/}" value2="" bi="=="}
+						<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="img/user-touxiang.png"></a>    
+					    {else}
+					    <a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="{fzw:p1:suoluetu/}"></a>
+					    {/if}
+						<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p1:id/}&ordertype=shuxing&lingshi1=1">{fzw:p1:quanziming/}<span>（今日发帖：{fzw:for:sql="select count(id) as count_id from sl_bbsshow where quanzibianhao={fzw:p1:id/} and datediff(day,dtime,getdate())=0" id="p2"}{fzw:p2:count_id/}{/fzw:for:sql}）</span></a><br>
+						{fzw:p1:jianjie size="25"/}
+					</li>
+					{/fzw:for:sql}
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+	$(".forum-group-left").children("table").find(".tiezilie").eq(1).children("td").eq(0).remove("");
+	$(".forum-group-left").children("table").find(".tiezilie").eq(2).children("td").eq(0).html("");
+	$(".forum-group-left").children("table").find(".tiezilie").eq(3).children("td").eq(0).html("");
+	$(".forum-group-left").children("table").find(".tiezilie").eq(4).children("td").eq(0).html("");
+	$(".forum-group-left").children("table").find(".tiezilie").eq(5).children("td").eq(0).html("");
+	var el = $('.forum-group-left'); 
+	el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没加入任何圈子，赶快去加入吧！'));
+	$("table").each(function(){
+		var a = $(this).find("tr").length;
+		for(var i=2;i<a;i++){
+			$(this).find(".tiezilie").eq(i).children("td").eq(0).attr("rowspan",1);
+		}
+	})
+</script>				
+	</body>
+</html>

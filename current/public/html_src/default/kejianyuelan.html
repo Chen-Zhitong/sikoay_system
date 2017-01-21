@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>课件阅览</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<style type="text/css">
+		.classhome-tab-list li i{
+			display: none;
+		}
+		.classhome-tab-list li:first-child i{
+			display: block;
+		}
+        .classhome-right-hide{
+            z-index:9;
+        }
+	</style>
+</head>
+<body>
+{fzw:inside src="顶部.html"/}
+<!-- datacenter -->
+<div class="max-width">
+<div class="datacenter-class-top" style="margin-top:30px;">
+		<ul>
+			{if value1="{fzw:url:suoshukecheng/}" value2="" bi="=="}
+			<li class="on"><a href="/search.aspx?m=kejianyuelan&classid=55">全部课件</a></li>    
+		    {else}
+		    <li><a href="/search.aspx?m=kejianyuelan&classid=55">全部课件</a></li>
+		    {/if}
+			{fzw:sql="select * from sl_Parameter where classid=261 order by id asc" id="p1"}
+			{if value1="{fzw:p1:id/}" value2="{fzw:url:id/}" bi="=="}
+			<li class="on"><a href="/search.aspx?m=kejianyuelan&classid=55&suoshukecheng={fzw:p1:id/}">{fzw:p1:u1/}</a></li>    
+		    {else}
+		    <li><a href="/search.aspx?m=kejianyuelan&classid=55&suoshukecheng={fzw:p1:id/}">{fzw:p1:u1/}</a></li>
+		    {/if}
+			{/fzw:sql}
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="guess-like">
+		<div class="guess-like-title">猜您喜欢<a href="">换一换<img src="img/check-icon.png"></a></div>
+		<ul class="data-read-list">
+			{fzw:sql="select top 5 * from sl_wendang where classid=55 and shenhe='已发布' order by newid()" id="p1"}
+			<li>
+				<a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}"></a>
+				<div class="data-read-list-word">
+					<a href="{fzw:pageurl/}">{fzw:p1:biaoti size="22"/}</a><br>
+					<span>{fzw:p1:miaoshu size="32"/}</span>
+					文件类型：{fzw:p1:wenjianleixing/}
+				</div>
+			</li>
+			{/fzw:sql}
+			<div class="clear"></div>
+		</ul>
+	</div>
+<div class="classhome-left datacenter-right" style="float:right">
+	<div class="classhome-left-tab" style="margin-top:0">
+		<ul class="nav nav-pills nav-tabs">
+			<li role="presentation" class="active"><a href="#tab-1"  data-toggle="tab">火爆课件</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="tab-1">
+				<ul class="classhome-tab-list" style="height:auto">
+					{fzw:sql="select top 12 * from sl_wendang where classid=55 and shenhe='已发布' order by renqi desc" id="p1"}
+					<li>
+						<a href="/page.aspx?id={fzw:p1:id/}&classid=55"><span></span>{fzw:p1:biaoti size="20"/}</a>
+						<i style="font-style: normal;width: 100%"><a href="/page.aspx?id={fzw:p1:id/}&classid=55"><img src="{fzw:p1:suoluetu/}"></a>
+						<span class="number">{fzw:p1:renqi/}</span><span class="playtimes">次浏览</span><br><br>
+						</i>
+						<div class="clear"></div>
+					</li>
+					{/fzw:sql}
+				</ul>	
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+		$(".classhome-tab-list").each(function(){
+			var a = $(this).children("li").length;
+			for(var i = 0;i<a;i++){
+				$(this).children("li").eq(i).children("a").children("span").html(i+1)
+			}
+		})
+		$(".classhome-tab-list").children("li").mouseover(function(){
+			$(this).parent().children("li").children("i").stop().slideUp(100);
+			$(this).children("i").stop().slideDown(80);
+		})
+		
+	</script>
+<div class="classhome-right datacenter-left" style="float:left">
+	
+	
+	<div class="datacenter-class-search">
+		<form>
+			<input type="text" name="search" placeholder="搜索内容，回车跳转" onkeydown="onKeyDown_kejianyuelan()">
+			<button onclick="return fromSubmit_kejianyuelan()"><img src="img/search.png"></button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		function fromSubmit_kejianyuelan() {
+		    window.location.href = "/search.aspx?m=kejianyuelan&classid=55&biaoti=" + document.getElementById("key_value").value;
+		    return false;
+		}
+		function onKeyDown_kejianyuelan() {
+		    var code = event.keyCode;
+		    if (code == 13) {
+		        fromSubmit_kejianyuelan();
+		        return false;
+		    }
+		}
+	</script>
+	
+	
+	<div class="classhome-right-nav" style="width:665px;">
+		<ul>
+			<li>
+				<a href="/search.aspx?m=kejianyuelan&classid=55">全部课程</a>
+			</li>
+			<li>
+				<a >{if value1="{fzw:url:ordertype/}" value2="renqi" bi="=="}最热{else}最新{/if}&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide">
+                    <a href="/search.aspx?m=kejianyuelan&ordertype=renqi&orderby=desc&jiage={fzw:url:jiage/}">最热</a>
+                    <a href="/search.aspx?m=kejianyuelan&ordertype=dtime&orderby=desc&jiage={fzw:url:jiage/}">最新</a>
+				</div>
+			</li>
+			<li>
+				<a >课程级别&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide">
+                    {fzw:sql="select * from sl_Parameter where classid=261 order by id asc" id="p1"}
+                    <a href="/search.aspx?m=kejianyuelan&suoshukecheng={fzw:p1:id/}">{fzw:p1:u1/}</a>
+                    {/fzw:sql}
+				</div>
+			</li>
+			<li>
+				<a >价格区间&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide">
+                    {fzw:sql="select * from sl_Parameter where classid=282 order by id asc" id="p1"}
+                    <a href="/search.aspx?m=kejianyuelan&jiage={fzw:p1:u2/}&ordertype={fzw:url:ordertype/}&orderby=desc&suoshukecheng={fzw:url:suoshukecheng/}">{fzw:p1:u1/}</a>
+                    {/fzw:sql}
+				</div>
+			</li>
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="guess-like">
+		<ul class="data-read-list">
+			{fzw:search table="sl_wendang" number="12" order="{fzw:url:ordertype/}" orderby="{fzw:url:orderby/}" id="p1" sqlvalue="classid=55&nbsp;and&nbsp;shenhe='已发布'"}
+			<li style="position:relative;z-index:0">
+                {if value1="{fzw:p1:jiage/}" value2="0" bi="=="}<span style="position:absolute;right:-5px;top:5px;background-color:#ff6a00;color:#fff;padding:5px 10px;border-radius:5px;">免费</span>{else}{/if}
+				<a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}"></a>
+				<div class="data-read-list-word">
+					<a href="{fzw:pageurl/}">{fzw:p1:biaoti size="22"/}</a><br>
+					<span>{fzw:p1:miaoshu size="32"/}</span>
+					文件类型：{fzw:p1:wenjianleixing/}
+				</div>
+			</li>
+			{/fzw:search}
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="classhome-right-page">
+		{fzw:search:page id="p1" size="8"/}
+	</div>
+</div>
+<div class="clear"></div>
+</div>
+{fzw:inside src="底部.html"/}{fzw:inside src="右侧.html"/}
+</body>
+</html>

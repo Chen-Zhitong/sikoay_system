@@ -1,0 +1,58 @@
+		<div class="max-width">
+			{fzw:sql="select * from sl_laoshi as ls,sl_user as u where ls.id={fzw:url:id/} and ls.yonghuming=u.yonghuming" id="p1"}
+			<div class="teacher-profile">
+				<p class="teacher-photo-title"><img src="img/teacher-icon8.png">基本信息</p>
+				<div class="teacher-profile-sec">
+					
+					<span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>{fzw:p1:xingming/}<br>
+					<span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>{fzw:p1:nicheng/}<br>
+					<span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>{fzw:p1:xingbie/}
+				</div>
+				<div class="teacher-profile-sec">
+					<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：</span>{fzw:p1:xueli/}<br>
+					<span>出生日期：</span>{fzw:p1:shengri datetime="yyyy-MM-dd"/}<br>
+					<span>毕业学校：</span>{fzw:p1:biyexuexiao/}
+				</div>
+				<div class="teacher-profile-sec">
+					<span>我的身份：</span>{fzw:p1:leixing/}<br>
+					<span>座&nbsp;&nbsp;右&nbsp;&nbsp;铭：</span>{fzw:p1:zuoyouming/}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="teacher-profile">
+				<p class="teacher-photo-title"><img src="img/teacher-icon9.png">背景资料</p>
+				<div class="teacher-profile-sec">
+					<span>教&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>{fzw:p1:jiaoling/}<br>
+					<span>教学科目：</span>{fzw:p1:kechengfenlei/}<br>
+				</div>
+				<div class="teacher-profile-sec">
+					<span style="width: auto">单位/机构/学校：</span>{fzw:p1:danwei/}<br>
+				</div>
+				<div class="teacher-profile-sec">
+					<span>个人标签：</span>{fzw:p1:gerenbiaoqian/}<br>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="teacher-profile">
+				<p class="teacher-photo-title"><img src="img/teacher-icon10.png">个人简介</p>
+				{fzw:p1:jianjie/}
+			</div>
+			{/fzw:sql}
+			<div class="teacher-profile">
+				<p class="teacher-photo-title"><img src="img/teacher-icon11.png">教育经历</p>
+				<div class="education-list">
+					<ul>
+						{fzw:sql="select * from sl_jiaoyujingli as jl,sl_laoshi as ls where ls.jiaoyujingli=jl.laiyuanbianhao and ls.id={fzw:url:id/}  order by jl.id desc" id="p1"}
+						<li>
+							<img src="img/circle.png">
+							<span>{fzw:p1:kaishishijian/}~{fzw:p1:jieshushijian/}</span>
+							<div>{fzw:p1:neirong/}</div>
+							<div class="clear"></div>
+						</li>
+						{/fzw:sql}
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="clear"></div>

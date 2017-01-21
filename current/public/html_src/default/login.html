@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>登录_{fzw:key:sitename/}</title>
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<script src="js/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="background:url(./img/login-bg.png) no-repeat;background-size:cover;background-position:center">
+<!-- login -->
+<div class="login-head">
+	<div class="login-max">
+		<div class="login-head-left">
+			<a href="/"><img src="img/login-logo.png"></a>
+			<img src="img/logo-word.png">
+		</div>
+		<div class="login-head-right">
+			<img src="img/login-icon1.png">
+			10年品牌 真实口碑
+			<img src="img/login-icon2.png">
+			精品课程 免费学习
+			<img src="img/login-icon3.png">
+			实战练习 名师指导
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="login">
+        <div class="login-max">
+            <div class="login-left"><img src="img/login-pic.png"></div>
+            <div class="login-right">
+                <ul class="nav nav-pills nav-tabs">
+                    <li role="presentation" class="active" style="width: 100%"><a href="#tab-1" data-toggle="tab">登录华予</a></li>
+                    <!-- <li role="presentation"><a href="#tab-2" data-toggle="tab">老师登录</a></li>
+                    <li role="presentation"><a href="#tab-3" data-toggle="tab">代理商登录</a></li> -->
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab-1">
+                        <form name="fff2" id="fff2" method="post" action="/Execution.aspx?type=login&t=user&tipurl={fzw:url:tipurl /}&tip_string=登录成功！" onsubmit="return checkshenhe(this)">
+                            <input type="text" name="shouji" placeholder="请输入手机号">
+                            <input type="password" name="password" placeholder="请输入密码">
+                            
+                            <input type="text" name="yzm" class="yzm" placeholder="验证码" style="width:190px">
+                            <img src="/inc/text.aspx" class="yanzheng-pic" alt="点击重新获取验证码" id="yzm_img" onclick="this.src='/inc/text.aspx?id='+Math.random()+''" width="100" height="40" style="vertical-align: middle;cursor: pointer" onclick="document.getElementById('yzm_img').src='/inc/text.aspx?id='+Math.random()+''">
+                            <button type="button" onclick="$('.yanzheng-pic').attr('src','/inc/text.aspx?id='+Math.random()+'')"><img src="img/check-icon.png"></button>
+                            <label>
+                                <input type="checkbox" name="remember">
+                                <span></span>
+                                记住我
+                            </label>
+                            <button id="login-in">登录</button>
+                        </form>
+                        <a href="/single.aspx?m=getpassword&tipurl={fzw:key:siteurl/}" style="float:left">忘记密码</a>
+                        <a href="/single.aspx?m=xueshengzhuce" style="float:right">免费注册</a>
+                        <div class="clear"></div>
+                    </div>
+                    <!-- <div class="tab-pane fade" id="tab-2">
+                        <form name="fff2" onsubmit="return checkshenhe(this)" id="fff2" method="post" action="/Execution.aspx?type=login&t=user&tipurl={fzw:url:tipurl /}&tip_string=会员登录成功！">
+                            <input type="text" name="shouji" placeholder="请输入手机号">
+                            <input type="password" name="password" placeholder="请输入密码">
+                            <input type="hidden" name="leixing" value="老师" />
+                            <input type="text" name="yzm" class="yzm" placeholder="验证码" style="width:190px">
+                            <img src="/inc/text.aspx" class="yanzheng-pic" alt="点击重新获取验证码" id="yzm_img" onclick="this.src='/inc/text.aspx?id='+Math.random()+''" width="100" height="40" style="vertical-align: middle;cursor: pointer" onclick="document.getElementById('yzm_img').src='/inc/text.aspx?id='+Math.random()+''">
+                            <button type="button" onclick="$('.yanzheng-pic').attr('src','/inc/text.aspx?id='+Math.random()+'')"><img src="img/check-icon.png"></button>
+                            <label>
+                                <input type="checkbox" name="remember">
+                                <span></span>
+                                记住我
+                            </label>
+                            <button id="login-in">登录</button>
+                        </form>
+                        <a href="/single.aspx?m=getpassword&tipurl={fzw:key:siteurl/}" style="float:left">忘记密码</a>
+                        <a href="/single.aspx?m=xueshengzhuce" style="float:right">免费注册</a>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-3">
+                        <form name="fff2" id="fff2" method="post" action="/Execution.aspx?type=login&t=user&tipurl={fzw:url:tipurl /}&tip_string=会员登录成功！" onsubmit="return checkshenhe(this)">
+                            <input type="text" name="shouji" placeholder="请输入手机号">
+                            <input type="password" name="password" placeholder="请输入密码">
+                            <input type="hidden" name="leixing" value="代理" />
+                            <input type="text" name="yzm" class="yzm" placeholder="验证码" style="width:190px">
+                            <img src="/inc/text.aspx" class="yanzheng-pic" alt="点击重新获取验证码" id="yzm_img" onclick="this.src='/inc/text.aspx?id='+Math.random()+''" width="100" height="40" style="vertical-align: middle;cursor: pointer" onclick="document.getElementById('yzm_img').src='/inc/text.aspx?id='+Math.random()+''">
+                            <button type="button" onclick="$('.yanzheng-pic').attr('src','/inc/text.aspx?id='+Math.random()+'')"><img src="img/check-icon.png"></button>
+                            <label>
+                                <input type="checkbox" name="remember">
+                                <span></span>
+                                记住我
+                            </label>
+                            <button id="login-in">登录</button>
+                        </form>
+                        <a href="/single.aspx?m=getpassword&tipurl={fzw:key:siteurl/}" style="float:left">忘记密码</a>
+                        <a href="/single.aspx?m=xueshengzhuce" style="float:right">免费注册</a>
+                        <div class="clear"></div>
+                    </div> -->
+                    <div class="login-right-bottom">
+                        其他合作网站账户注册<br>
+                        <a href="/inc/qq/example/oauth/index.php"><i class="fa fa-qq" aria-hidden="true"></i></a>
+                        <a href="javascript:void(0);" onclick="openlogin('weixin')"><i class="fa fa-weixin" aria-hidden="true"></i></a>
+                        <a href="/inc/weibo/index.php"><i class="fa fa-weibo" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+</div>
+<div class="login-bottom">
+{fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}
+    {fzw:p1:u4/}
+{/fzw:sql}  
+</div>
+<script type="text/javascript">
+    function checkshenhe(e){
+        var a = $(e).find("input[name=shouji]").val();
+        var x = true;
+        $.ajax({
+                type: "get",
+                url: "/single.aspx?m=ajax_shenheuser&id="+a,
+                async:false,
+                success: function(data) {
+                    if(data=='通过'){
+                        return true;
+                    }else{
+                        layer.alert("该账户尚未审核或审核未通过，请联系管理员！");
+                        x = false;
+                    }
+                },error: function(data){
+                    layer.msg("网络错误！请重试");
+                    return false
+                }
+            });
+        if (!x) {
+            return false;
+        }
+        var yzm = $(e).find(".yzm").val();
+        if (yzm=='') {
+            layer.msg("请填写验证码！");
+            return false;
+        }
+    }
+    function tologin() {
+        alert(45)
+    }
+    function openlogin(a) {
+        if (a == 'weixin') {
+            var index = layer.open({
+                type: 2,
+                title: '微信登录',
+                area: ['330px', '70%'],
+                fix: false, //不固定
+                maxmin: true,
+                content: '/weixinlogin.aspx'
+            });
+            //layer.iframeAuto(index);
+        }
+    }
+</script>
+</body>
+</html>

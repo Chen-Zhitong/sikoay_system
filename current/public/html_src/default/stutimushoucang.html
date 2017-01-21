@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>收藏题目_我的题库</title>
+        <link rel="stylesheet" href="css/jquery.raty.css">
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery.raty.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	.com-reply1 a{
+		font-size: 13px;
+		color: #656565;
+	}
+	.com-info2 label{
+		font-size: 13px;
+		color: #8d8d8d;
+	}
+	.com-detail{
+		color: #333;
+	}
+	.conments2 img{
+		border-radius: 100%;
+	}
+	.com-time{
+		color: #8d8d8d;
+		font-size: 13px;
+	}
+</style>        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+            $(".mytiku").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>收藏题目</p>
+					
+				</div>
+				<!-- <div class="creatxy">
+					<a href="">＋ 我要发帖</a>
+					<form>
+					<input type="text" name="" class="txt3 search" placeholder="搜索学员，回车跳转" />
+					<input type="submit" name="" class="txt4" value="" />
+					</form>
+				</div> -->
+				<div class="sc">
+					<ul>
+						{fzw:search table="sl_history" sqlvalue="yonghuming='{fzw:cookie:name="user_name"}'&nbsp;and&nbsp;leixing='题目收藏'" number="10" order="dtime" orderby="desc" id="p1"}
+						{fzw:sql="select *,(select count(id) from sl_history as h where h.laiyuanbianhao=tk.id and leixing='题目收藏') as shoucangshu,(select id from sl_tiku as tk2 where tk2.timu=timu.laiyuanbianhao) as tkid from sl_tiku_timu as timu,sl_tiku as tk where timu.id={fzw:p1:laiyuanbianhao/} and timu.laiyuanbianhao=tk.timu" id="p2"}
+						<li>
+							<img src="{fzw:p2:suoluetu/}">
+							<p class="sc-title">{fzw:p2:biaoti/}</p>
+							<p class="sc-zhaiyao">{fzw:p2:shuoming size="80"/}</p>
+							<p>收藏数量：<span class="sc-shu">{fzw:p2:shoucangshu/}</span>收藏日期：{fzw:p1:dtime datetime="yyyy-MM-dd" /}</p>
+							<a href="/single.aspx?m=practice&id={fzw:p2:tkid/}&timubianhao={fzw:p2:id/}" class="sc-go">收藏题练习</a>
+							<a href="javascript:void(0)" class="sc-del" onclick="del({fzw:p1:id/})">删除习题</a>
+						</li>
+						{/fzw:sql}
+						{/fzw:search}
+					</ul>
+					<!--页码-->
+					<div class="footpage">
+						{fzw:search:page id="p1" size="5"/}
+					</div>
+				</div>
+				
+			</div>
+			<!--右侧内容栏结束-->
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有任何收藏记录'));
+			function del(id){
+				$.ajax({
+					type: "POST",
+					url: "/Execution.aspx?t=history&type=del&id="+id,
+					success: function(data) {
+						layer.msg("删除成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+					}
+				});
+				return false;
+			}
+		</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

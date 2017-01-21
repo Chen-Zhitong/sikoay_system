@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>学生注册_{fzw:key:sitename/}</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<script src="/inc/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="background:url(./img/login-bg.png) no-repeat;background-size:cover;background-position:center">
+<!-- login -->
+<div class="login-head">
+	<div class="login-max">
+		<div class="login-head-left">
+			<a href="/"><img src="img/login-logo.png"></a>
+			<img src="img/logo-word.png">
+		</div>
+		<div class="login-head-right">
+			<img src="img/login-icon1.png">
+			10年品牌 真实口碑
+			<img src="img/login-icon2.png">
+			精品课程 免费学习
+			<img src="img/login-icon3.png">
+			实战练习 名师指导
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="register">
+	<div class="login-max">
+		<div class="register-left">
+			<p>学生注册<a href="/single.aspx?m=dailizhuce">代理商注册</a><a href="/single.aspx?m=laoshizhuce">老师注册</a></p>
+			<form id="reg-form" method="post" action="/Execution.aspx?type=useradd&t=user&tipurl={fzw:url:tipurl /}&tip_string=会员注册成功！">
+				<input type="text" name="yonghuming" style="display: none">
+				<input type="text" name="shouji" placeholder="请输入手机号" id="shouji">
+				<input type="text" name="shoujiyzm" placeholder="动态码" id="shoujiyzm">
+				<button class="get-code" id="lqyzm" type="button" onclick="send_jiaoyanma(this)" class="btn-success">获取动态码</button>
+				<div class="register-password"><input type="password" name="mima" placeholder="输入8~16位密码" onblur="nopassword(this)" onfocus="inputpassword(this)" class="shurumima" id="mima">
+				<span>请输入密码</span></div>
+				密码长度8~16位，数字、字母、字符至少包含两种
+				<input type="password" name="mima_" placeholder="再次输入密码" class="querengmima">
+				<label style="margin-top:10px;color:#6f6f6f;" class="invite-code">
+					<input type="checkbox" name="">
+					<span></span>
+					邀请码（选填）
+				</label><br>
+				<input type="text" id="yqm" onchange="yqm1()" placeholder="输入邀请码" class="input-invite-code" style="margin:0;width: 100%;">
+				<label style="margin:10px 10px 10px 0;">
+					<input type="checkbox" name="" class="tongyi">
+					<span></span>
+					同意遵守华予教育学院
+				</label><a href="/page.aspx?id=11&classid=52" target="_blank">网站条款</a>
+                <input type="hidden" name="yaoqingma" id="yaoqingma" />
+                <input type="hidden" name="jieshaoren" id="jieshaoren" />
+                <input type="hidden" name="shenhe" value="通过">
+                <input type="hidden" name="touxiang" value="{fzw:cookie:name="touxiang"}">
+                <input type="hidden" name="xingbie" value="{fzw:cookie:name="xingbie"}">
+                <input type="hidden" name="weiboid" value="{fzw:cookie:name="weiboid"}">
+                <input type="hidden" name="openid" value="{fzw:cookie:name="openid"}">
+                <input type="hidden" name="qqid" value="{fzw:cookie:name="qqid"}">
+                <input type="hidden" name="leixing" id="leixing" value="会员" />
+			</form>
+			<button id="regist" type="button">注册</button>
+		</div>
+		<div class="register-right">
+			<p>已有账号&nbsp;<a href="/single.aspx?m=login">直接登录</a></p>
+			<p>微信扫描二维码快速注册：</p>
+			<p>扫描 》关注 》确认安全 》注册成功</p>
+			<img src="img/2d.png"><br>
+			其他合作网站账户注册<br>
+			<a href=""><i class="fa fa-qq" aria-hidden="true"></i></a>
+			<a href=""><i class="fa fa-weixin" aria-hidden="true"></i></a>
+			<a href=""><i class="fa fa-weibo" aria-hidden="true"></i></a>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="login-bottom">
+{fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}
+	{fzw:p1:u4/}
+{/fzw:sql}	
+</div>
+<div id="tiaokuan" style="display: none;">欢迎您成为华予教育的注册会员，在您注册成为的我们的会员后，将享有我们提供的	相应服务，但同时也要遵守相应的规则和履行一定的义务。请您务必在注册之前认真阅读全部服务协议内容，如有任何疑问，可	向华予教育咨询，您一旦注册成为我们的会员，则意味着已完全接受以下条款。 <br>
+	1、注册用户的权利： <br>
+	    1）用户有权拥有自已在华予教育的用户名及密码，并有权使用自已的用户名及密码随时登录网站。 <br>
+	    2）用户可以根据自身需求对注册帐户进行充值，有偿使用公民身份核查、同名同性统计、同年同月同日出生统计服务。<br> 
+	    3）用户可以在论坛模块发表本协议中允许的言论。<br> 
+	2、注册用户的义务： <br>
+	    1）注册用户必须是具备完全民事行为能力的自然人，法人或能够独立承担民事责任的其他组织。<br> 
+	    2）用户有义务在注册时提供自己的真实资料，并保证诸如电子邮件地址、联系电话、联系地址、邮政编码等内容的有效性及安全性，保证华予教育可以通过上述联系方式与自己进行联系。同时，用户也有义务在相关资料实际变更时及时更新有关注册资料。用户保证不以他人资料在湖南公网进行注册或认证。<br>如果用户提供的资料不准确，不真实，不合法有效，湖南公网将保留结束用户使用各项服务的权利。 <br>
+	    3）未经华予教育许可，不得将华予教育的信息用于任何侵犯国家、集体或个人利益的行为和商业行为。 <br>
+	    4）您不得向华予教育散发垃圾邮件、连锁邮件等骚扰性邮件；发布、传播或散发其它无关的信息。 <br>
+	    5） 您不得擅自转让自己的用户名和口令给他人使用。通过您的用户名和口令编辑、<br>发布的任何信息或做出的任何行为都被视为是您自己的行为。 <br>
+	    6）您必须遵守国家法律、法规及规章，并特别注意并遵守以下事项： <br>
+	不得以任何手段非法篡改、破坏、删除(或有此企图)华予教育或数据库中的内容，不得对华予教育所属的服务器、系统或网络进行任何形式的攻击、破坏，不得制作、传播病毒。一经发现，我们将立即无限期终止对您的服务，并报告国家有关行政机关和司法机关，追究您的法律责任。 <br>
+	不得利用华予教育来获取商业秘密，窥探个人隐私，侵犯他人知识产权，制造、传播和散布污蔑、诽谤、恐吓他人的言论和消息。一经发现，我们将立即无限期终止对您的服务，并报告国家有关行政机关和司法机关，追究您的法律责任。 <br>
+	    7）自愿接受华予教育站法律声明。<br> 
+	3、华予教育的权利和义务 <br>
+	    1）华予教育有义务在现有技术上确保网站的正常运行，并努力提升和改进技术。 <br>
+	    2）华予教育对用户提供的公民身份核查服务所显示的信息，为湖南公民信息管理局数据库中从政府各参建单位已归集来信息的展现，如数据库中无此类信息，即显示暂无记录，表示尚未归集该相关信息，并不表示其本身没有发生。此平台提供的信息仅供参考，不保证该等信息的准确性、时效性、及时性或完整性，对该等信息的应用本局不承担任何责任。 <br>
+	    3）华予教育有权对用户的注册资料进行查阅，发现注册资料中存在任何问题或怀疑，均有权向用户发出询问及要求改正的通知或者直接作出删除等处理。 <br>
+	    4）华予教育可随时直接以电子邮件或其它方式与您联系，或向您发送信息。以电子邮件形式发送信息的，信息一经发出，即视为送达。<br> 
+	4、 服务的中断和终止 <br>
+	在下列情况下，华予教育可以通过注销用户的方式终止服务：<br> 
+	    1）用户因违反本服务协议相关规定而被华予教育中断服务，华予教育将在中断服务时通知用户。但用户被终止服务后，以本人或他人名义再次注册为用户的，华予教育可以单方面终止与该用户的服务协议； <br>
+	    2）华予教育在与用户联系过程中，发现用户注册时填写的电子邮箱不存在或无法接收电子邮件的，以其他联系方式通知用户更改，而用户在三个工作日内仍未提供新的电子邮箱地址的，可以终止与该用户的服务协议； <br>
+	    3）华予教育发现用户注册资料中主要内容是虚假的，可随时终止与该用户的服务协议； <br>
+	    4）本服务协议终止或更新时，用户未确认新的服务协议的； <br>
+	    5）其它华予教育认为需终止服务的情况。 <br>
+	5、其它注意事项 <br>
+	用户在使用华予教育提供的各项服务时，承诺接受并遵守各项相关规则。华予教育有权根据需要不时的制定、修改本协议及各类规则，如本协议有任何变更，华予教育将在网站上刊载公告，通知用户。如用户不同意相关变更，必须停止使用“服务”。<br>修订的协议一经在湖南公网公布后，立即自动生效。各类规则会在发布后生效，亦成为本协议的一部分。登录或继续使用“服务”将表示用户接受经修订的协议。除另行明确声明外，任何使“服务”范围扩大或功能增强的新内容均受本协议约束。 <br>
+	6、如您不同意此服务条款，请勿注册为本网站用户。<br> 
+	7、本协议的解释权归华予教育所有。<br>
+</div>
+<script type="text/javascript">
+    function yqm1()
+    {
+        $.ajax({
+            type: "get",
+            url: "/single.aspx?m=yqm&yqm=" + document.getElementById('yqm').value + "",
+            success: function (data) {
+              
+                if (data == "") {
+                    layer.msg("此邀请码不存在");
+                    document.getElementById('yqm').value = "";
+                    document.getElementById('jieshaoren').value = "";
+                } else {
+                    document.getElementById('jieshaoren').value = data;
+                }
+            }
+        })
+    }
+    //生成随机数
+    var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+    function generateMixed(n) {
+        var res = "";
+        for (var i = 0; i < n ; i++) {
+            var id = Math.ceil(Math.random() * 35);
+            res += chars[id];
+        }
+        return res;
+    }
+    $("#yaoqingma").val(generateMixed(6));
+
+	function nopassword(e){
+		var x = $(e).val();
+		if (x=='') {
+			$(e).parent("div").attr("id","no-password");
+		}else{
+			$(e).parent("div").removeAttr("id","no-password");
+		}
+	}
+	function inputpassword(e){
+		$(e).parent("div").removeAttr("id","no-password");
+	}
+</script>
+<script type="text/javascript">
+	var count = 120;
+	var countdown;
+    function countDown() {
+        $("#lqyzm").html(count + "秒后可重试");
+	    if (count == 0) {
+		    $("#lqyzm").removeAttr("disabled").html("获取动态码");
+		    clearInterval(countdown);
+		}
+        count--;
+    }
+	function send_jiaoyanma(btn) {     
+		//手机验证
+		var myreg = /^1+\d{10}$/;
+		if (!myreg.test(document.getElementById('shouji').value)) {
+			layer.alert("手机号不正确");
+		}else {
+			$(btn).attr("disabled", true);
+			count = 120;			                   			                                   
+			countdown = setInterval("countDown()", 1000); 
+			//获取手机验证码
+			$.ajax({
+			    type: "POST",
+			    url: "/Execution.aspx?t=fasong&leixingbiaoti=会员注册&type=shouji_yzm&shouji=" + document.getElementById('shouji').value + "",
+			    processData: true,
+			    success: function (data) {
+			        //  alert(data);
+			        if (data == "ok") {
+			            layer.msg("验证码发送成功");
+			        }else {
+			            layer.msg("验证码发送成功");
+			        }
+			    }
+			})
+		}
+	}
+	$("#regist").click(function() {
+		var x = $('#reg-form input[name="shouji"]').val();
+		$('#reg-form input[name="yonghuming"]').val(x);
+		var count = 0;
+		$('#reg-form input').each(function() {
+			if ($(this).val() == "") {
+				count++;
+			}else if ($(".invite-code").children("input").prop("checked")==false) {
+				count--;
+			}
+		});
+		var mima = /((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^.{8,16}$/;
+		if (!mima.test(document.getElementById('mima').value)) {
+			layer.alert("密码太简单了！请输入密码长度8~16位，数字、字母、字符至少包含两种");
+			return false;
+		}
+		if (count > 0) {
+			layer.msg('请完整填写信息');
+			return false;
+		}
+		if ($(".tongyi").prop("checked")==false) {
+			layer.msg('请同意注册条款!');
+			return false;
+		}
+		var a = $(".shurumima").val();
+		var b = $(".querengmima").val();
+		if (a!=b) {
+			layer.msg('两次密码不一样，请重新确认！');
+			return false;
+		}
+		document.getElementById("reg-form").submit();
+		return false;
+	});
+	function fuwutiaokuan(){
+		var a = $("#tiaokuan").html()
+		layer.alert(a);
+	}
+</script>
+</body>
+</html>

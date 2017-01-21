@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>订单管理_交易管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+            <script>
+                $(".jiaoyi").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>订单管理</p>				
+					<a href="/search.aspx?m=teacherdingdanzs">知识订单（{fzw:sql="select count(id) as count_id from sl_zhishi_order where laoshi='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teacherdingdankj">课件订单（{fzw:sql="select count(id) as count_id from sl_wd_order where laoshi='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teacherdingdankc" class="on">课程订单（{fzw:sql="select count(id) as count_id from sl_kc_order where laoshi='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<div class="clear"></div>
+				</div>
+				
+				<div class="dd-title">
+					<p style="width: 160px;">订单号</p>
+					<p style="width: 240px;">课程名称</p>
+					<p style="width: 120px;">售价</p>
+					<p style="width: 100px;">购买学员</p>
+					<p style="width: 100px;">实价付款</p>
+					<p style="width: 80px;">状态</p>
+					<p style="width: 60px;">操作</p>
+				</div>
+				<div class="clear"></div>
+				{fzw:search table="sl_kc_order" sqlvalue="laoshi='{fzw:cookie:name="user_name"}'" number="10" order="dtime" orderby="desc" id="p1"}
+				<div class="dd-info">
+					{fzw:sql="select * from sl_kc_cart as kc,sl_user as u where kc.yonghuming=u.yonghuming and kc.dingdanhao={fzw:p1:dingdanhao/}" id="p2"}
+					<p class="dd-num">{fzw:p1:dingdanhao/}</p>
+					<p class="classname">{fzw:p2:biaoti size="20"/}</p>
+					<p class="dd-price">¥{fzw:p1:chanpinjine string="￥"/}</p>
+					<p class="dd-buyer">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</p>
+					<p class="dd-money">¥{fzw:p1:jine string="￥"/}</p>
+					<p class="dd-state">{fzw:p1:zhuangtai/}</p>
+					<a class="dd-opera"> </a>
+					{/fzw:sql}
+				</div>
+				<div class="clear"></div>
+				{/fzw:search}
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关订单'));
+		</script>
+	</body>
+</html>

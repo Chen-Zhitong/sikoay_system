@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>我的动态</title>
+		<link href="css/teacher.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+                $(".gerendongtai").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2" style="position: relative">
+				<div class="right-title">
+					<p>我的动态</p>
+				</div>
+				<div class="left-border"></div>
+				{fzw:search table="sl_dongtai" sqlvalue="yonghuming='{fzw:cookie:name="user_name"/}'" number="10" order="dtime" orderby="desc" id="p1"}
+				<div class="mydt">
+					<div class="dt-date1">
+						<p>{fzw:p1:dtime datetime="MM-dd"/}</p>
+					</div>
+					<div class="dt-time1">
+						<label>{fzw:p1:dtime datetime="hh:mm"/}</label>
+						<img src="img/tc66.png" />
+					</div>
+
+					<div class="mydt-box">
+						<div class="dt-user1">
+							<p>我</p>
+						</div>
+						{if value1="{fzw:p1:leixing/}" value2="视频" bi="=="}
+						<div class="dt-what1">
+							<p>学习了视频</p>
+						</div>
+						<div class="clear"></div>
+						{fzw:sql="select * from sl_jie where id={fzw:p1:laiyuanbianhao/}" id="p2"}
+						<div class="dt-from1">
+							<p>来自视频：{fzw:p2:biaoti/}</p>
+						</div>
+						<div class="dt-more1">
+							<a href="/single.aspx?m=kecheng_shipin&id={fzw:p2:laiyuanbianhao sql="sl_kecheng|where&nbsp;kechengjie='&dangqian'|id"/}&shipin={fzw:p2:id/}">查看详情</a>
+						</div>
+						{/fzw:sql}
+						{else}
+						{/if}
+						{if value1="{fzw:p1:leixing/}" value2="贴子" bi="=="}
+						<div class="dt-what1">
+							<p>浏览了帖子</p>
+						</div>
+						<div class="clear"></div>
+						{fzw:sql="select * from sl_bbsshow where id={fzw:p1:laiyuanbianhao/}" id="p2"}
+						<div class="dt-from1">
+							<p>来自帖子：{fzw:p2:biaoti/}</p>
+						</div>
+						<div class="dt-more1">
+							<a href="/single.aspx?m=quanzi_detail&id={fzw:p2:id/}&quanzibianhao={fzw:p2:quanzibianhao/}">查看详情</a>
+						</div>
+						{/fzw:sql}
+						{else}
+						{/if}
+						{if value1="{fzw:p1:leixing/}" value2="老师" bi="=="}
+						<div class="dt-what1">
+							<p>浏览了老师</p>
+						</div>
+						<div class="clear"></div>
+						{fzw:sql="select * from sl_user where yonghuming in(select yonghuming from sl_laoshi where id={fzw:p1:laiyuanbianhao/})" id="p2"}
+						<div class="dt-from1">
+							<p>来自老师：{fzw:p2:nicheng/}</p>
+						</div>
+						<div class="dt-more1">
+							<a href="/single.aspx?m=teacher_detail&id={fzw:p1:laiyuanbianhao/}">查看详情</a>
+						</div>
+						{/fzw:sql}
+						{else}
+						{/if}
+						{if value1="{fzw:p1:leixing/}" value2="课件" bi="=="}
+						<div class="dt-what1">
+							<p>阅览了课件</p>
+						</div>
+						<div class="clear"></div>
+						{fzw:sql="select * from sl_wendang where id={fzw:p1:laiyuanbianhao/}" id="p2"}
+						<div class="dt-from1">
+							<p>来自课件：{fzw:p2:biaoti/}</p>
+						</div>
+						<div class="dt-more1">
+							<a href="/page.aspx?id={fzw:p2:id/}&classid=55">查看详情</a>
+						</div>
+						{/fzw:sql}
+						{else}
+						{/if}
+						{if value1="{fzw:p1:leixing/}" value2="科普" bi="=="}
+						<div class="dt-what1">
+							<p>阅览了科普知识</p>
+						</div>
+						<div class="clear"></div>
+						{fzw:sql="select * from sl_kepuzhishi where id={fzw:p1:laiyuanbianhao/}" id="p2"}
+						<div class="dt-from1">
+							<p>来自科普知识：{fzw:p2:biaoti/}</p>
+						</div>
+						<div class="dt-more1">
+							<a href="/page.aspx?id={fzw:p2:id/}&classid=69">查看详情</a>
+						</div>
+						{/fzw:sql}
+						{else}
+						{/if}
+						{if value1="{fzw:p1:leixing/}" value2="做题" bi="=="}
+						<div class="dt-what1">
+							<p>练习了测试题</p>
+						</div>
+						<div class="clear"></div>
+						{fzw:sql="select * from sl_tiku where id={fzw:p1:laiyuanbianhao/}" id="p2"}
+						<div class="dt-from1">
+							<p>来自题目：{fzw:p2:biaoti/}</p>
+						</div>
+						<div class="dt-more1">
+							<a href="/single.aspx?m=practice&id={fzw:p2:id/}">查看详情</a>
+						</div>
+						{/fzw:sql}
+						{else}
+						{/if}
+						<div class="delete">
+							<a onclick="del({fzw:p1:id/})""><img src="img/tc64.png" />
+								<p>删除记录</p>
+							</a>
+						</div>
+					</div>
+				</div>
+				{/fzw:search}
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+		<script type="text/javascript">
+			var x = $(".content-right2").children(".mydt").length;
+			$(".left-border").css("height",x*140-30+'px');
+			console.log(x)
+		</script>
+		<script type="text/javascript">
+		function del(num){
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=dongtai&type=del&id="+num,
+				success: function(data) {
+					layer.msg("删除成功！");
+					location.reload(true);
+				},error: function(data){
+					layer.msg("删除失败！请重试");
+				}
+			});
+			return false;
+		}
+		var el = $('.content-right2'); 
+		el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关记录'));
+		
+		</script>
+	</body>
+
+</html>

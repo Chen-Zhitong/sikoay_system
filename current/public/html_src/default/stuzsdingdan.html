@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>知识订单_交易管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+            $(".jiaoyi").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>订单管理</p>				
+					<a href="/search.aspx?m=stuzsdingdan&zhuangtai=待评价">待评价（{fzw:sql="select count(id) as count_id from sl_zhishi_order where yonghuming='{fzw:cookie:name="user_name"}' and zhuangtai='待评价'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=stuzsdingdan&zhuangtai=未付款">待支付（{fzw:sql="select count(id) as count_id from sl_zhishi_order where yonghuming='{fzw:cookie:name="user_name"}' and zhuangtai='未付款'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=stuzsdingdan&zhuangtai=订单完成">已完成（{fzw:sql="select count(id) as count_id from sl_zhishi_order where yonghuming='{fzw:cookie:name="user_name"}' and zhuangtai='订单完成'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=stuzsdingdan">全部订单（{fzw:sql="select count(id) as count_id from sl_zhishi_order where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<div class="clear"></div>
+				</div>
+				<script type="text/javascript">
+					var a = '{fzw:url:zhuangtai/}';
+					if (a=='') {
+						$(".right-title").children("a").eq(3).addClass("on");
+					}else if (a=='订单完成') {
+						$(".right-title").children("a").eq(2).addClass("on");
+					}else if (a=='未付款') {
+						$(".right-title").children("a").eq(1).addClass("on");
+					}else if (a=='待评价') {
+						$(".right-title").children("a").eq(0).addClass("on");
+					}
+				</script>
+				<div class="dd-title">
+					<p style="width: 160px;">订单号</p>
+					<p style="width: 240px;">课程名称</p>
+					<p style="width: 120px;">售价</p>
+					<p style="width: 100px;">购买日期</p>
+					<p style="width: 100px;">实价付款</p>
+					<p style="width: 80px;">状态</p>
+					<p style="width: 60px;">操作</p>
+				</div>
+				<div class="clear"></div>
+				{fzw:search table="sl_zhishi_order" sqlvalue="yonghuming='{fzw:cookie:name="user_name"}'" number="8" order="dtime" orderby="desc" id="p1"}
+				<div class="dd-info" data-id="{fzw:p1:id/}">
+					<p class="dd-num">{fzw:p1:dingdanhao/}</p>
+					<p class="classname">{fzw:sql="select * from sl_kepuzhishi where id={fzw:p1:laiyuanbianhao/}" id="p2"}{fzw:p2:biaoti size="20"/}{/fzw:sql}</p>
+					<p class="dd-price">¥{fzw:p1:chanpinjine string="￥"/}</p>
+					<p class="dd-buyer">{fzw:p1:dtime datetime="yyyy-MM-dd"/}</p>
+					<p class="dd-money">¥{fzw:p1:jine string="￥"/}</p>
+					<p class="dd-state">{fzw:p1:zhuangtai/}</p>
+					<a href="" class="dd-opera">删除</a>
+				</div>
+				<div class="clear"></div>
+				{/fzw:search}
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关订单'));
+			$(".dd-info").each(function(){
+				var x = $(this).find(".dd-state").html();
+				var y = $(this).find(".dd-num").html();
+				var id = $(this).data("id");
+				if (x=='待评价') {
+					$(this).find(".dd-opera").html("评价");
+					$(this).find(".dd-opera").attr("href","/single.aspx?m=stukcpingjia&dingdanhao="+y);
+				}else if (x=='未付款') {
+					$(this).find(".dd-opera").html("付款");
+					$(this).find(".dd-opera").attr("href","/single.aspx?m=pay&tablename=zhishi_order&dingdanhao="+y);
+					$(this).append("<a href=\"/pay/orderok.aspx?tablename=zhishi_order&type=cancel&id="+id+"\" class=\"dd-opera\">取消订单</a>")
+				}else if (x=='已付款') {
+					$(this).find(".dd-opera").html("详情");
+					$(this).find(".dd-opera").attr("href","javascript:void(0)");
+					$(this).find(".dd-opera").attr("onclick","detail("+id+")");
+				}
+			})
+			function detail(id){
+				layer.open({
+				  	type: 2,
+				  	skin: 'layui-layer-rim', 
+				  	area: ['400px', '500px'], 
+				  	content: '/single.aspx?m=ajax_dingdandetail&table=zhishi_order&id='+id
+				});
+				layer.iframeAuto(index)
+			}
+		</script>
+	</body>
+</html>

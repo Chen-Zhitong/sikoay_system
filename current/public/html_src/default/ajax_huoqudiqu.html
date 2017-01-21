@@ -1,0 +1,27 @@
+﻿<span>考试预约地区：</span>
+<select class="txt1" id="diqu" name="diqu">
+    <option value="">请选择地区</option>
+    {fzw:for:sql="select * from sl_yuyueanpai where kemujibie={fzw:url:id/} and zhuangtai='正在进行'" id="p1"}
+    {fzw:for:sql="select * from sl_Parameter where id={fzw:p1:diqu/}" id="p2"}
+    <option value="{fzw:p2:u1/}">{fzw:p2:u1/}</option>
+    {/fzw:for:sql}
+    {/fzw:for:sql}
+</select>
+<label>&nbsp;&nbsp;&nbsp;&nbsp;请选择考试预约地区</label>
+<br clear="all" />
+<span>考试预约时间：</span>
+<select class="txt1" id="shijian" name="kaoshishijian">
+    <option value="">请选择时间</option>
+    {fzw:sql="select * from sl_yuyueanpai where kemujibie={fzw:url:id/} and zhuangtai='正在进行'" id="p1"}
+    <option value="{fzw:p1:shijian/}">{fzw:p1:shijian/}</option>
+    {/fzw:sql}
+</select>
+<label>&nbsp;&nbsp;&nbsp;&nbsp;请选择考试预约时间</label>
+<br clear="all" />
+<script>
+    $("#shijian").on('change', function () {
+        if ($(this).val() != '') {
+            $("#sczl").toggle();
+        }
+    })
+</script>

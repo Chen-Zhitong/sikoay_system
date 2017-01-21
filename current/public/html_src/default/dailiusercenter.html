@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}_个人中心</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="代理左侧.html"}
+			
+			<!--右侧内容栏-->
+			<div class="content-right">
+				
+				<div class="info-top">
+					<div class="userpic">
+						{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+						<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" />
+						{/fzw:sql}
+					</div>
+					<div class="username">
+						<h4>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}</h4>
+						<img src="img/woman.png"/>
+						<div class="clear"></div>
+						<a href="/single.aspx?m=dailigerenziliao">修改账号资料</a>
+						<!-- <a href="">查看个人主页</a> -->
+					</div>
+					<div class="opera">
+						<a href="/search.aspx?m=dailimsgfabu"><img src="img/tc2.png"/><p>发布通知</p></a>
+						<a href="/search.aspx?m=dailixitongmsg"><img src="img/tc3.png"/><p>系统消息</p></a>
+						<a href="/search.aspx?m=dailisixin"><img src="img/tc4.png"/><p>我的私信</p></a>
+					</div>
+				</div>
+				
+				<div class="info-mid">
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=dailifenxiaochengyuan1"><p>{fzw:sql="select count(id) as count_id from sl_user where jieshaoren='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}</p>分销成员</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=dailifenxiaomingxi"><p>{fzw:sql="select count(id) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"/}' and leixing like '%返利%'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}</p>分销订单</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=dailimoney"><p>{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and datediff(day, dtime ,getdate())=0 and (leixing='课程收入' or leixing='返利')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}</p>今日收入</a>
+					</div>
+					<div class="info-box">
+						<a href="/search.aspx?m=dailimoney"><p>{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}</p>账户余额</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="dongtai" style="margin-top: 20px;">
+					<div class="dt-title">
+						<img src="img/tc6.png"/>
+						<h4>我的动态</h4>
+						<a href="/search.aspx?m=dailidongtai">更多 》</a>
+					</div>
+					<div class="clear"></div>
+					<div id="getdongtai">
+						
+					</div>
+					
+					<div class="quanz">
+						<div class="qz-title">
+							<img src="img/tc84.png"/>
+							<h4>我发表的帖子</h4>
+							<a href="/search.aspx?m=dailitiezi">更多 》</a>
+						</div>
+						{fzw:for:sql="select top 5 * from sl_bbsshow where yonghuming='{fzw:cookie:name="user_name"/}' and laiyuanbianhao=0 order by dtime desc" id="p1"}
+						<div class="qz-box" style="border-bottom:1px dotted #6e6e6e">
+							{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+							<div class="qz-pic">
+								<img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+							</div>
+							<div class="qz-text">
+								<p>我</p>
+								<label>发布了</label>
+								<span>{fzw:p1:dtime string="shijian"/}</span>
+							</div>
+							{/fzw:for:sql}							
+							<a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a>
+						</div>
+						{/fzw:for:sql}
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			$.ajax({
+				type: "GET", 
+				url: "/search.aspx?m=ajax_dongtai",
+				success: function(data) {
+					$("#getdongtai").html(data);
+				}
+			});	
+		</script>
+        <script type="text/javascript" src="js/circle.js" ></script>
+        <script type="text/javascript">
+			var x = $(".class-info").children(".class-box").length;
+			var y = (x-1)*145;
+			$(".classtime-line").css("height",y);
+		</script>
+		
+        <script type="text/javascript" src="js/circle.js" ></script>
+	</body>
+</html>

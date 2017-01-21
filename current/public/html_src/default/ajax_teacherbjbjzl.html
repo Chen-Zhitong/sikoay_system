@@ -1,0 +1,60 @@
+{fzw:for:sql="select * from sl_laoshi as ls,sl_user as u where u.yonghuming=ls.yonghuming and ls.yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+<form id="bjzl-form">	
+	<div class="baseinfo">
+		<p><nobr>*</nobr>您的教龄：</p>
+		<input type="text" name="jiaoling" class="txt2" value="{fzw:p1:jiaoling/}" />
+	</div>
+	<div class="baseinfo">
+		<p><nobr>*</nobr>您的单位/机构/学校：</p>
+		<input type="text" name="danwei" class="txt2" value="{fzw:p1:danwei/}" />
+	</div>
+	<div class="clear"></div>
+	<div class="baseinfo">
+		<p><nobr>*</nobr>您的教学科目：</p>
+		<select name="kechengfenlei" id="kechengfenlei" class="txt2" value="{fzw:p1:kechengfenlei/}">
+			<option selected="selected" value=""></option>
+			{fzw:for:sql="select * from sl_Parameter where classid=398 order by id asc" id="p2"}
+			<option value="{fzw:p2:id/}">{fzw:p2:u1/}</option>
+			{/fzw:for:sql}
+		</select>
+		<script type="text/javascript">
+			var x = '{fzw:p1:kechengfenlei/}';
+			$("#kechengfenlei option").each(function(){
+				$(this).removeAttr("selected");
+				if ($(this).val()==x) {
+					$(this).attr("selected","selected");
+				}
+			})
+		</script>
+	</div>
+	<div class="clear"></div>
+	<div class="baseinfo">
+		<p><nobr>*</nobr>您的个人标签：</p>
+		<input type="text" name="gerenbiaoqian" class="txt2" value="{fzw:p1:gerenbiaoqian/}" />
+	</div>
+	<div class="clear"></div>
+	<input type="button" class="base-btn" value="保存" onclick="savebjzl({fzw:p1:id/})" />
+	<input type="button" class="basecan-btn" value="取消" onclick="getbjzl()"/>
+	<div class="clear"></div>
+</form>
+{/fzw:for:sql}
+<script type="text/javascript">
+	function savebjzl(id){
+		var formData = $("#bjzl-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=laoshi&type=edit&id="+id,
+			data: formData,
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("保存成功！");
+				getbjzl();
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		return false;
+	}
+</script>	

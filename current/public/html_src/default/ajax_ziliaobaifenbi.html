@@ -1,0 +1,21 @@
+<div class="ziliaoshu">
+			{fzw:for:sql="select *,(select COUNT(id) from sl_Field where Model_id=76) as count_id from sl_Field where Model_id=76" id="p1"}
+			<span class="ziliaototal">{fzw:p1:count_id/}</span>
+			{fzw:for:sql="select * from sl_laoshi where yonghuming='{fzw:cookie:name="user_name"}'" id="p2"}
+			<div class="ziliaoeach" data-canshu="{fzw:p2:{fzw:p1:u1/}/}"></div>{/fzw:for:sql}
+			{/fzw:for:sql}
+		</div>
+		<script type="text/javascript">
+			var total = $(".ziliaototal").html();
+			var notnull = 0;
+			$(".ziliaoeach").each(function(){
+				if ($(this).data("canshu")!='') {
+					notnull++;
+				}
+			})
+			function percentNum(num, num2) { 
+     			return (Math.round(num / num2 * 10000) / 100.00 + "%");
+			}
+			var ziliaobaiefnbi = percentNum(notnull,total);
+			$("#ziliaobaiefnbi").html(ziliaobaiefnbi);
+		</script>

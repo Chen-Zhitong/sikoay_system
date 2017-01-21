@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>兑换券</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="代理左侧.html"/}
+            <script>
+                $(".zhanghuguanli").addClass("lefton")
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>兑换券</p>
+				</div>
+				<form class="kecheng-info">
+					<div class="kc-info">
+					<span>兑换券卡号：</span>
+					<input type="text" name="" class="txt1" value="" id="kahao" />
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;请输入兑换券卡号</label>
+					<br  clear="all"/>
+					<input type="button" name="" class="tz-btn" value="立即充值" style="margin-left: 78px;" id="duihuan" />
+					</div>
+				</form>
+				<div class="charge">
+					<div class="charge-title">
+						<img src="img/tc15.png"/>
+						<p>充值说明</p>
+					</div>
+					<div class="clear"></div>
+					<h4>兑换券的获取与使用说明</h4>
+					<div class="charge-info">					
+						<h5>一、如何获得兑换券</h5>
+						<p>1）参加华予在线上商城、微信公众号组织的营销活动并满足活动要求，或购买华予线上商城特定活动商品可获得相应的兑换券，兑换券将绑定在您的账户中。</p>
+						<p>2）线上商城特定测试期，参与线上测试的用户将获得相应的兑换券。</p>
+						<p>3）线下途径：华予线下推广人员在种植基地体验活动、社区推广活动、其他路演、体验活动中向客户派发兑换券。</p>
+						<p>4）参与华予的问卷调查，并满足相应条件，可获得兑换券。</p>
+					</div>
+					<div class="charge-info">
+						<h5>二、兑换券的查询与使用</h5>
+						<p>1）如何查看兑换券点击首页右上角“会员中心”点击左侧列表的“兑换券”，即可查看账户上的兑换券。</p>
+						<p>2）如何使用兑换券:在结算信息页面里输入兑换券的卡号，或者选择已有的兑换券，点击“确定”按钮后，系统自动扣除兑换券。</p>
+					</div>
+					<div class="charge-info">
+						<h5>三、兑换券使用规则</h5>
+						<p>有机汇优惠券/体验券是有机汇对客户的一种优惠和回馈，为使更多的客户能够更好的享受到这种优惠和回馈，特制定有机汇优惠券/体验券使用规则。一旦您接受并使用了有机汇优惠券/体验券，等同于您已经阅读并同意以下规则：</p>
+						<p>1）兑换券能兑换现金;</p>
+						<p>2）每张兑换券仅能使用一次，不找零，不退换;</p>
+						<p>3）使用兑换券抵扣部分的货款不开具发票;</p>
+						<p>4）兑换券不能抵扣运费；</p>
+						<p>5）兑换券应在券面载明的有效期内使用，过期作废;</p>
+						<p>6）如使用兑换券的订单产生退货，优惠券/体验券金额将不予退款;</p>
+						<p>7）每笔订单只能使用一张兑换券;</p>
+						<p>8）不支持使用兑换券的商品将在商品详情中予以标明，请以商品详情说明为准。</p>
+						<p>9）不支持使用兑换券的促销活动将在活动详情中予以标明，请以活动详情说明为准。</p>
+						<p>10）出现如下情况：</p>
+						<p>A、非以个人消费为目的获取、使用兑换券的</p>
+						<p>B、伪造、购买、销售、转让兑换券，或使用伪造、购买、转让的兑换券的</p>
+					</div>
+					<div class="charge-info">
+						<p>华予有权视选择冻结或作废相关用户持有兑换券，取消使用兑换券的订单，取消该用户的用卡资格、停止提供服务和/或注销该用户账户并有权不接受该用户的再次注册申请。</p>						
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			$("#duihuan").click(function(){
+				var kahao = $("#kahao").val();
+				if (kahao=="") {
+					layer.msg("请输入兑换券卡号");
+					return false;
+				}
+				$.ajax({
+					type: "POST",
+					url: "/yhq_load.aspx?kahao="+kahao+"&fenlei=兑换&type=search",
+					success: function(data) {
+						if(data=="err"){
+							layer.alert("此卡无效！");
+							return false;
+						}else{
+							window.location.href="/single.aspx?m=studuihuanjuan&kahao="+kahao;
+						}
+					},error: function(data){
+						layer.msg("网络错误！请重试");
+					}
+				});
+				return false;
+			})	
+		</script>
+	</body>
+</html>

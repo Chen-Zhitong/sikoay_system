@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>我的私信_我的消息</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+                $(".gerendongtai").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>我的私信</p>
+					<a href="/search.aspx?m=stuxitongmsg">系统消息（{fzw:sql="select count(id) as count_id from sl_sms where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='通知'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=stusixin" class="on">我的私信（{fzw:sql="select count(id) as count_id from sl_sms where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='私信'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					
+				</div>
+				{fzw:search table="sl_sms" sqlvalue="yonghuming='{fzw:cookie:name="user_name"/}'&nbsp;and&nbsp;leixing='私信'" number="20" order="dtime" orderby="desc" id="p1"}
+				<div class="conments">
+					{fzw:sql="select * from sl_user where yonghuming='{fzw:p1:fasongren/}'" id="p2"}
+					<img src="{fzw:p2:touxiang/}" style="cursor:pointer" onclick="window.location.href='/single.aspx?m=user-homepage&id={fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|id"/}'"/>
+					<div class="com-info">
+						<label>{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</label>
+						<label>发来私信</label>			
+						<p class="com-detail">{fzw:p1:neirong/}</p>
+						<p class="com-time">时间：{fzw:p1:dtime datetime="yyyy-MM-dd&nbsp;&nbsp;&nbsp;&nbsp;hh:mm:ss"/}</p>
+						<div class="com-reply">
+							<a href="javascript:void(0)" class="delet" data-id="{fzw:p1:id/}" onclick="del(this)">删除</a>
+							<a class="reply1">回复</a>
+						</div>
+												
+						<div class="clear"></div>
+						<div class="reply">
+							<form class="huifu-form">
+					    		<input type="hidden" name="fasongren" value='{fzw:cookie:name="user_name"}'>
+					    		<input type="hidden" name="yonghuming" value="{fzw:p1:fasongren/}">
+					    		<input type="hidden" name="leixing" value="私信">
+					    		<input type="hidden" name="zhuangtai" value="未读">
+					    		<textarea name="neirong" placeholder="回复..." class="reply-text"></textarea>
+					    	</form>
+					    	<a href="javascript:void(0)" class="huifu">回复</a>
+					    </div>
+				   </div>
+				   {/fzw:sql}
+				    <div class="clear"></div>
+				</div>
+				{/fzw:search}
+				
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			
+		</div>
+		<form id="form">
+			<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+			<input type="hidden" name="zhuangtai" value="已读">
+		</form>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+	<script type="text/javascript">
+		function del(e){
+			var a = $(e).data("id");
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=sms&type=del&id="+a,
+				success: function(data) {
+					layer.msg("删除成功！");
+					location.reload(true);
+				},error: function(data){
+					layer.msg("删除失败！请重试");
+				}
+			});
+			return false;
+		}
+		var el = $('.content-right2'); 
+		el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关信息'));
+		$(".huifu").click(function(){
+			var count = 0;
+			$(this).parent().children(".huifu-form").children("textarea").each(function() {
+				if ($(this).val() == "") {
+					count++;
+				}
+			});
+			if (count > 0) {
+				layer.msg('请填写您的回复!');
+				return false;
+			}
+			var formData1 = $(this).parent().children(".huifu-form").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=sms&type=add",
+				data: formData1,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					layer.msg("回复成功！");
+					location.reload(true);
+				},error: function(data){
+					layer.msg("回复失败！请重试");
+				}
+			});
+			return false;
+		})
+		var formData = $("#form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=sms&type=edit&tip_string=提交成功！&tipurl=/",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				
+			}
+		});
+	</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

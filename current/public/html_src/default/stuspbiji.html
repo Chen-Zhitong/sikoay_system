@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>我的笔记_学习记录_{fzw:key:sitename/}</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery.raty.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	.com-reply1 a{
+		font-size: 13px;
+		color: #656565;
+	}
+	.com-info2 label{
+		font-size: 13px;
+		color: #8d8d8d;
+	}
+	.com-detail{
+		color: #333;
+	}
+	.conments2 img{
+		border-radius: 100%;
+	}
+	.com-time{
+		color: #8d8d8d;
+		font-size: 13px;
+	}
+</style>        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+            $(".mykc").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>我的笔记</p>
+                    {if value1="{fzw:url:laiyuanbianhao/}" value2="" bi="=="}
+                    <a href="/search.aspx?m=stuspbiji&laiyuanbianhao={fzw:url:laiyuanbianhao/}">笔记（{fzw:sql="select count(id) as bijishu from sl_biji where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:bijishu/}{/fzw:sql}）</a>
+                    <a href="/search.aspx?m=stusptw&laiyuanbianhao={fzw:url:laiyuanbianhao/}">提问（{fzw:sql="select count(id) as tiwenshu from sl_wenda where leixing='提问' and fasongren='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:tiwenshu/}{/fzw:sql}）</a>
+                    <a href="/search.aspx?m=stusppl&laiyuanbianhao={fzw:url:laiyuanbianhao/}">评论（{fzw:sql="select count(id) as pinglunshu from sl_pinglun where leixing='视频' and yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:pinglunshu/}{/fzw:sql}）</a>
+                    {else}
+                    <a href="/search.aspx?m=stuspbiji&laiyuanbianhao={fzw:url:laiyuanbianhao/}">笔记（{fzw:sql="select count(id) as bijishu from sl_biji where laiyuanbianhao={fzw:url:laiyuanbianhao/}" id="p1"}{fzw:p1:bijishu/}{/fzw:sql}）</a>
+                    <a href="/search.aspx?m=stusptw&laiyuanbianhao={fzw:url:laiyuanbianhao/}">提问（{fzw:sql="select count(id) as tiwenshu from sl_wenda where laiyuanbianhao={fzw:url:laiyuanbianhao/} and leixing='提问' and fasongren='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:tiwenshu/}{/fzw:sql}）</a>
+                    <a href="/search.aspx?m=stusppl&laiyuanbianhao={fzw:url:laiyuanbianhao/}">评论（{fzw:sql="select count(id) as pinglunshu from sl_pinglun where laiyuanbianhao={fzw:url:laiyuanbianhao/} and leixing='视频' and yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:pinglunshu/}{/fzw:sql}）</a>
+                    {/if}
+				</div>
+				<!-- <div class="creatxy">
+					<a href="">＋ 我要发帖</a>
+					<form>
+					<input type="text" name="" class="txt3 search" placeholder="搜索学员，回车跳转" />
+					<input type="submit" name="" class="txt4" value="" />
+					</form>
+				</div> -->
+				{fzw:search table="sl_biji" sqlvalue="yonghuming='{fzw:cookie:name="user_name"/}'" number="10" order="dtime" orderby="desc" id="p1"}
+				<div class="biji-box">
+					{fzw:sql="select *,(select top 1 biaoti from sl_jie as j,sl_history as h where j.laiyuanbianhao in (select kechengjie from sl_kecheng where id={fzw:p1:laiyuanbianhao/}) and j.id=h.laiyuanbianhao order by h.dtime desc) as jiebiaoti,(select top 1 j.id from sl_jie as j,sl_history as h where j.laiyuanbianhao in (select kechengjie from sl_kecheng where id={fzw:p1:laiyuanbianhao/}) and j.id=h.laiyuanbianhao order by h.dtime desc) as jieid from sl_kecheng as kc,sl_user as u where kc.id={fzw:p1:laiyuanbianhao/} and kc.yonghuming=u.yonghuming" id="p2"}
+					<div class="biji-title">
+						<a href="/single.aspx?m=kecheng_shipin&id={fzw:p2:id/}&shipin={fzw:p2:jieid/}" style="float: left;margin-top: 13px;font-size: 13px;"><span></span>课程名称：{fzw:p2:biaoti/}
+						学习至：{fzw:p2:jiebiaoti/}</a>
+					</div>
+					<div class="teacher">
+						<label>授课老师：</label>
+						<img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+						<p>{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</p>
+					</div>
+					{/fzw:sql}
+					<div class="clear"></div>
+					<div class="biji-text">
+						<p>{fzw:p1:neirong/}</p>
+					</div>
+					<p class="biji-time">时间：{fzw:p1:dtime string="shijian"/}</p>
+					<div class="good">
+						<!-- <a><img src="img/tc73.png"/>5</a> -->
+					</div>
+					<div class="clear"></div>
+				</div>
+				{/fzw:search}
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			<!--右侧内容栏结束-->
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关笔记'));
+		</script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

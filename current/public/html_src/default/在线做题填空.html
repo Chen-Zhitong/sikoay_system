@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/jquery.raty.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<script src="js/jquery.raty.js" type="text/javascript"></script>
+</head>
+<body>
+<!-- classvideo-detail -->
+<div class="max-width">
+<div class="classvideo-detail-title">
+	<a href="">资料中心</a>
+	<span>></span>
+	<a href="">练习题库</a>
+	<span>></span>
+	<a href="">2016护士超级宝典在线测试</a>
+</div>
+<p class="practice-top">2016护士超级宝典在线测试<span id="practice-number">1/100</span></p>
+<div class="practice-container">
+	<div id="true-answer">B</div>
+	<div class="practice-analyze">
+		<div class="classvideo-note">
+			<img src="img/cancle.png" class="cancle">
+			<p>本题解析</p>
+			<div class="practice-analyze-word">解析：656545646546545646464646545646546</div>
+			<a href="">收藏本题</a>
+			<a href="">我的错题</a>
+		</div>
+	</div>
+	<div class="practice-title">
+		1.【填空题】
+		<a href="" class="mywrong"><span></span>我的错题</a>
+		<a href="javascript:(0)" class="collect"><span></span>收藏本题</a>
+	</div>
+	<div class="practice-row">
+		<div class="practice-question">患者男性，29岁，在输液的第10天，手腕至肘上2/3处，沿静脉走向出现一条索状红线，感觉局部灼热且疼痛，此反应为（　　）。</div>
+		<div class="practice-answer">
+			<form id="blank">
+				<textarea placeholder="请输入您的答案" rows="4" class="practice-blank"></textarea>
+			</form>
+			<button class="practice-submit">提交答案</button>
+		</div>
+		<div class="practice-tip">
+			您答错了！标准答案是：B 
+		</div>
+		<div class="practice-button">
+			<div class="practice-button-left">
+				<button>上一题</button>
+				<button>下一题</button>
+			</div>
+			<div class="practice-button-right">
+				<a href="javascript:void(0);" onclick="showanalyze()">本题解析</a>
+				<a href="">在线测试</a>
+				<a href="">保存试卷</a>
+				<a href="">放弃测试</a>
+			</div>
+			<div class="clear"></div>
+			<script type="text/javascript">
+				function showanalyze(){
+					$(".practice-analyze").fadeIn();
+					$(".classvideo-note").fadeIn();
+				}
+				function checkanswer(){
+					var x = $(".practice-answer").children("form").attr("id");
+					var y = $("#true-answer").html();
+					if(x=='single-check'){
+						$("#single-check label").click(function(){
+							var z = $(this).children("input").val();
+							if (y!=z) {
+								$(".practice-tip").css("display","block")
+							}else{
+								$(".practice-tip").css("display","none");
+								return;
+							}
+						})
+					}
+				}
+				$(document).ready(function(){
+					checkanswer();
+				})
+			</script>
+		</div>
+	</div>
+</div>
+<div class="practice-bottom">
+	<label class="autonext">
+		<input type="checkbox" name=" autonext">
+		<span></span>
+		自动跳转至下一题
+	</label>
+	<div class="practice-bottom-right">
+		答对：<span class="practice-right-quantity">0</span>
+		答错：<span class="practice-wrong-quantity">0</span>
+		正确率：<span class="practice-right-percent">0.00%</span>
+	</div>
+	<div class="goto">
+		共1310题转到
+		<input type="text" name="goto">
+		题
+	</div>
+	
+</div>
+<div class="clear"></div>
+</div>
+
+</body>
+</html>

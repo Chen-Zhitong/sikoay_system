@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>系统消息_我的消息</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script> 
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+            <script>
+                $(".gerendongtai").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>消息管理</p>
+					<a href="/search.aspx?m=teacherxitongmsg" class="on">通知消息（{fzw:sql="select count(id) as count_id from sl_sms where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='通知'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teachersixin">我的私信（{fzw:sql="select count(id) as count_id from sl_sms where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='私信'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teachermsgfabu">发布通知（{fzw:sql="select count(id) as count_id from sl_sms where fasongren='{fzw:cookie:name="user_name"/}' and leixing='通知'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<div class="clear"></div>
+				</div>
+
+				{fzw:search table="sl_sms" sqlvalue="yonghuming='{fzw:cookie:name="user_name"/}'&nbsp;and&nbsp;leixing='通知'" number="20" order="dtime" orderby="desc" id="p1"}
+				<div class="tz-box">
+					<div class="tz-pic1 ">
+						<img src="img/tc69.png" style="vertical-align: middle;" />
+					</div>
+					<div class="tzbox-info">
+						<span>{fzw:p1:biaoti/}</span>
+						<p>{fzw:p1:neirong/}</p>
+						<p class="com-time">时间：{fzw:p1:dtime datetime="yyyy-MM-dd&nbsp;&nbsp;&nbsp;&nbsp;hh:mm:ss"/}</p>
+						<div class="com-reply">
+							<a class="delet" data-id="{fzw:p1:id/}" onclick="del(this)">删除</a>
+						</div>
+					</div>
+				</div>
+				{/fzw:search}
+				
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+				
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+		function del(e){
+			var a = $(e).data("id");
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=sms&type=del&id="+a,
+				success: function(data) {
+					layer.msg("删除成功！");
+					location.reload(true);
+				},error: function(data){
+					layer.msg("删除失败！请重试");
+				}
+			});
+			return false;
+		}
+		var el = $('.content-right2'); 
+		el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关信息'));
+		
+		</script>
+		
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>创建资料 </title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+    </head>
+	<body>
+		
+		<div class="content3">
+			<!--左侧菜单栏-->
+			<div class="content-left">
+				<div class="menu-box">
+					<h4><nobr>▪</nobr>用户中心</h4>
+				</div>
+				<div class="menu-box">
+					<h5>课程管理</h5>
+					<a href=""><p><nobr>▪</nobr>视频管理</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>交易管理</h5>
+					<a href=""><p><nobr>▪</nobr>订单管理</p></a>
+					<a href=""><p><nobr>▪</nobr>学生管理</p></a>
+					<a href=""><p><nobr>▪</nobr>评价管理</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>个人设置</h5>
+					<a href=""><p><nobr>▪</nobr>认证设置</p></a>
+					<a href=""><p><nobr>▪</nobr>个人资料</p></a>
+					<a href=""><p><nobr>▪</nobr>我的相册</p></a>
+					<a href=""><p><nobr>▪</nobr>我的视频</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>资料管理</h5>
+					<a href=""><p><nobr>▪</nobr>资料库</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>圈子管理</h5>
+					<a href=""><p><nobr>▪</nobr>圈子设置</p></a>
+					<a href=""><p><nobr>▪</nobr>成员管理</p></a>
+					<a href=""><p><nobr>▪</nobr>帖子管理</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>账户管理</h5>
+					<a href=""><p><nobr>▪</nobr>我的钱包</p></a>
+					<a href=""><p><nobr>▪</nobr>兑换券</p></a>
+					<a href=""><p><nobr>▪</nobr>充值卡</p></a>
+					<a href=""><p><nobr>▪</nobr>邀请码</p></a>
+					<a href=""><p><nobr>▪</nobr>数据统计</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>分销管理</h5>
+					<a href=""><p><nobr>▪</nobr>分销明细</p></a>
+					<a href=""><p><nobr>▪</nobr>分销成员</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>个人动态</h5>
+					<a href=""><p><nobr>▪</nobr>我的动态</p></a>
+					<a href=""><p><nobr>▪</nobr>我的消息</p></a>
+				</div>			
+			</div>
+			<!--左侧菜单栏 END-->
+			
+			<!--右侧内容栏-->
+			<div class="content-right5">
+				<div class="right-title">
+					<p>个人身份认证</p>
+				</div>
+				<form class="kecheng-info">
+				    <div class="tz-title">
+						<p>第一步：填写通知标题和内容</p>
+					</div>
+				<div class="kc-info">
+					<span>资料封面：</span>
+					<div class="cover-box">
+						<img src="img/tc13.png"/>
+						<input type="file" name="" class="uppic" value="上传图片" />
+					</div>
+					<label>图片大小不超过5M</label>
+					<div class="clear"></div>
+					<span>资料标题：</span>
+					<i style="font-style: normal"><input type="text" name="" class="txt" value="" maxlength="20" onkeydown="checkMaxInput(this,20)" onkeyup="checkMaxInput(this,20)" onfocus="checkMaxInput(this,20)" onblur="checkMaxInput(this,20)"/>
+					<label>还可以输入 <nobr>20</nobr> 字</label></i>
+					<br  clear="all"/><br />
+					<span>资料价格：</span>
+					<input type="text" name="" class="txt1" value="" />
+					<input type="checkbox" name="" class="mycheck1" id="free" /><label for="free">这是免费资料</label>
+					<br  clear="all"/>
+					<span>观看期限：</span>
+					<input type="text" name="" class="txt1" value="" />
+					<input type="checkbox" name="" class="mycheck1" id="forever" /><label for="forever">该资料永久有效</label>
+					<br  clear="all"/>
+					<span>资料简介：</span>
+					<i style="font-style: normal"><textarea name="" class="tz-text" maxlength="200" onkeydown="checkMaxInput(this,200)" onkeyup="checkMaxInput(this,200)" onfocus="checkMaxInput(this,200)" onblur="checkMaxInput(this,200)"></textarea>
+					<label>还可以输入 <nobr>200</nobr> 字</label></i>
+					<br  clear="all"/>
+					<br />
+					<span>资料分类：</span>
+					<select name="">
+						<option>请选择</option>
+						<option>研究生</option>
+						<option>博士</option>
+					</select>
+					<select name="">
+						<option>请选择</option>
+						<option>研究生</option>
+						<option>博士</option>
+					</select>
+					<select name="">
+						<option>请选择</option>
+						<option>研究生</option>
+						<option>博士</option>
+					</select>
+					<br  clear="all"/>
+					<br />
+					<span>资料类型：</span>
+					<select name="">
+						<option>ppt</option>
+						<option>word</option>
+						<option>excel</option>
+					</select>
+					<br  clear="all"/>
+					<br />
+					<span>资料标签：</span>
+					<input type="text" name="" class="txt" value="" maxlength="20"/>
+					<br />
+					<label>每个标签最多 <nobr>8</nobr> 个字，用空格分隔（不能包含标点符号，且最多输入 8 个标签哦）</label>
+				</div>
+					<div class="clear"></div>					
+					<input type="submit" name="" class="tjrz-btn" value="保存课程信息" />
+					<input type="reset" name="" class="qxrz-btn" value="清空重填" />
+					
+				</form>
+				<div class="clear"></div>
+				<div class="tz-title">
+					<p>第二步：资料概述</p>
+				</div>
+			</div>
+			
+		</div>
+<script type="text/javascript">
+	//剩余字数计算  
+    function checkMaxInput(obj, maxLen) {  
+        if (obj == null || obj == undefined || obj == "") {  
+                return;  
+            }  
+        if (maxLen == null || maxLen == undefined || maxLen == "") {  
+            maxLen = 100;  
+        }  
+      	var strResult;  
+        var $obj = $(obj);  
+        var newid = $obj.attr("id") + 'msg';  
+        if (obj.value.length > maxLen) { //如果输入的字数超过了限制  
+            obj.value = obj.value.substring(0, maxLen); //就去掉多余的字
+            var rest = parseInt(maxLen) - parseInt(obj.value.length);
+            $(obj).parent().children("label").html("还可以输入 <nobr>"+ rest +"</nobr> 字");  
+        }  
+        else {  
+            var rest = parseInt(maxLen) - parseInt(obj.value.length);
+            $(obj).parent().children("label").html("还可以输入 <nobr>"+ rest +"</nobr> 字");   
+        }    
+        var $msg = $("#" + newid);  
+        if ($msg.length == 0) {  
+            $obj.after(strResult);  
+        }  
+        else {  
+            $msg.html(strResult);  
+        }  
+    }
+    $(".qxrz-btn").click(function(){
+    	$(".tz-text").each(function(){
+    		$(this).parent().children("label").html("还可以输入 <nobr>"+ 200 +"</nobr> 字"); 
+    	})
+    	$(".txt").each(function(){
+    		$(this).parent("i").children("label").html("还可以输入 <nobr>"+ 20 +"</nobr> 字"); 
+    	})
+    })
+</script>		
+	</body>
+</html>

@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+        <title>在线充值_{fzw:key:sitename/}</title>
+        {if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+        <style type="text/css">
+        	.waytopay{
+        		margin: 0 -10px;
+        	}
+        	.waytopay label{
+        		width: 18.3%;
+        		float: left;
+        		border: 1px solid #e9e9e9;
+        		text-align: left;
+        		padding: 16px 10px;
+        		margin: 10px;
+        		-webkit-box-sizing: border-box;
+        		-moz-box-sizing: border-box;
+        		box-sizing: border-box;
+				height: 75px;
+				cursor: pointer;
+        	}
+        	.waytopay label input{
+        		vertical-align: middle;
+        		margin-right: 10px;
+        	}
+        	.waytopay label img{
+        		max-width: 100%;
+        		max-height: 100%;
+        		display: inline-block;
+        		vertical-align: middle;
+        	}
+        </style>
+	</head>
+	<body>
+		<!--top-->
+        {fzw:inside src="top.html"/}
+		<!--top end-->
+		<!--header-->
+		<div class="header">
+		    <div class="wrap">
+		        <div class="fl">
+		            <a href="/"><img src="images/logo.png" height="84"/></a>
+		        </div>
+		        
+		        
+		        <p class="clear"></p>
+		    </div>
+		</div>
+		<!--header end-->
+		<!-- payment -->
+        <form class="waytopay" method="post" id="ffxx" action="/pay/oneorder.aspx?type=add&tablename=caiwu">
+            <div class="payment payol max-width ">
+                <p>在线充值</p>
+                <input type="text" name="jine" placeholder="请输入充值金额">
+
+               
+                <div class="clear"></div>
+                <label style="float:none">
+                    <input type="radio" name="zhifufangshi" checked="checked" value="支付宝" style="width: 18px;height: 18px;">
+                    <img src="img/alipay.gif">
+                </label>
+                <label style="float:none">
+                    <input type="radio" name="zhifufangshi" value="微信支付" style="width: 18px;height: 18px;">
+                    <img src="img/weixin.jpg">
+                </label>
+                <div class="clear"></div>
+                
+
+                <div class="clear"></div>
+                
+                
+            
+                <script type="text/javascript">
+                
+                //var dangqianshijian = new Date();
+                //var gengxinshijian = new Date("{fzw:p1:dtime/}");
+                //gengxinshijian.setMinutes(date.setMinutes() + 30)
+                //alert(gengxinshijian);
+                //if (dangqianshijian > gengxinshijian) {
+                //    window.location = "/pay/orderok.aspx?type=chaoshi&tablename={fzw:url:tablename/}&dingdanhao={fzw:url:dingdanhao/}";
+                //}
+                </script>
+
+               
+
+
+                <input type="submit" id="buy-now" value="确认充值"  />
+            </div>
+        </form>
+		
+		<div class="clear"></div>
+        <!-- pay-bottom -->
+        <div class="pay-bottom">
+            {fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}{fzw:p1:u4/}{/fzw:sql}
+        </div>
+        <!--<script type="text/javascript">
+                function set_order()
+                {
+              
+                    document.getElementById("buy-now").value = "计算中";
+               
+                    var yue = "0";
+                    if (document.getElementById("yue").checked)
+                    {
+                        yue = "1";
+                    }
+                    var jifen = "0";
+                    if (document.getElementById("jifen"))
+                    {
+                        if (document.getElementById("jifen").checked) {
+                            jifen = "1";
+                        }
+                    }
+                 
+                    $.ajax({
+                        type: 'get',
+                        url: '/pay/orderok.aspx?type=zongjia&dingdanhao={fzw:url:dingdanhao/}&tablename={fzw:url:tablename/}&jifen=' + jifen + '&yue=' + yue + '',
+                        success: function (data) {
+                      
+                            document.getElementById("yingfujine").innerHTML = "￥"+data+"元";
+                            if (parseFloat(data) > 0) {
+                                document.getElementById("buy-now").value = "去付款（" + data + "元）";
+                            }
+                            else {
+                                document.getElementById("buy-now").value = "确认支付";
+                            }
+                        }
+                    })
+                }
+                set_order();
+        </script>-->
+        <!-- bottom-end -->
+        {fzw:inside src="右侧.html"/}	
+      	
+	</body>
+</html>

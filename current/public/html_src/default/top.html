@@ -1,0 +1,94 @@
+<!--top-->
+<div class="top">
+    <div class="wrap">
+        <div class="fl">
+            <a href="/" style="float: left;">华予首页</a>
+            {fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}
+            <p class="fl" style="margin-left: 30px"> 您好，欢迎来到华予教育学习平台！  全国统一 客服热线：{fzw:p1:u1/}</p>
+            {/fzw:sql}
+        </div>
+        <div class="fr top_nav">
+            <div class="toggle fl">
+                <span class="tag"><a href="" id="xuexizhongxin">学习中心</a></span>
+                
+            </div>
+            <div class="toggle fl">
+                <span class="tag"><a href="" id="gotokecheng">我的课程</a> <!-- <em class="icon-caret-down"></em> --></span>
+                <!-- <div class="toggle_down">
+                    <p><a href="#">测试测试</a></p>
+                    <p><a href="#">测试测试</a></p>
+                    <p><a href="#">测试测试</a></p>
+                </div> -->
+            </div>
+            <div class="toggle fl">
+                <span class="tag"><a href="" id="gotodingdan">我的订单</a></span>
+            </div>
+            <div class="toggle fl">
+                <span class="tag">免费咨询&nbsp;&nbsp;<em class="icon-caret-down"></em></span>
+                <div class="toggle_down" style="border:1px solid #eee">
+                    <p><a href="http://wpa.qq.com/msgrd?v=3&uin=1046371017&site=qq&menu=yes" target="_blank">邓老师</a></p>
+                    <p><a href="http://wpa.qq.com/msgrd?v=3&uin=306676398&site=qq&menu=yes" target="_blank">戴老师</a></p>
+                    <p><a href="http://wpa.qq.com/msgrd?v=3&uin=328813491&site=qq&menu=yes" target="_blank">何老师</a></p>
+                </div>
+            </div>
+            <div class="toggle fl">
+                <a title="收藏本站到收藏夹" class="tag shoucang">收藏华予</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+			//收藏
+			$(".shoucang").click(function() {
+				var ctrl = (navigator.userAgent.toLowerCase()).indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL';
+				if (document.all) {
+					window.external.addFavorite(window.location.href, document.title);
+				} else if (window.sidebar) {
+					window.sidebar.addPanel(document.title, window.location.href, "");
+				} else {
+					alert('您可以通过快捷键' + ctrl + ' + D 加入到收藏夹');
+				}
+				return false;
+			});
+</script>
+<script type="text/javascript">
+                    var a = '{fzw:cookie:name="user_name"}';
+                    var b;
+                    {fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+                    b = "{fzw:p1:leixing/}"
+                    {/fzw:sql}
+                    if (a=='') {
+                        $("#gotouser").attr("href","javascript:void(0)");
+                        $("#gotouser").click(function(){
+                            layer.alert("请您先登录！");
+                        })
+                        $("#xuexizhongxin").attr("href","javascript:void(0)");
+                        $("#xuexizhongxin").click(function(){
+                            layer.alert("请您先登录！");
+                        })
+                        $("#gotodingdan").attr("href","javascript:void(0)");
+                        $("#gotodingdan").click(function(){
+                            layer.alert("请您先登录！");
+                        })
+                        $("#gotokecheng").attr("href","javascript:void(0)");
+                        $("#gotokecheng").click(function(){
+                            layer.alert("请您先登录！");
+                        })
+                    }else if(b=='会员'){
+                        $("#gotouser").attr("href","/single.aspx?m=stuusercenter"); 
+                        $("#xuexizhongxin").attr("href","/single.aspx?m=stuusercenter");
+                        $("#gotodingdan").attr("href","/search.aspx?m=stukcdingdan");
+                        $("#gotokecheng").attr("href","/search.aspx?m=stumysp&classid=37");
+                    }else if(b=='老师'){
+                        $("#gotouser").attr("href","/single.aspx?m=teacherusercenter");
+                        $("#xuexizhongxin").attr("href","/single.aspx?m=teacherusercenter");
+                        $("#gotodingdan").attr("href","/search.aspx?m=teacherdingdankc");
+                        $("#gotokecheng").attr("href","/search.aspx?m=teachershipinguanli&lingshi1=1");
+                    }else if(b=='代理'){
+                        $("#gotouser").attr("href","/single.aspx?m=dailiusercenter");
+                        $("#xuexizhongxin").attr("href","/single.aspx?m=dailiusercenter");
+                        $("#gotodingdan").attr("href","/single.aspx?m=stuusercenter");
+                        $("#gotokecheng").attr("href","/single.aspx?m=stuusercenter");
+                    }
+                </script>
+<!--top end-->

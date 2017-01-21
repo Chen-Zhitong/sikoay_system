@@ -1,0 +1,19 @@
+<p style="font-size: 14px;color: #1dbca6;margin: 0 0 10px 0;float: right;" id="zhangtips">拖动章节即可移动，点住章前图标即可拖动章！</p>
+{fzw:for:sql="select * from sl_zhang where laiyuanbianhao in (select kechengzhang from sl_kecheng where id={fzw:url:id/}) order by paixu asc" id="p1"}
+
+					<div class="section clear zhangjie">
+						<div class="zhang-title" data-zhangid="{fzw:p1:id/}">
+							<img src="img/tc78.png"><!-- 第<i></i>章 --><input type="text" name="zhang" placeholder="请输入长度在20字以内的课程标题" readonly="readonly" value="{fzw:p1:biaoti/}"><button onclick="zhedie(this)" class="zhedie">折叠</button><button class="delzhang2" onclick="delzhang(this,{fzw:p1:id/})">删除</button><button class="addvideo">添加视频</button><button class="changetitle">修改标题</button>
+						</div>
+						<div class="dd jie" data-zhangjie="" style="display: none;">
+						    <ol class="dd-list" style="position:relative">
+						    	{fzw:for:sql="select *,(select kj.biaoti from sl_wendang_wenjian as kj where kj.id=j.kejian) as kjbiaoti from sl_jie as j where j.laiyuanbianhao in (select kc.kechengzhang from sl_kecheng as kc where kc.id={fzw:url:id/}) and j.zhangbiaoti='{fzw:p1:id/}' order by j.paixu asc" id="p2"}
+                                <li class="dd-item" data-id="">
+                                    <input type="checkbox" name="kejian" style="left: -30px;position:absolute;z-index:9;width:20px;margin:0;top:35%" value="{fzw:p2:id/}">
+                                    <div class="dd-handle"><img src="{fzw:p2:suoluetu/}" class="jiesuoluetu" onerror="this.src='/template/default/img/datacenter-icon5.png'"><i></i><b>{fzw:p2:biaoti/}</b><h6 style="width:150px;display:inline-block">{fzw:p2:kjbiaoti/}</h6><button style="margin-right: 17px;" class="deljie">删除</button><button class="changejie" data-spurl="{fzw:p2:shipindizhi/}">编辑</button><span>价格：<g>{fzw:p2:jiage string="￥"/}</g> 元/节</span></div>
+                                </li>
+						        {/fzw:for:sql}
+						    </ol>               
+						</div>
+					</div>
+					{/fzw:for:sql}

@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>课程评价_订单管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/jquery.raty.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery.raty.js" type="text/javascript"></script>
+<style type="text/css">
+	.pingjia-title{
+		padding: 10px 5px;
+		width: 906px;
+		border: 1px solid #e8e8e8;
+		margin-bottom: 30px;
+	}
+	.pingjia-tips{
+		color: #515151;
+		font-size: 14px;
+		width: 10px;
+		float: left;
+		padding: 5px 15px 5px 10px;
+		border-right: 1px solid #e8e8e8;
+	}
+	.pingjia-kc{
+		margin-left: 60px;
+		color: #4f4f4f;
+		font-size: 14px;
+	}
+	.pingjia-kc img{
+		width: 142px;
+		height: 83px;
+		float: left;
+		margin-right: 13px;
+	}
+	.pingjia-kc a{
+		color: #4f4f4f;
+		font-size: 20px;
+		line-height: 35px;
+		display: inline-block;
+		margin-bottom: 25px;
+	}
+	.pingjia-kc span{
+		color: #fe835a;
+	}
+	.pingjia-kc textarea{
+		width: 830px;
+		padding: 10px;
+		font-size: 13px;
+		color: #333;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		resize: none;
+		font-family: "微软雅黑";
+	}
+	button{
+		width: 117px;
+		height: 38px;
+		background-color: #1dbca6;
+		color: #fff;
+		font-size: 14px;
+		border: 0;
+		outline: medium;
+		cursor: pointer;
+		font-family: "微软雅黑";
+	}
+</style>        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+            $(".jiaoyi").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>评价</p>				
+					
+					<div class="clear"></div>
+				</div>
+				{fzw:sql="select * from sl_kecheng where id in (select laiyuanbianhao from sl_kc_cart where dingdanhao={fzw:url:dingdanhao/})" id="p1"}
+				<div class="pingjia-title">
+					<div class="pingjia-tips">课程信息</div>
+					<div class="pingjia-kc">
+						<img src="{fzw:p1:suoluetu/}">
+						<a href="">{fzw:p1:biaoti/}</a><br>
+						学费：<span>￥{fzw:p1:jiage string="￥"}</span>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="pingjia-title">
+					<div class="pingjia-tips" style="padding: 25px 15px 25px 10px;">课程评价</div>
+					<div class="pingjia-kc">
+						<form id="pingjia-form">
+						<span id="my-rating" data-score="0" style="margin-left: 0;font-size: 1.5em;color: #1dbca6"></span><br>
+						<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+						<input type="hidden" name="leixing" value="视频">
+						<input type="hidden" name="fen" id="pingfen">
+						<input type="hidden" name="shenhe" value="未审核">
+						<textarea placeholder="评价内容" rows="5" name="neirong"></textarea>
+						</form>
+					</div>
+					<div class="clear"></div>
+				</div>
+				{/fzw:sql}
+				<button onclick="pinglun_shipin()">立即发布</button>
+			</div>
+		</div>
+<script type="text/javascript">
+	$('#my-rating').raty({ 
+		starType: 'i',
+		hints: ['1', '2', '3', '4', '5'],
+		score: function() {
+		    return $(this).attr('data-score');
+		}
+	})
+	function pinglun_shipin(){
+		var score1=$('#my-rating').raty('score');
+		if(score1==''){
+			layer.alert('给老师打个分吧');
+			return false;
+		}else{
+			$('#pingfen').val(score1);
+		}
+		if($("#pingjia-form textarea").val()==''){
+			layer.msg('请输入评价内容');
+			return false;
+		}
+		var formData = $("#pingjia-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=pinglun&type=add",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.alert("提交成功！");
+				history.go(-1);
+			}
+		});
+		return false;
+	}			
+</script>		
+	</body>
+</html>

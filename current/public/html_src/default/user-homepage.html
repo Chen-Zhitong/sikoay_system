@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/jquery.raty.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<style type="text/css">
+			.bottom-2{
+				margin-top: 0;
+			}
+		</style>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script src="js/jquery.raty.js" type="text/javascript"></script>
+		<title>会员主页_{fzw:key:sitename/}</title>
+	</head>
+	<body>
+	<!--history-->
+<form method="post" action="" id="laoshi_liulan">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:id/}' />
+	<input type="hidden" name="leixing" value="学生浏览" />
+    <input type="hidden" name="dtime" value="{fzw:key:time/}"/>
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+</form>
+<script language="javascript" type="text/javascript"> 
+    function shipin_xuexi(){
+        var formData = $("#laoshi_liulan").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/Execution.aspx?t=history&type=add",
+            data: formData,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            success: function(data) {
+					
+            }
+        });
+    }
+	shipin_xuexi();
+</script>
+<!--动态-->
+<p style="display: none;" class="laoshi_dongtai" data-yuan="{fzw:sql="select * from sl_dongtai where yonghuming='{fzw:cookie name="user_name"/}' and laiyuanbianhao={fzw:url:id/} and leixing='学生' " id="p1"}{fzw:p1:id/}{/fzw:sql}"></p>	
+<form method="post" action="" id="laoshi_dongtai">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:id/}' />
+	<input type="hidden" name="leixing" value="学生" />
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+</form>
+<script type="text/javascript">
+	function laoshi_dongtai(){
+		var yuan=$('.laoshi_dongtai').data('yuan');
+		var yhm = '{fzw:cookie name="user_name"/}';
+		var id = '{fzw:url:id/}';
+			var formData = $("#laoshi_dongtai").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=dongtai&type=add",
+				data: "&leixing=学生&laiyuanbianhao="+id+"&yonghuming="+yhm,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					
+				},error:function(data){
+					
+				}
+			});
+		
+   	}
+	laoshi_dongtai();
+</script>
+		{fzw:inside src="顶部.html"/}
+		<!-- student-vip -->
+		<div class="student-top">
+			<div class="max-width">
+                {fzw:inside src="usertop.html"/}
+				<ul class="student-top-menu">
+					<li class="studentpage-on"><a href="/single.aspx?m=user-homepage&id={fzw:url:id/}"><img src="img/student3-on.png">主页</a></li>
+					<li><a href="/single.aspx?m=user-shuoshuo&id={fzw:url:id/}"><img src="img/student4.png">说说</a></li>
+					<li><a href="/single.aspx?m=user-tiezi&id={fzw:url:id/}"><img src="img/student5.png">帖子</a></li>
+					<li><a href="/single.aspx?m=user-video&id={fzw:url:id/}"><img src="img/student6.png">视频</a></li>
+					<li><a href="/single.aspx?m=user-xiangche&id={fzw:url:id/}"><img src="img/student7.png">相册</a></li>
+					<li><a href="/single.aspx?m=user-info&id={fzw:url:id/}"><img src="img/student8.png">个人信息</a></li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="student-container">
+			<div class="max-width" style="background-color: transparent;padding: 0">
+				<div class="student-homepage-left">
+                    {fzw:sql="select * from sl_user where id={fzw:url:id/}" id="p1"}
+                    {if value1="{fzw:p1:yonghuming/}" value2="{fzw:cookie:name="user_name"/}" bi="=="}
+					<div class="student-homepage-text">
+                        <form id="shuoshuo-form">
+                            <textarea placeholder="说点什么吧" rows="6" name="neirong"></textarea>
+                            <input type="hidden" name="yonghuming" value="{fzw:p1:yonghuming/}"/>
+                        </form>
+						<button class="student-button" onclick="fabiao()">发表</button>
+						<div class="clear"></div>
+					</div>
+                    <script>
+                        function fabiao(){
+                            if($("#shuoshuo-form").find("textarea").val()==''){
+                                layer.alert("请输入说说内容！");
+                                return false;
+                            }
+                            var formData = $("#shuoshuo-form").serialize();
+                            $.ajax({
+                                type: "POST",
+                                async: false,
+                                url: "/Execution.aspx?t=shuoshuo&type=add",
+                                data: formData,
+                                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                                success: function (data) {
+                                    layer.msg("发表成功！");
+                                    window.location.reload(true);
+                                }, error: function (data) {
+                                    layer.msg("发表失败！请重试");
+                                    return false;
+                                }
+                            });
+                        }
+                    </script>
+                    {else}
+                    {/if}
+                    {/fzw:sql}
+                    <iframe src="/search.aspx?m=ifr_shuoshuolist&lingshi1={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%" id="ifm" name="ifm" target="_self" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>
+				</div>
+				<div class="student-homepage-right">
+                    {fzw:sql="select *,(select count(id) from sl_bbsshow as bbs where bbs.yonghuming=u.yonghuming) as tiezishu,(select count(id) from sl_shuoshuo as ss where ss.yonghuming=u.yonghuming) as shuoshuo,(select count(id) from sl_xiangche as xc where xc.yonghuming=u.yonghuming and xc.leixing='照片') as xiangche from sl_user as u where u.id={fzw:url:id/}" id="p1"}
+					<ul class="student-homepage-right-top clearfix">
+						<li><a href=""><span>{fzw:p1:shuoshuo/}</span>说说</a></li>
+						<li><a href=""><span>{fzw:p1:tiezishu/}</span>帖子</a></li>
+						<li><a href=""><span>{fzw:p1:xiangche/}</span>相册</a></li>
+					</ul>
+                    {/fzw:p1}
+					<div class="student-homepage-right-box">
+						<div class="student-homepage-right-box-title">最近访客（{fzw:sql="select count(distinct yonghuming) as shu from sl_history where laiyuanbianhao={fzw:url:id/} and leixing='学生浏览'" id="p1"}{fzw:p1:shu/}{/fzw:sql}）</div>
+						<ul class="student-homepage-right-visitor clearfix">
+                            {fzw:sql="select top 9 *,h.dtime as shijian from sl_user as u,sl_history as h,(select max(id) as id ,yonghuming from sl_history where laiyuanbianhao=4 and leixing='学生浏览' group by yonghuming) as sl where u.yonghuming=h.yonghuming and h.id=sl.id " id="p1"}
+							<li>
+								<a href="/single.aspx?m=user-homepage&id={fzw:p1:id/}"><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" style="border-radius:3px"><span>{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</span></a>{fzw:p1:shijian string="shijian"/}
+							</li>
+                            {/fzw:sql}
+							
+						</ul>
+					</div>
+					<div class="student-homepage-right-box">
+						<div class="student-homepage-right-box-title clearfix">推荐用户<a href="" class="student-homepage-exchange"><img src="img/check-icon.png">换一换</a></div>
+						<ul class="student-homepage-recommand clearfix">
+                            {fzw:for:sql="select top 6 * from sl_user where leixing='会员' order by newid()" id="p1"}
+							<li>
+								<a href="/single.aspx?m=user-homepage&id={fzw:p1:id/}" class="student-homepage-recommand-user"><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" style="border-radius:3px">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a>
+                                {if value1="{fzw:for:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='关注' and yonghuming='{fzw:cookie:name="user_name"/}'" id="p2"}{fzw:p2:shu/}{/fzw:for:sql}" value2="0" bi="=="}
+								<a href="javascript:void(0)" onclick="guanzhu({fzw:p1:id/})" class="stuguanzhu"><img src="img/zan-off.png">&nbsp;关注</a>
+                                {else}
+                                <a class="stuguanzhu"><img src="img/zan-off.png">&nbsp;已关注</a>
+                                {/if}
+								<p>{fzw:p1:leixing/}</p>
+							</li>
+                            {/fzw:for:sql}
+							
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}	
+<script type="text/javascript">
+	function showhuifu(e){
+		$(e).parent().parent().children(".student-homepage-list-hide").slideToggle();
+	}
+	function huifuthis(e){
+		var a = $(e).parent().parent().find(".student-homepage-list-user2").html();
+		$(e).parent().parent().parent().find("textarea").val("回复 "+a+"：")
+	}
+	function autoheight(h){
+	    $("#ifm").stop().animate({height:h});
+	}
+    //关注
+	function guanzhu(id){
+	    $.ajax({
+	        type: "POST",
+	        async: false,
+	        url: "/Execution.aspx?t=history&type=add",
+	        data: "&laiyuanbianhao="+id+"&yonghuming={fzw:cookie:name="user_name"/}&leixing=关注",
+	        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	    success: function (data) {
+	        layer.msg("关注成功！");
+	        window.location.reload(true);
+	    }, error: function (data) {
+	        layer.msg("关注失败！请重试");
+	        return false;
+	    }
+	});
+	}
+</script>	
+	</body>
+</html>

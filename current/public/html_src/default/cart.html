@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<title>选择课程_{fzw:key:sitename/}</title>
+        {if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+        <style type="text/css">
+            .pay-right{
+                width: 900px;
+                float: left;
+            }
+            .pay-left{
+                width: 250px;
+                float: left;
+                padding: 10px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                text-align: center;
+                margin-right: 8px;
+                line-height: 30px;
+            }
+            .pay-left img{
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .pay-left button{
+                width: 150px;
+                height: 30px;
+                font-size: 16px;
+                color: #fff;
+                outline: medium;
+                border: 0;
+                background-color: #1dbca6;
+                border-radius: 5px; 
+            }
+        </style>
+	</head>
+	<body>
+		<!--top-->
+        {fzw:inside src="top.html"/}
+		<!--top end-->
+		<!--header-->
+		<div class="header">
+		    <div class="wrap">
+		        <div class="fl">
+		            <a href="/"><img src="images/logo.png" height="84"/></a>
+		        </div>
+		        <div class="pay-state">
+		        	<ul>
+		        		<li class="pay-on">
+		        			<span>1</span>
+		        			<div class="pay-state-line"></div>
+		        			选择课程
+		        		</li>
+		        		<li>
+		        			<span>2</span>
+		        			<div class="pay-state-line"></div>
+		        			网上支付
+		        		</li>
+		        		<li>
+		        			<span>3</span>
+		        			<div class="pay-state-line"></div>
+                            购买成功
+		        		</li>
+		        	</ul>
+		        </div>
+		        
+		        <p class="clear"></p>
+		    </div>
+		</div>
+		<!--header end-->
+		<!-- payment -->
+        <form method="post" action="/pay/video_order.aspx?t=kc_order&type=add&tipurl=/single.aspx?m=payfzw123tablename=kc_order" id="order-form">
+            <div class="payment max-width">
+                <p>章节购买</p>
+                <div class="pay-left">
+                    {fzw:sql="select * from sl_kecheng where id={fzw:url:laiyuanbianhao/}" id="p1"}
+                    <img src="{fzw:p1:suoluetu/}">
+                    <p style="font-size: 16px">{fzw:p1:biaoti/}</p>
+                    <label class="buy-all" style="float: none;">
+                        整套优惠价格：<span class="payment-price">￥{fzw:p1:jiage string="￥"/}</span>
+                        <input type="checkbox" name="price" value="{fzw:p1:jiage/}">
+                    </label>
+                    <input type="hidden" name="laoshi" id="laoshi" value="{fzw:p1:yonghuming/}" />
+                    <button type="button" id="maizhengtao" onclick="return goumai('全部', '{fzw:p1:jiage/}')" data-jiage="{fzw:p1:jiage/}">整套购买</button>
+                    {/fzw:sql}
+                </div>
+                <ul class="classvideo-detail-left-lists pay-right">
+                    {fzw:for:sql="select * from sl_zhang where laiyuanbianhao in (select kechengzhang from sl_kecheng where id={fzw:url:laiyuanbianhao/}) order by paixu asc" id="p1"}
+                    <li data-cost="0">
+                        <a>
+                            <img src="img/videodetail-icon-5.png">{fzw:p1:biaoti/}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                            
+                        </a>
+                        <ul style="display: block;">
+                            {fzw:for:sql="select * from sl_jie where laiyuanbianhao in (select kechengjie from sl_kecheng where id='{fzw:url:laiyuanbianhao/}') and zhangbiaoti='{fzw:p1:id/}' order by paixu asc" id="p2"}
+                            <li>
+                                <a href="javascript:void(0)" class="eachjie">
+                                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>{fzw:p2:biaoti/}   ({fzw:p2:shijian/})<i class="fa fa-circle-thin" aria-hidden="true"></i>
+                                    <label class="pay-single">
+                                        价格：<span class="payment-price">￥<b style="font-weight: 500">{fzw:p2:jiage string="￥"/}</b></span>
+                                        <input type="checkbox" name="jiebianhao" value="{fzw:p2:id /}"  class="jiejiage">
+                                        
+                                        <i></i>
+                                    </label>
+                                 
+                                </a>
+                            </li>
+                            {/fzw:for:sql}
+                        </ul>
+                    </li>
+                    {/fzw:for:sql}
+                </ul>
+                <div class="clear"></div>
+                <!-- <p>
+                    整章购买
+                    <label class="buy-all">
+                        {fzw:sql="select * from sl_kecheng where id={fzw:url:laiyuanbianhao/}" id="p1"}
+                        优惠价格：<span class="payment-price">￥{fzw:p1:jiage string="￥"/}</span>
+                        <input type="checkbox" name="price" value="{fzw:p1:jiage/}">
+                
+                        {/fzw:sql}
+                        <i></i>
+                    </label>
+                </p> -->
+
+            </div>
+   
+     
+            <div class="max-width" style="margin-top: 35px;">
+                <div class="pay-cost">应付金额：<span id="zongjia">￥0.00</span></div>
+                <button class="pay-confirm" type="submit" onclick="return goumai('部分','')">确认购买</button>
+            </div>
+            <input type="hidden" name="zhuangtai" id="zhuangtai" value="未付款" />
+            <input type="hidden" name="yonghuming" id="yonghuming" value="{fzw:cookie name=" user_name" /}" />
+            <input type="hidden" value="{fzw:key:bianhao/}" name="dingdanhao" />
+            <input type="hidden" value="{fzw:url:laiyuanbianhao/}" name="laiyuanbianhao" />
+            <input type="hidden" value="" name="fangshi" id="fangshi" />
+            <input type="hidden" name="jine" id="jine" />
+            <input type="hidden" name="chanpinjine" id="chanpinjine" />
+            <input type="hidden" name="zhifushijian" id="zhifushijian" value="{fzw:key:time Minutes="30"/}" />
+            
+            <input type="hidden" name="chuli" id="chuli" value="否" />
+            
+        </form>
+            <div class="clear"></div>
+            <!-- pay-bottom -->
+            <div class="pay-bottom">
+                {fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}{fzw:p1:u4/}{/fzw:sql}
+            </div>
+            <!-- bottom-end -->
+            {fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+    $(".buy-left button").click(function(){
+        $(".buy-all").click();
+    })
+    function goumai(fangshi,jiage)
+    {
+        $("#fangshi").val(fangshi);
+        if (fangshi == "部分") {
+            jiage = parseFloat($("#zongjia").html().replace("￥", ""));
+            if (jiage <= 0) {
+                layer.alert("请选择要购买的章节");
+                return false;
+            }
+            $("#jine").val(jiage);
+            $("#chanpinjine").val(jiage);
+        }
+        else {
+            $("#jine").val(jiage);
+            $("#chanpinjine").val(jiage);
+        }
+        
+        return true;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿{fzw:search table="sl_shuoshuo" order="dtime" orderby="desc" id="p1" sqlvalue="yonghuming&nbsp;in&nbsp;(select&nbsp;yonghuming&nbsp;from&nbsp;sl_user&nbsp;where&nbsp;id={fzw:url:lingshi1/})&nbsp;and&nbsp;laiyuanbianhao=0" number="10"}
+<li>
+    {fzw:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+    <a href="" class="student-homepage-list-user"><img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" style="border-radius:3px">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji"/}{else}{fzw:p2:nicheng/}{/if}</a>
+    {/fzw:sql}
+    <p class="student-homepage-list-time">{fzw:p1:dtime datetime="yyyy年MM月dd日&nbsp;&nbsp;&nbsp;hh:mm"/}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye" aria-hidden="true"></i><!--浏览（11）--></p>
+    <div class="student-homepage-list-word clear clearfix">
+        {fzw:p1:neirong/}
+    </div>
+    <div class="student-homepage-list-a">
+        {if value1="{fzw:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='说说点赞' and yonghuming='{fzw:cookie:name="user_name"/}'" id="p2"}{fzw:p2:shu/}{/fzw:sql}" value2="" bi="=="}
+        {fzw:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='说说点赞'" id="p2"}
+        <a href="javascript:void(0)" onclick="dianzan({fzw:p1:id/})"><img src="img/zan-off.png">&nbsp;赞（{fzw:p2:shu/}）</a>
+        {/fzw:sql}
+        {else}
+        {fzw:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='说说点赞'" id="p2"}
+        <a><img src="img/zan-off.png">&nbsp;已赞（{fzw:p2:shu/}）</a>
+        {/fzw:sql}
+        {/if}
+        {fzw:sql="select count(id) as shu from sl_shuoshuo where laiyuanbianhao={fzw:p1:id/}" id="p2"}
+        <a href="javascript:void(0)" onclick="showhuifu(this)"><img src="img/huifu.png">&nbsp;回复（{fzw:p2:shu/}）</a>
+        {/fzw:sql}
+        <div class="bdsharebuttonbox" style="display: inline-block;"><a href="#" class="bds_more" data-cmd="more" style="background: none;margin: 0;font-size: 13px;line-height: 20px;color: #727272"><i class="iconfont">&#xe68f;</i>&nbsp;分享</a></div>
+    </div>
+    <ul class="student-homepage-list-hide">
+        {fzw:sql="select * from sl_shuoshuo as ss,sl_user as u where ss.laiyuanbianhao={fzw:p1:id/} and ss.yonghuming=u.yonghuming" id="p2"}
+        <li>
+            <a href=""><img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" class="student-homepage-list-touxiang"></a>
+            <div class="student-homepage-list-hide-word"><a href="" class="student-homepage-list-user2">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji"/}{else}{fzw:p2:nicheng/}{/if}</a>:{fzw:p2:neirong/}</div>
+            <!--<div class="clear"></div>-->
+            <p class="student-homepage-list-hide-time">{fzw:p2:dtime datetime="yyyy年MM月dd日&nbsp;&nbsp;&nbsp;hh:mm"/}&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="huifuthis(this)"><img src="img/huifu.png">&nbsp;回复</a></p>
+        </li>
+        {/fzw:sql}
+        <div class="student-homepage-list-text">
+            <form class="huifu-form">
+                <input type="hidden" name="yonghuming" value="{fzw:cookie:name=" user_name"/}"/>
+                <input type="hidden" name="laiyuanbianhao" value="{fzw:p1:id/}" />
+                <textarea rows="3" name="neirong"></textarea>
+            </form>
+
+            <button class="student-button" onclick="huifu(this)">回复</button>
+            <div class="clear"></div>
+        </div>
+    </ul>
+</li>
+                    {/fzw:search}

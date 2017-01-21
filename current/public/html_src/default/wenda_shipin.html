@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/jquery.raty.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script src="js/jquery.raty.js" type="text/javascript"></script>
+		<title></title>
+	</head>
+	<body style="min-width: auto;">
+		<div style="width: 858px;min-height: 300px;">
+		    	<ul class="class-qa-list">
+					{fzw:search table="sl_wenda" sqlvalue="leixing='提问'" number="6" order="dtime" orderby="desc" id="p1"}
+					<li>
+						<div class="class-qa-left">
+							
+							{if value1="{fzw:p1:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}" value2="" bi="=="}
+							<img src="img/videodetail-user.png">   
+						    {else}
+						    <img src='{fzw:p1:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}'>
+						    {/if}
+							{if value1="{fzw:p1:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|xingming"/}" value2="" bi="=="}
+							{fzw:p1:fasongren string="shouji"/}   
+						    {else}
+						    {fzw:p1:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|xingming"/}
+						    {/if}
+						</div>
+						<div class="class-qa-right">
+							<p style="color: #333333;font-size: 15px;margin-bottom: 25px;"><img src="img/class-qa.png">{fzw:p1:neirong nohtml="yes" /}</p>
+							{fzw:sql="select * from sl_wenda where laiyuanbianhao={fzw:p1:id/} order by id asc" id="p2"}
+							<img src="img/class-qa2.png" class="class-qa-icon2">
+							<p class="class-qa-anwser" style="line-height: 25px;"><span>【回答】</span>
+							{if value1="{fzw:p2:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}" value2="" bi="=="}
+							<img src="img/videodetail-user.png" class="classqa-user" style="vertical-align: middle;">   
+						    {else}
+						    <img src='{fzw:p2:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}' style="vertical-align: middle;" class="classqa-user">
+						    {/if}
+						    {if value1="{fzw:p2:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|xingming"/}" value2="" bi="=="}
+						    <span class="classqa-user-id">{fzw:p2:fasongren string="shouji"/} ：</span>
+							  
+						    {else}
+						    <span class="classqa-user-id">{fzw:p2:fasongren sql="sl_user|where&nbsp;yonghuming='&dangqian'|xingming"/} ：</span>
+						    {/if}
+							{fzw:p2:neirong nohtml="yes" /}</p>
+							{/fzw:sql}
+							
+							{if value1="{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie name="user_name"/}' " id="p1"}{fzw:p1:leixing/}{/fzw:sql}" value2="老师" bi="=="}
+							<p>时间：{fzw:p1:dtime/}<a data-id="{fzw:p1:id/}" data-jsr="{fzw:p1:fasongren/}" onclick="return laoshi_huida(this)" href="javascript:;">回答</a></p>    
+						    {else}
+						    <p>时间：{fzw:p1:dtime/}</p>
+						    {/if}
+							
+						</div>
+						<div class="clear"></div>
+					</li>
+					{/fzw:search}
+				</ul>
+				<div class="classhome-right-page" style="line-height:20px;">
+					{fzw:search:page id="p1" size="8"/}
+				</div>
+		</div>
+		<!--老师回答-->
+
+	
+	<div class="classvideo-askA classvideo-askA2 laoshi_huida" style="left: 272px;top: 20px;right: auto;bottom: auto; width: 400px; height:180px;padding: 10px;">
+		<img src="img/cancle.png" class="cancle">
+		<p style="margin-bottom: 6px;">回答</p>
+		<form method="post" action="/Execution.aspx?t=wenda&type=add&tip_string=提交成功！&tipurl=/" id="huida">
+			
+			<textarea name="neirong" id="neirong_huida" style="width: 100%;height:100px;"></textarea>
+			<input type="hidden" name="leixing" id="leixing_huida" value="回答" />
+			<input type="hidden" name="laiyuanbianhao" id="laiyuanbianhao_huida" value="" />
+			<input type="hidden" name="fasongren" id='yonghuming_huida' value='18381067439{fzw:cookie name="user_name"/}' />
+			<input type="hidden" name="jieshouren" id="jieshouren_huida" value="" />
+			<!--<div class="classvideo-ask-check">
+				<input type="text" name="check" placeholder="请输入验证码">
+				<img src="img/check.png" style="width:70px;height:40px;">
+				<a href=""><img src="img/check-icon.png"></a>
+			</div>-->
+			<input type="hidden" />
+		</form>
+		<input type="submit" class="pinglun_laoshi" style="margin-top: 6px;" onclick="return huida()" value="发布" />
+		<!--<button>发布</button>-->
+	</div>
+				<script type="text/javascript">
+					function huida(){
+						var yhm=$('#yonghuming_huida').val();
+						if(yhm==''){
+							alert('您还没登录哦');
+							return false;
+						}
+						var biaoti=$('#biaoti_huida').val();
+						if(biaoti==''){
+							alert('请输入提问标题');
+							return false;
+						}
+						var neirong=$('#neirong_huida').val();
+						if(neirong==''){
+							alert('请输入内容');
+							return false;
+						}
+						var formData = $("#huida").serialize();
+						$.ajax({
+							type: "POST",
+							url: "/Execution.aspx?t=wenda&type=add",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								alert("提交成功！");
+								//$("#huida")[0].reset();
+								location.reload(true);
+							}
+						});
+						return false;
+					}
+				</script>
+
+
+<script type="text/javascript">
+	function laoshi_huida(obj){
+		var did=$(obj).data('id');
+		$('#laiyuanbianhao_huida').val(did);
+		var jsr=$(obj).data('jsr');
+		$('#jieshouren_huida').val(jsr);
+		$('.laoshi_huida').show();
+	}
+	$('.laoshi_huida .cancel').parents('.laoshi_huida').hide();
+</script>		
+	</body>
+</html>

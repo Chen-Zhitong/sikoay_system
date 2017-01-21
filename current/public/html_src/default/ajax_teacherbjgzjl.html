@@ -1,0 +1,105 @@
+<input type="button" class="base-btn" value="添加工作经历" onclick="tianjia()" />
+<input type="button" class="basecan-btn" value="取消" onclick="getgzjl()" />
+<div class="clear" style="height: 10px;"></div>
+{fzw:sql="select * from sl_laoshi_jiaoyujingli where laiyuanbianhao in (select gongzuojingli from sl_laoshi where yonghuming='{fzw:cookie:name="user_name"}')" id="p1"}
+<form class="gzjl-form">
+	<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+	<div class="baseinfo">
+		<label><nobr>*</nobr>开始时间</label>
+		<input type="month" name="kaishishijian" class="txt2" value="{fzw:p1:kaishishijian/}" />
+	</div>
+	<div class="baseinfo">
+		<label><nobr>*</nobr>结束时间</label>
+		<input type="month" name="jieshushijian" class="txt2" value="{fzw:p1:jieshushijian/}" />
+	</div>
+	<div class="clear"></div>
+	<div class="baseexp">
+		<p><nobr>*</nobr>描述过往经历（50-200字）</p>
+		<textarea name="neirong" value="{fzw:p1:neirong/}" class="grjj" maxlength="400">{fzw:p1:neirong/}</textarea>
+	</div>
+	<input type="button" class="base-btn" value="保存" onclick="editgzjl(this,{fzw:p1:id/})" />
+	<input type="button" class="basecan-btn" value="删除" onclick="delgzjl({fzw:p1:id/})" />
+	<div class="clear"></div>
+</form>
+{/fzw:sql}
+<script type="text/javascript">
+	function editgzjl(e,id){
+		var formData = $(e).parent(".gzjl-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=laoshi_jiaoyujingli&type=edit&id="+id,
+			data: formData,
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("保存成功！");
+				getgzjl();
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		return false;
+	}
+	function addgzjl(e){
+		var formData = $(e).parent(".gzjl-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=laoshi_jiaoyujingli&type=add",
+			data: formData,
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("保存成功！");
+				getgzjl();
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		return false;
+	}
+	function delgzjl(id){
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=laoshi_jiaoyujingli&type=del&id="+id,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("删除成功！");
+				xiugaigzjl();
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		return false;
+	}
+	function tianjia(){
+		var a = $("#addgzjl-box").html();
+		$("#gongzuojingli-box").append(a);
+	}
+</script>
+<div id="addgzjl-box" style="display: none;">
+	<form class="gzjl-form">
+		{fzw:sql="select * from sl_laoshi where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+		<input type="hidden" name="laiyuanbianhao" class="jyjlbianhao" value="{fzw:p1:gongzuojingli/}">
+		{/fzw:sql}
+		<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+		<div class="baseinfo">
+			<label><nobr>*</nobr>开始时间</label>
+			<input type="month" name="kaishishijian" class="txt2" value="" />
+		</div>
+		<div class="baseinfo">
+			<label><nobr>*</nobr>结束时间</label>
+			<input type="month" name="jieshushijian" class="txt2" value="" />
+		</div>
+		<div class="clear"></div>
+		<div class="baseexp">
+			<p><nobr>*</nobr>描述过往经历（50-200字）</p>
+			<textarea name="neirong" value="" class="grjj" maxlength="400"></textarea>
+		</div>
+		<input type="button" name="" class="base-btn" value="保存" onclick="addgzjl(this)" />
+		<div class="clear"></div>
+	</form>
+	<div class="clear" style="height: 10px;"></div>
+</div>

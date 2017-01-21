@@ -1,0 +1,17 @@
+{
+    "autoload": {
+        "psr-4": {
+        "root\\":"src/",
+        "database\\":"../database/"
+        }
+    },
+    "require": {
+        "nette/mail":"*",
+        "aura/filter": "^2.2",
+        "intervention/image": "^2.3",
+        "intervention/imagecache": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
+}

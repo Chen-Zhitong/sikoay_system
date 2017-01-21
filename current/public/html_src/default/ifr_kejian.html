@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>创建课程_视频管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+        	body{
+        		padding: 20px
+        	}
+        	label{
+        		padding: 10px 0;
+        		border-bottom: 1px solid #707070;
+        	}
+            select {
+                width: 173px;
+                height: 38px;
+                font-size: 13px;
+                font-family: 微软雅黑;
+                line-height: 26px;
+                margin-bottom: 10px;
+                outline: none;
+                padding: 6px 10px;
+                border: 1px solid #e8e8e8;
+                color: #595959;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background: url(/template/default/img/down.png) no-repeat scroll right center transparent;
+                padding-right: 14px;
+            }
+            input[type=radio]{
+                width:20px;
+                height:20px;
+            }
+        </style>
+    </head>
+	<body>
+		{fzw:sql="select * from sl_wendang where classid=55 and yonghuming='{fzw:cookie:name="user_name"/}' order by dtime desc" id="p1"}
+		<select class="txt1">
+			<option value="{fzw:p1:wenjianliebiao/}">{fzw:p1:biaoti/}</option>
+		</select>
+		{/fzw:sql}
+		<ul>
+            <form id="kejian-form">
+                <input type="hidden" name="id" id="id"/>
+                {fzw:search table="sl_wendang_wenjian" sqlvalue="yonghuming='{fzw:cookie:name="user_name"/}'" order="dtime" orderby="desc" id="p1" number="10"}
+                <label style="display:block">
+                    <span>{fzw:p1:biaoti/}</span>
+                    <input type="radio" name="kejian" value="{fzw:p1:id/}" class="fr" width="20">
+                </label>
+                {/fzw:search}
+            </form>
+		</ul>
+		<div class="footpage">
+				{fzw:search:page id="p1" size="8"/}
+			</div>
+			<button style="background-color: #1dbca6;border: 0;outline: medium;font-size: 13px;color: #fff;width: 80px;height: 38px;cursor: pointer;font-family: '微软雅黑';margin-right: 20px;" class="fr" onclick="bind()">确定绑定</button>
+			<script type="text/javascript">
+				function bind(){
+				    if ($("input[name=kejian]:checked").length == 0) {
+				        alert('请选择一个课件');
+				        return false;
+				    }
+				    var a = '{fzw:url:lingshi1/}';
+				    var id = new Array();
+				    id = a.split("|");
+				    for (var i = 0; i < id.length; i++) {
+				        $("#id").val(id[i]);
+				        var formData = $("#kejian-form").serialize();
+				        $.ajax({
+				            type: "POST",
+				            async: false,
+				            url: "/Execution.aspx?t=jie&type=edit&id=" + id,
+				            data: formData,
+				            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				            success: function (data) {
+				                parent.axjazhangjie({fzw:url:lingshi2/});
+				                parent.layer.closeAll();
+				                
+				                window.parent.frames.aaa();
+				            }, error: function (data) {
+				                alert("网络错误，请重试！")
+				            }
+				        });
+				    }
+				}
+			</script>
+	</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>添加成员_成员管理_圈子管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link rel="stylesheet" type="text/css" href="css/cityPicker.css">
+        <style type="text/css">
+        	.active {
+			    width: auto;
+			    height: auto;
+			    bottom: auto;
+			}
+			.IIInsomnia-city-picker .IIInsomnia-city:hover{
+				color: #1dbca6;
+			}
+			.IIInsomnia-city-picker .IIInsomnia-province-name:hover{
+				color: #1dbca6;
+			}
+			.IIInsomnia-city-picker .IIInsomnia-province-name.active{
+				color: #1dbca6;
+			}
+			.IIInsomnia-city-picker .IIInsomnia-hot-wrap ul li:hover{
+				color: #1dbca6;
+			}
+			#cityChoice{
+				width: 173px;
+    			height: 38px;
+    			border: 1px solid #e8e8e8;
+    			padding: 6px 10px;
+    			-webkit-box-sizing: border-box;
+    			-moz-box-sizing: border-box;
+    			box-sizing: border-box;
+    			font-family: "微软雅黑"
+			}
+        </style>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>  
+        <script type="text/javascript" src="js/cityPicker.js"></script>
+        <script type="text/javascript" src="js/cityData.js"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>成员管理</p>
+				</div>
+				<div class="clear"></div>
+				<div class="search-box">
+					<form action="" method="post">
+						<input type="text" name="" placeholder="请输入成员昵称/手机号/关键字" class="txt6" value="" / id="key_value">
+						<button type="button" class="search-btn" onclick="fromSubmit()"><img src="img/tc83.png" style="vertical-align: sub;margin-right: 5px;">查找</button>
+						<p>没有找到该成员？您可以<a href="/single.aspx?m=teacheryaoqingma">邀请TA</a></p>
+					</form>
+					<script type="text/javascript">
+						function fromSubmit() {
+						   // alert(document.getElementById("key_value").value);
+						   if (document.getElementById("key_value").value==''){
+								layer.alert("请输入关键字!");
+								return false;
+						   }
+						    window.location.href = "/search.aspx?m=teachertianjiachengyuan&all=" + document.getElementById("key_value").value;
+						    return false;
+						}
+					</script>	
+					<div class="clear"></div>
+					<input type="text" name="chengshi" id="cityChoice" placeholder="城市">
+					<input type="hidden" id="province" value="">
+					<input type="hidden" id="city" value="" name="suozaidi">
+					<select name="xingbie" id="xingbie">
+						<option>性别</option>
+						<option value="男">男</option>
+						<option value="女">女</option>
+					</select>
+					<!-- <select name="shengri">
+						<option>年龄</option>
+						<option>22</option>
+						<option>23</option>
+					</select> -->
+				</div>
+				<div class="clear"></div>
+				{fzw:search table="sl_user" sqlvalue="leixing='会员'" number="20" order="dtime" orderby="desc" id="p1"}
+				<div class="cy-box">
+					<div class="cy-pic">
+						<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+					</div>
+					<div class="cy-text">
+						<span>{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</span>
+						{fzw:sql="select * from sl_bbs where yonghuming='{fzw:cookie:name="user_name"/}'" id="p2"}
+						<a href="javascript:void(0)" data-yonghuming="{fzw:p1:yonghuming/}" data-id='{fzw:p2:id/}' onclick="add(this)">+ 添加</a>
+						{/fzw:sql}
+						<div class="clear"></div>
+					</div>							
+					<p>{fzw:p1:suozaidi/}</p>
+					<div class="clear"></div>
+				</div>
+				{/fzw:search}
+				<div class="clear"></div>
+				<!--页码-->
+				<div class="footpage clear">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<form id="add-form">
+			<input type="hidden" name="leixing" value="加入圈子">
+			<input type="hidden" name="yonghuming">
+			<input type="hidden" name="laiyuanbianhao">
+			<input type="hidden" name="zhuangtai" value="有效">
+		</form>
+<script type="text/javascript">
+	var city = "{fzw:url:suozaidi/}";
+	$("#cityChoice").val(city);
+	var el = $('.content-right2'); 
+	el.html(el.html().replace(/您搜索的信息不存在/ig, '您搜索的成员不存在'));
+	$("#xingbie").change(function(){
+		var sex = $(this).val();
+		window.location.href="/search.aspx?m=teachertianjiachengyuan&suozaidi="+city+"&xingbie="+sex;
+	})
+	function add(e){
+		var yonghuming = $(e).data("yonghuming");
+		var id = $(e).data("id");
+		var a;
+		$.ajax({
+			type: "GET",
+			async: false, 
+			url: "/single.aspx?m=ajax_chaxunjiaruquanzi&yonghuming="+yonghuming+"&id="+id,
+			success: function(data) {
+				a = data;
+			}
+		});
+		if (a!='') {
+			layer.alert("该成员已经在您的圈子里了！请添加别的成员");
+			return false;
+		}
+		$("#add-form input[name=yonghuming]").val(yonghuming);
+		$("#add-form input[name=laiyuanbianhao]").val(id);
+		var formData = $("#add-form").serialize();
+		$.ajax({
+			type: "POST",
+			async: false, 
+			url: "/Execution.aspx?t=history&type=add",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("添加成功！");
+				window.location.href="/search.aspx?m=teacherchengyuanguanli"
+			},error: function(data){
+				layer.msg("添加失败！请重试");
+			}
+		});
+		return false;
+	}
+</script>
+<script>
+	var sex = '{fzw:url:xingbie/}'
+    var cityPicker = new IIInsomniaCityPicker({
+        data: cityData,
+        target: '#cityChoice',
+        valType: 'v',
+        hideCityInput: '#city',
+        hideProvinceInput: '#province',
+        callback: function(city_name){
+            window.location.href="/search.aspx?m=teachertianjiachengyuan&suozaidi="+city_name+"&xingbie="+sex;
+        }
+    });
+    cityPicker.init();
+</script>
+
+	</body>
+</html>

@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<title>帖子详情_学院论坛_{fzw:key:sitename/}</title>
+		<style type="text/css">
+			button{
+				font-family: "微软雅黑"
+			}
+		</style>
+	</head>
+	<body>
+	<!-- 动态 -->
+	<script type="text/javascript">
+		var a = '{fzw:url:id/}';
+		var yhm = '{fzw:cookie:name="user_name"/}'
+		$.ajax({
+			type: "POST", 
+			url: "/Execution.aspx?t=dongtai&type=add",
+			data: "&leixing=贴子&laiyuanbianhao="+a+"&yonghuming="+yhm,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				console.log("动态成功");
+			},error: function(data){
+				console.log("动态错误");
+			}
+		});
+	</script>
+	<!-- 动态END -->
+		{fzw:inside src="顶部.html"/}
+		<!-- forum-group-detail -->
+		<div class="forum-group-list-top">
+			<div class="max-width">
+				{fzw:for:sql="select *,(select count(id) from sl_bbsshow where quanzibianhao={fzw:url:quanzibianhao/} and laiyuanbianhao=0) as tiezishu,(select count(id) from sl_bbsshow where quanzibianhao={fzw:url:quanzibianhao/} and laiyuanbianhao<>0) as huitieshu,(select count(id) from sl_history where leixing='加入圈子' and laiyuanbianhao={fzw:url:quanzibianhao/}) as chengyuanshu from sl_bbs where id={fzw:url:quanzibianhao/}" id="p1"}
+				<img src="{fzw:p1:suoluetu/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">
+				<p>{fzw:p1:quanziming/}</p>
+				<div class="forum-group-list-top-right">
+					主贴：{fzw:p1:tiezishu/}  /  回帖： {fzw:p1:huitieshu/}  /  成员：{fzw:p1:chengyuanshu/}
+					<a href="javascript:void(0)" onclick="joinquanzi({fzw:url:quanzibianhao/})"><img src="img/group-icon8.png">加入圈子</a>
+				</div>
+				圈主：{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}{/fzw:for:sql}<br>
+				简介：{fzw:p1:jianjie/}
+				{/fzw:for:sql}
+			</div>		
+		</div>
+		
+		<div class="max-width" style="margin-top: 20px;">
+			<div class="forum-group-detail">
+				{fzw:sql="select *,u.id as userid from sl_bbsshow as bbs,sl_user as u where bbs.id={fzw:url:id/} and bbs.yonghuming=u.yonghuming" id="p1"}
+				<p>{fzw:p1:biaoti/}</p>
+				<div class="forum-group-detail-title">
+					<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" style="cursor:pointer" onclick="window.location.href='/single.aspx?m=user-homepage&id={fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|id"/}'">    
+					<a href="/single.aspx?m=user-homepage&id={fzw:p1:userid/}" style="color: #1dbca6;">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a>  {fzw:p1:dtime string="shijian"/}<br>
+					浏览量：<span id="renqi"></span>
+					<div>
+						<div class="bdsharebuttonbox" style="float: left;display: inline-block;"><a href="#" class="bds_more" data-cmd="more" style="background: none;margin: 0;font-size: 13px;line-height: 20px;color: #727272"><i class="iconfont">&#xe68f;</i>&nbsp;分享</a></div>
+						<a href="javascript:void(0)" onclick="fenxiang()"></a>&nbsp;&nbsp;&nbsp;
+						<a href="javascript:void(0)" onclick="dianzan({fzw:p1:id/})"><i class="fa fa-thumbs-up" aria-hidden="true" style="font-size: 16px">&nbsp;</i>点赞</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="forum-group-detail-content">
+					{fzw:p1:neirong/}
+				</div>
+				{/fzw:sql}
+				<script type="text/javascript">{ajax:table="sl_bbsshow" id="{fzw:url:id/}" type="+" span_id="renqi" value="renqi"/}</script>
+				<div class="forum-group-detail-answer">
+					<form id="lv1-form">
+						<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"/}'>
+						<input type="hidden" name="laiyuanbianhao" value="{fzw:url:id/}">
+						<input type="hidden" name="quanzibianhao" value="{fzw:url:quanzibianhao/}">
+						<textarea placeholder="扯淡、吐槽、表扬、鼓励...想说啥就说啥！" rows="6" name="neirong"></textarea>
+					</form>
+					<button id="huifu-lv1">添加回答</button>
+				</div>
+				<script type="text/javascript">
+					$("#huifu-lv1").click(function(){
+						var count = 0;
+						if ($("#lv1-form").children("input").val()=='') {
+							count++;
+						}
+						if(count>0){
+							layer.msg("请先登录！");
+							return false;
+						}
+						var a = $("#lv1-form").children("textarea").val();
+						if (a=='') {
+							layer.msg("请输入回复内容！");
+							return false;
+						}
+						var formData = $("#lv1-form").serialize();
+						$.ajax({
+							type: "POST", 
+							url: "/Execution.aspx?t=bbsshow&type=add",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								layer.msg("回复成功！");
+								location.reload(true);
+							},error: function(data){
+								layer.msg("回复失败！请重试");
+							}
+						});
+					})
+				</script>
+				
+				<div class="forum-group-detail-list">
+					<p>回复（{fzw:sql="select count(id) as huifushu from sl_bbsshow where laiyuanbianhao={fzw:url:id/}" id="p1"}{fzw:p1:huifushu/}{/fzw:sql}）</p>	
+					<ul>
+						{fzw:for:sql="select *,(select count(id) from sl_history as h where h.laiyuanbianhao=bbs.id and leixing='点赞') as dianzanshu,(select count(id) from sl_bbsshow as bbs2 where bbs2.laiyuanbianhao=bbs.id) as huifushu,u.id as userid from sl_bbsshow as bbs,sl_user as u where bbs.yonghuming=u.yonghuming and bbs.laiyuanbianhao={fzw:url:id/} order by bbs.id desc" id="p1"}
+						<li>
+							<div class="group-detail-list-title">
+								<a href="/single.aspx?m=user-homepage&id={fzw:p1:userid/}"><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"></a>
+								<a href="/single.aspx?m=user-homepage&id={fzw:p1:userid/}">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a><br>
+								{fzw:p1:dtime string="shijian"/}
+							</div>
+							{fzw:p1:neirong/}
+							<div class="group-detail-list-click">
+								<a href="javascript:void(0)" onclick="dianzan({fzw:p1:id/})"><img src="img/zan-off.png">赞（{fzw:p1:dianzanshu/}）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="javascript:void(0)" class="openhuifu"><img src="img/huifu.png">回复（{fzw:p1:huifushu/}）</a>
+							</div>
+							<div class="group-detail-list-hide">
+								<ul class="lv2huifu">
+									{fzw:for:sql="select *,u.id as userid from sl_bbsshow as bbs,sl_user as u where bbs.yonghuming=u.yonghuming and bbs.laiyuanbianhao={fzw:p1:id/}" id="p2"}
+									<li>
+										<a href="/single.aspx?m=user-homepage&id={fzw:p2:userid/}"><img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"></a>
+										<div>
+											<a href="/single.aspx?m=user-homepage&id={fzw:p2:userid/}">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</a>&nbsp;:&nbsp;{fzw:p2:neirong/}
+										</div>
+										<a href="javascript:void(0)" class="gruop-list-answer-this">回复</a>
+									</li>
+									{/fzw:for:sql}
+								</ul>
+								<div class="group-detail-list-answer">
+									<a href="/single.aspx?m=login&tipurl={fzw:key:siteurl/}"><img src="" onerror="this.src='/template/default/img/lingshitouxiang.png'"><b style="font-weight: 500">请登录</b></a><br>
+									<form class="lv2-form">
+										<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"/}'>
+										<input type="hidden" name="laiyuanbianhao" value="{fzw:p1:id/}">
+										<input type="hidden" name="quanzibianhao" value="{fzw:p1:quanzibianhao/}">
+										<textarea rows="4" name="neirong"></textarea>
+									</form>
+									<button class="huifu-lv2">回复</button>
+									<div class="clear"></div>
+								</div>
+							</div>
+						</li>
+						{/fzw:for:sql}
+					</ul>
+				</div>
+			</div>
+			<div class="forum-home-content-right">
+				
+				<div class="forum-home-right-list">
+					<p>圈内热帖</p>
+					<ol>
+						{fzw:sql="select top 9 * from sl_bbsshow where quanzibianhao={fzw:url:quanzibianhao/} and laiyuanbianhao=0 order by renqi desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ol>
+				</div>
+				<div class="forum-home-right-list forum-home-right-list2">
+					<p>回答雷锋榜</p>
+					<table class="leifengbang">
+						{fzw:sql="select top 5 * ,(select count(id) from sl_bbsshow as bs where bs.yonghuming=u.yonghuming and laiyuanbianhao<>0) as huidashu from sl_user as u order by huidashu desc" id="p1"}
+						<tr>
+							<td class="paixu"></td>
+							<td><a href="/single.aspx?m=user-homepage&id={fzw:p1:id/}"><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a><br>{fzw:p1:leixing/}</td>
+							<td>{fzw:p1:huidashu/}回答</td>
+						</tr>
+						{/fzw:sql}
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var a = $(".leifengbang").find("tr").length;
+		    for(var i=0;i<a;i++){
+		    	$(".leifengbang").children().children("tr").eq(i).children(".paixu").html(i+1);
+		    }
+		    var touxiang;
+		    var nicheng;
+		    var id;
+		    {fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+		    touxiang = '{fzw:p1:touxiang/}';
+		    nicheng = '{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}';
+		    id={fzw:p1:id/};
+		    {/fzw:sql}
+		        $(".group-detail-list-answer").find("img").attr("src",touxiang);
+		    $(".group-detail-list-answer").find("b").html(nicheng);
+		    $(".group-detail-list-answer").find("a").attr("href","/single.aspx?m=user-homepage&id="+id);
+		    function fenxiang(){
+				$(".bdsharebuttonbox").children("a").click();
+			}
+			function dianzan(num){
+				var yonghuming ='{fzw:cookie:name="user_name"}';
+				if (yonghuming=='') {
+					layer.msg("请先登录！");
+					return false;
+				}
+				var x;
+				$.ajax({
+					type: "GET", 
+					async:false,
+					url: "/single.aspx?m=ajax_chaxundianzan&id="+num+"&yonghuming="+yonghuming,
+					success: function(data) {
+						x = data;
+					}
+				});
+				if (x>0) {
+					layer.msg("您已经点过赞了！");
+					return false;
+				}
+				$.ajax({
+					type: "POST", 
+					async:false,
+					url: "/Execution.aspx?t=history&type=add",
+					data:"&leixing=点赞&laiyuanbianhao="+num+"&yonghuming="+yonghuming,
+					success: function(data) {
+						layer.msg("点赞成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("点赞失败！请重试");
+					}
+				});
+			}
+			$(".huifu-lv2").click(function(){
+				var count = 0;
+				if ($(this).parent().children(".lv2-form").children("input").val()=='') {
+					count++;
+				}
+				if(count>0){
+					layer.msg("请先登录！");
+					return false;
+				}
+				var a = $(this).parent().children(".lv2-form").children("textarea").val();
+				if (a=='') {
+					layer.msg("请输入回复内容！");
+					return false;
+				}
+				var formData = $(this).parent().children(".lv2-form").serialize();
+				$.ajax({
+					type: "POST", 
+					url: "/Execution.aspx?t=bbsshow&type=add",
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("回复成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("回复失败！请重试");
+					}
+				});
+			})
+			function joinquanzi(num){
+				var yonghuming;
+				yonghuming='{fzw:cookie:name="user_name"}';
+				if (yonghuming=='') {
+					layer.alert("请先登录！");
+					return false;
+				}
+				var x;
+				$.ajax({
+					type: "GET", 
+					async:false,
+					url: "/single.aspx?m=ajax_chaxunjiaruquanzi&id="+num+"&yonghuming="+yonghuming,
+					success: function(data) {
+						x = data;
+					}
+				});
+				if (x>0) {
+					layer.msg("您已经在圈子里了！");
+					return false;
+				}
+				$.ajax({
+					type: "POST", 
+					async:false,
+					url: "/Execution.aspx?t=history&type=add",
+					data:"&leixing=加入圈子&laiyuanbianhao="+num+"&yonghuming="+yonghuming,
+					success: function(data) {
+						layer.msg("加入成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("加入失败！请重试");
+					}
+				});
+			}
+		</script>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>		
+	</body>
+</html>

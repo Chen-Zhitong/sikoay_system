@@ -1,0 +1,3 @@
+- (ADD) Implement JsonSerializable in the Failure class
+- (DOC) Update the documentation
+- (FIX) Removed undefined but registered sanitizers from SanitizerLocator

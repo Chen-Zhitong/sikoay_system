@@ -1,0 +1,21 @@
+<div class="renzhengshu">
+			{fzw:for:sql="select *,(select COUNT(id) from sl_Field where Model_id=80) as count_id from sl_Field where Model_id=80" id="p1"}
+			<span class="renzhengtotal">{fzw:p1:count_id/}</span>
+			{fzw:for:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p2"}
+			<div class="renzhengeach" data-canshu="{fzw:p2:{fzw:p1:u1/}/}"></div>{/fzw:for:sql}
+			{/fzw:for:sql}
+		</div>
+		<script type="text/javascript">
+			var total = $(".renzhengtotal").html();
+			var notnull = 0;
+			$(".renzhengeach").each(function(){
+				if ($(this).data("canshu")!='') {
+					notnull++;
+				}
+			})
+			function percentNum(num, num2) { 
+     			return (Math.round(num / num2 * 10000) / 100.00 + "%");
+			}
+			var renzhengbaifenbi = percentNum(notnull,total);
+			$("#renzhengbaifenbi").html(renzhengbaifenbi);
+		</script>

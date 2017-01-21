@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>帖子管理_圈子管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	.com-reply1 a{
+		font-size: 13px;
+		color: #656565;
+	}
+	.com-info2 label{
+		font-size: 13px;
+		color: #8d8d8d;
+	}
+	.com-detail{
+		color: #333;
+	}
+	.conments2 img{
+		border-radius: 100%;
+	}
+	.com-time{
+		color: #8d8d8d;
+		font-size: 13px;
+	}
+	.sousuo{
+		opacity: 0;
+		position: absolute;
+		z-index: 99;
+		display: inline-block !important;
+		cursor: pointer;
+		width: 25px;
+		height: 34px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		left: 385px;
+	}
+</style>        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>帖子管理{fzw:sql="select count(id) as tiezishu from sl_bbsshow where laiyuanbianhao=0 and quanzibianhao in (select id from sl_bbs where yonghuming='{fzw:cookie:name="user_name"/}')" id="p1"}({fzw:p1:tiezishu/}){/fzw:sql}</p>
+				</div>
+				<div class="creatxy">
+                    {fzw:sql="select * from sl_bbs where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}
+					<a href="/single.aspx?m=fatie&quanzibianhao={fzw:p1:id/}">＋ 我要发帖</a>
+                    
+					<form style="position: relative;" onkeydown="if(event.keyCode==13){fromSubmit();return false;}">
+					<input type="text" name="" class="txt3 search" placeholder="搜索学员，回车跳转" id="key_value"/>
+					<input type="button" name="" class="txt4 sousuo" value="" onclick="fromSubmit()"/>
+					</form>
+                    {/fzw:sql}
+				</div>
+				<script type="text/javascript">
+						function fromSubmit() {
+						   // alert(document.getElementById("key_value").value);
+						   if (document.getElementById("key_value").value==''){
+								layer.alert("请输入关键字!");
+								return false;
+						   }
+						    window.location.href = "/search.aspx?m=teacherchengyuansearch&nicheng=" + document.getElementById("key_value").value;
+						    return false;
+						}
+					</script>
+				{fzw:search table="sl_bbsshow" sqlvalue="quanzibianhao&nbsp;in&nbsp;(select&nbsp;id&nbsp;from&nbsp;sl_bbs&nbsp;where&nbsp;yonghuming='{fzw:cookie:name="user_name"/}')&nbsp;and&nbsp;laiyuanbianhao=0" number="10" order="dtime" orderby="desc" id="p1"}
+				<div class="conments2">
+					<input type="checkbox" name="check" class="mycheck"  />
+					{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+					<img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+					<div class="com-info2">
+						<label>{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</label>
+						<label>发布了</label>			
+						<p class="com-detail">{fzw:p1:biaoti/}</p>
+						<p class="com-time">时间：{fzw:p1:dtime datetime="yyyy-MM-dd&nbsp;&nbsp;&nbsp;&nbsp;hh:mm"/}</p>
+						<p class="com-time">{fzw:for:sql="select count(id) as huifushu from sl_bbsshow where laiyuanbianhao={fzw:p1:id/}" id="p3"}{fzw:p3:huifushu/}{/fzw:for:sql}评/{fzw:p1:renqi/}阅</p>											
+						<div class="clear"></div>
+				   </div>
+				   {/fzw:for:sql}
+				   <div class="com-reply1" data-id="{fzw:p1:id/}">
+				   		<a href="javascript:void(0)" class="jinghua">精华</a>
+						<a href="javascript:void(0)" class="zhiding">置顶</a>
+						<a href="javascript:void(0)" onclick="del({fzw:p1:id/})">删除帖子</a>
+						<a class="reply1">回复帖子</a>
+					</div>
+					<div class="clear"></div>
+				   <div class="reply">
+					<form class="huifu-form">
+						<input type="hidden" name='yonghuming' value='{fzw:cookie:name="user_name"/}'>
+						<input type="hidden" name="laiyuanbianhao" value="{fzw:p1:id/}">
+						<input type="hidden" name="quanzibianhao" value="{fzw:p1:quanzibianhao/}">
+						<input type="hidden" name="tiezileibie" value="{fzw:p1:tiezileibie/}">
+						<textarea name="neirong" placeholder="回复..." class="reply-text2"></textarea>
+						<a href="javascript:void(0)" class="huifubox">回复</a>
+					</form>
+					</div>
+				    <div class="clear"></div>
+				</div>
+				{/fzw:search}
+				
+				<div class="checkall">
+					<input type="checkbox" name="myall" class="mycheck" id="myall" onclick="checkAll(this.checked)"  />
+					<label for="myall" onselectstart="return false;">全选</label>
+					<a href="">删除帖子</a>
+				</div>
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			<!--右侧内容栏结束-->
+		</div>
+		<form id="shuxing-form">
+			<input type="hidden" name="id">
+			<input type="hidden" name="shuxing">
+		</form>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			$(".jinghua").click(function(){
+				var id = $(this).parent("div").data("id");
+				$("#shuxing-form input[name=id]").val(id);
+				$("#shuxing-form input[name=shuxing]").val("精华");
+				var formData = $("#shuxing-form").serialize();
+				$.ajax({
+					type: "POST", 
+					url: "/Execution.aspx?t=bbsshow&type=edit",
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("设置成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("设置失败！请重试");
+					}
+				});
+			})
+			$(".huifubox").click(function(){
+				var a = $(this).parent().children("textarea").val();
+				if (a=='') {
+					layer.msg("请输入回复内容！");
+					return false;
+				}
+				if ($(this).parent().children("input").val()=='') {
+					layer.msg("请登录！");
+					return false;
+				}
+				var formData2 = $(this).parent("form").serialize();
+				$.ajax({
+					type: "POST", 
+					url: "/Execution.aspx?t=bbsshow&type=add",
+					data: formData2,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("回复成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("回复失败！请重试");
+					}
+				});
+			})
+			function del(num){
+				$.ajax({
+					type: "POST",
+					url: "/Execution.aspx?t=bbsshow&type=del&id="+num,
+					success: function(data) {
+						layer.msg("删除成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+					}
+				});
+				return false;
+			}
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您的圈子还没有相关帖子'));
+		</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

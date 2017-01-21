@@ -1,0 +1,29 @@
+{fzw:sql="select * from sl_geren as ls,sl_user as u where u.yonghuming=ls.yonghuming and ls.yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+<form id="grjj-form">
+	<textarea name="gerenjianjie" class="grjj" id="neirong">{fzw:p1:gerenjianjie/}</textarea>
+	{fzw:server type="Editor" id="neirong" user="{fzw:cookie name="user_name" /}" width="100%" height="200px" /}
+	<input type="button" class="base-btn" value="保存" onclick="savegrjj({fzw:p1:id/})" />
+	<input type="button" class="basecan-btn" value="取消" onclick="getgrjj()"/>
+	<div class="clear"></div>
+</form>
+{/fzw:sql}
+<script type="text/javascript">
+	function savegrjj(id){
+		var formData = $("#grjj-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=geren&type=edit&id="+id,
+			data: formData,
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("保存成功！");
+				getgrjj();
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		return false;
+	}
+</script>	

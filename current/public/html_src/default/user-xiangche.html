@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/jquery.raty.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<style type="text/css">
+			.bottom-2{
+				margin-top: 0;
+			}
+            a{
+                cursor:pointer
+            }
+            #photolist li{
+                box-sizing:border-box
+            }
+            .main {
+                position: relative;
+                -moz-column-count: 4; /* Firefox */
+                -webkit-column-count: 4; /* Safari and Chrome */
+                column-count: 4;
+                -webkit-column-gap: 5px;
+                -moz-column-gap: 5px;
+            }
+
+            .box {
+                float: left;
+                padding: 15px 0 0 15px;
+            }
+
+                .box .pic {
+                    width: 180px;
+                    height: auto;
+                    padding: 10px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 5px #cccccc;
+                    border: 1px solid #cccccc;
+                }
+
+                    .box .pic img {
+                        display: block;
+                        width: 100%;
+                    }
+                    .teacher-photo ul li{
+                        width:100%;
+                        box-shadow:1px 1px 1px #cccccc;
+                    }
+		</style>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script src="js/jquery.raty.js" type="text/javascript"></script>
+		<title>会员相册_{fzw:key:sitename/}</title>
+        
+	</head>
+<body>
+    {fzw:inside src="顶部.html"/}
+    <!-- student-vip -->
+    <div class="student-top">
+        <div class="max-width">
+            {fzw:inside src="usertop.html"/}
+            <ul class="student-top-menu">
+                <li><a href="/single.aspx?m=user-homepage&id={fzw:url:id/}"><img src="img/student3.png">主页</a></li>
+                <li><a href="/single.aspx?m=user-shuoshuo&id={fzw:url:id/}"><img src="img/student4.png">说说</a></li>
+                <li><a href="/single.aspx?m=user-tiezi&id={fzw:url:id/}"><img src="img/student5.png">帖子</a></li>
+                <li><a href="/single.aspx?m=user-video&id={fzw:url:id/}"><img src="img/student6.png">视频</a></li>
+                <li class="studentpage-on"><a href="/single.aspx?m=user-xiangche&id={fzw:url:id/}"><img src="img/student7-on.png">相册</a></li>
+                <li><a href="/single.aspx?m=user-info&id={fzw:url:id/}"><img src="img/student8.png">个人信息</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="student-container">
+        <div class="max-width">
+            <div class="student-title">
+                <img src="img/student10.png">相册
+            </div>
+            <div class="teacher-photo"  style="width:100%;padding-bottom:10px">
+                <ul id="photolist" class="layer-photos-demo main clearfix">
+                    {fzw:sql="select * from sl_xiangche where yonghuming in (select yonghuming from sl_user where id={fzw:url:id/}) and leixing='照片' order by dtime desc,id desc" id="p1"}
+                    <li class="box" style="width:100%"><a class=""><img src="{fzw:p1:suoluetu/}" layer-pid="{fzw:p1:biaoti/}" layer-src="{fzw:p1:suoluetu/}" alt="{fzw:p1:biaoti/}">{fzw:p1:biaoti/}</a></li>
+                    {/fzw:sql}
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    {fzw:inside src="底部.html"/}
+    {fzw:inside src="右侧.html"/}
+    <script src="js/layer.js"></script>
+    <script>
+        //图片展示
+        layer.photos({
+            photos: '#photolist'
+          ,anim: 5 
+        });
+        
+        /*parent 父元素id clsName 块元素类*/
+        function waterfall(parent,clsName){
+            //获取父元素
+            var oParent = document.getElementById(parent);
+            //获取所有box
+            aBoxArr = oParent.getElementsByClassName(clsName);
+            //单个box宽度
+            iBoxW = aBoxArr[0].offsetWidth;
+            // 列数
+            cols = Math.floor(document.documentElement.clientWidth / iBoxW);
+
+            //oParent.style.cssText = 'width:'+iBoxW*cols+'px;margin:0 auto;';
+
+            //储存所有的高度
+            var hArr = [];
+            for(var i = 0; i < aBoxArr.length; i++){
+                if(i <= cols){
+                    hArr[i] = aBoxArr[i].offsetHeight;
+                }else{
+                    //获取hArr最小值
+                    var minH = Math.min.apply(null,hArr),
+                    // hArr最小值索引index
+                    minHIndex = getMinHIndex(hArr,minH);
+                    //aBoxArr[i].style.cssText = 'position:absolute;top:'+minH+'px;left:'+aBoxArr[minHIndex].offsetLeft+'px;';
+
+                    //添加元素之后更新hArr
+                    hArr[minHIndex] += aBoxArr[i].offsetHeight;
+                }
+            }
+        }
+
+        //获取最小值索引
+        function getMinHIndex(arr,val){
+            for(var i in arr){
+                if(arr[i]  == val){
+                    return i;
+                }
+            }
+        }
+
+        //检查是否满足加载数据条件,parent 父元素id clsName 块元素类
+        function checkScollSlide(parent,clsName){
+            var oParent = document.getElementById(parent),
+                aBoxArr = oParent.getElementsByClassName(clsName),
+                // 最后一个box元素的offsetTop+高度的一半
+                lastBoxH = aBoxArr[aBoxArr.length - 1].offsetTop + aBoxArr[aBoxArr.length - 1].offsetHeight / 2,
+                //兼容js标准模式和混杂模式
+                scrollTop = document.documentElement.scrollTop || document.body.scrollTop,
+                height = document.documentElement.clientHeight || document.body.clientHeight;
+            return lastBoxH < scrollTop + height ? true : false;
+        }
+        window.onload = function(){
+            waterfall('photolist','box');
+        }
+    </script>
+</body>
+</html>

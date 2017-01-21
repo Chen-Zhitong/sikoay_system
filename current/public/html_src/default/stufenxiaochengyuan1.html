@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>分销成员_分销管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script> 
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+                $(".fenxiaoguanli").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>分销成员</p>
+					<a href="/search.aspx?m=stufenxiaochengyuan3">三级分销（{fzw:sql="select COUNT(id) as count_id from sl_user where jieshaoren in (select yonghuming from sl_user where jieshaoren in (select yonghuming from sl_user where jieshaoren='{fzw:cookie:name="user_name"/}'))" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=stufenxiaochengyuan2">二级分销（{fzw:sql="select COUNT(id) as count_id from sl_user where jieshaoren in (select yonghuming from sl_user where jieshaoren='{fzw:cookie:name="user_name"/}')" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					
+					<a href="/search.aspx?m=stufenxiaochengyuan1" class="on">一级分销（{fzw:sql="select COUNT(id) as count_id from sl_user where jieshaoren='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+				</div>
+				<!-- <script type="text/javascript">
+					var a = {fzw:url:lingshi1/};
+					if (a==1) {
+						$(".right-title").children("a").eq(2).addClass("on")
+					}else if(a==2){
+						$(".right-title").children("a").eq(1).addClass("on")
+					}else if(a==3){
+						$(".right-title").children("a").eq(0).addClass("on")
+					}
+				</script> -->
+				<div class="clear"></div>
+				{fzw:search table="sl_user" sqlvalue="jieshaoren='{fzw:cookie:name="user_name"/}'" number="20" order="dtime" orderby="desc" id="p1"}
+                <div class="fenx-box">
+                    <div class="fenx-pic">
+                        <img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" />
+                    </div>
+                    <div class="fenx-text">
+                        <span>{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</span>
+                        {if value1="{fzw:p1:leixing/}" value2="老师" bi="=="}
+                        <a href="javascript:void(0)" onclick="chakata({fzw:p1:id/})"><img src="img/tc67.png" />查看TA</a>
+                        {else}
+                        <a href="javascript:void(0)" onclick="chakata({fzw:p1:id/})"><img src="img/tc67.png" />查看TA</a>
+                        {/if}
+                        <div class="clear"></div>
+                        {fzw:sql="select top 1 sl_kc_cart.biaoti,sl_kc_cart.dtime as dtime from sl_kc_cart,sl_kc_order where sl_kc_cart.dingdanhao=sl_kc_order.dingdanhao and sl_kc_order.zhuangtai='已付款' and sl_kc_cart.yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+                        <p>购买课程：{fzw:p2:biaoti/}</p>
+
+                        <label>{fzw:p2:dtime string="shijian"/}</label>
+                        {/fzw:sql}
+                        <div class="clear"></div>
+                    </div>
+                </div>
+			{/fzw:search}
+<div class="clear"></div>
+<div class="footpage">
+    {fzw:search:page id="p1" size="5"/}
+    <div class="clear"></div>
+</div>
+		</div>
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关成员'));
+			function chakata(id){ 
+				layer.open({
+				  	type: 2,
+				  	title: '查看TA',
+				  	shadeClose: true,
+				  	shade: 0.8,
+				  	area: ['400px', '390px'],
+				  	content: '/single.aspx?m=ajax_chakanta&id='+id, 
+				}); 
+			}
+		</script>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+	</body>
+</html>

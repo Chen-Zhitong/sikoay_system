@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>资料管理_个人设置</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+
+    </head>
+	<body>
+		<form id="laoshi-form">
+			<input type="hidden" name="yonghuming">
+			<input type="hidden" name="jiaoyujingli">
+			<input type="hidden" name="gongzuojingli">
+		</form>
+		<script type="text/javascript">
+        	var x=0;
+        	var yonghuming='{fzw:cookie:name="user_name"}'
+        	{fzw:sql="select * from sl_laoshi where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+        	x = {fzw:p1:id/};
+        	{/fzw:sql}
+        	if (x==0) {
+        		var jiaoyujingli = {fzw:key:bianhao/};
+        		$("#laoshi-form input[name=yonghuming]").val(yonghuming);
+        		$("#laoshi-form input[name=jiaoyujingli]").val(jiaoyujingli);
+        		$("#laoshi-form input[name=gongzuojingli]").val(jiaoyujingli);
+        		var formData = $("#laoshi-form").serialize();
+        		$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=laoshi&type=add",
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+							console.log("y");
+							location.reload(true);
+					},error:function(data){
+						location.reload(true);
+						return false;
+					}
+				});
+        	}
+        </script>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+            <script>
+                $(".gerenshezhi").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				
+				<div class="right-title">
+					<p>个人资料</p>
+				</div>
+				<div class="zl-title">
+					<p>基本信息</p>
+					<a href="javascript:void(0)" onclick="xiugaijbxx()">编辑<img src="img/tc62.png"/></a>
+				</div>
+				<div class="zl-box ziliaogunali" id="jibeninfo-box">
+					
+				</div>
+				<div class="zl-title">
+					<p>背景资料</p>
+					<a href="javascript:void(0)" onclick="xiugaibjzl()">编辑<img src="img/tc62.png"/></a>
+				</div>
+				<div class="zl-box ziliaogunali" id="beijingziliao-box">
+					
+				</div>
+				<div class="zl-title">
+					<p>个人简介<nobr>（*必填）</nobr></p>
+					<a href="javascript:void(0)" onclick="xiugaigrjj()">编辑<img src="img/tc62.png"/></a>
+				</div>
+				<div class="zl-box" id="gerenjianjie-box">
+					
+				</div>
+				
+				<div class="zl-title">
+					<p>教育经历</p>
+					<a href="javascript:void(0)" onclick="xiugaijyjl()">编辑<img src="img/tc62.png"/></a>
+				</div>
+				<div class="zl-box" id="jiaoyujingli-box">
+					
+				</div>
+				<div class="zl-title">
+					<p>工作经历</p>
+					<a href="javascript:void(0)" onclick="xiugaigzjl()">编辑<img src="img/tc62.png"/></a>
+				</div>
+				<div class="zl-box" id="gongzuojingli-box">
+					
+				</div>
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			function getjbxx(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherjibeninfo",
+					success: function(data) {
+						$("#jibeninfo-box").html(data);
+					}
+				});
+			}
+			function getbjzl(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherbeijingziliao",
+					success: function(data) {
+						$("#beijingziliao-box").html(data);
+					}
+				});
+			}
+			function getgrjj(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teachergerenjianjie",
+					success: function(data) {
+						$("#gerenjianjie-box").html(data);
+					}
+				});
+			}
+			function getjyjl(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherjiaoyujingli",
+					success: function(data) {
+						$("#jiaoyujingli-box").html(data);
+					}
+				});
+			}
+			function getgzjl(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teachergongzuojingli",
+					success: function(data) {
+						$("#gongzuojingli-box").html(data);
+					}
+				});
+			}
+			getjbxx();
+			getbjzl();
+			getgrjj();
+			getjyjl();
+			getgzjl();
+			function xiugaijbxx(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherbjjbxx",
+					success: function(data) {
+						$("#jibeninfo-box").html(data);
+					}
+				});
+			}
+			function xiugaibjzl(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherbjbjzl",
+					success: function(data) {
+						$("#beijingziliao-box").html(data);
+					}
+				});
+			}
+			function xiugaigrjj(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherbjgrjj",
+					success: function(data) {
+						$("#gerenjianjie-box").html(data);
+					}
+				});
+			}
+			function xiugaijyjl(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherbjjyjl",
+					success: function(data) {
+						$("#jiaoyujingli-box").html(data);
+					}
+				});
+			}
+			function xiugaigzjl(){
+				$.ajax({
+					type: "GET",
+					async: false, 
+					url: "/single.aspx?m=ajax_teacherbjgzjl",
+					success: function(data) {
+						$("#gongzuojingli-box").html(data);
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

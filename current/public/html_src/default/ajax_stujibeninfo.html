@@ -1,0 +1,42 @@
+{fzw:sql="select * from sl_geren as ls,sl_user as u where u.yonghuming=ls.yonghuming and ls.yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+					<div class="baseinfo">
+						<span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+						<label><i>{fzw:p1:xingming/}</i></label>
+					</div>
+					<div class="baseinfo">
+						<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：</span>
+						<label><i>{fzw:p1:xueli/}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="baseinfo">
+						<span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
+						<label><i>{fzw:p1:nicheng/}</i></label>
+					</div>
+					<div class="baseinfo">
+						<span>出生日期：</span>
+						<label><i>{fzw:p1:shengri datetime="yyyy-MM-dd"/}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="baseinfo">
+						<span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+						<label><i>{fzw:p1:xingbie/}</i></label>
+					</div>
+					<div class="baseinfo">
+						<span>毕业学校：</span>
+						<label><i>{fzw:p1:jiuduxuexiao/}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="baseinfo">
+						<span>我的身份：</span>
+						<label><i>{fzw:p1:leixing/}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="baseinfo" style="width: 700px;">
+						<span>座&nbsp;&nbsp;右&nbsp;&nbsp;铭：</span>
+						<label><i>{fzw:p1:zuoyouming/}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="basepic">
+						<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+					</div>
+{/fzw:sql}

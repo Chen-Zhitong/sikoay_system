@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>我的钱包_账户管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+<style type="text/css">
+	.dd-info{
+		border-bottom: 1px dashed #e8e8e8;
+	}
+
+</style>   
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>     
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+            <script>
+                $(".zhanghuguanli").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>我的钱包</p>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				<div class="account">
+					<h4>账户余额</h4>
+					<span>{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}元</span>
+					<a href="/single.aspx?m=chongzhi" class="chongz-btn">充值</a>
+					<a href="/single.aspx?m=tixian" class="tix-btn">提现</a>
+					<div class="clear"></div>
+					<p>累计收入：<nobr>¥{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and (leixing='课程收入' or leixing='返利') and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}</nobr></p>
+					<p>今日收入：<nobr>¥{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and datediff(day, dtime ,getdate())=0 and (leixing='课程收入' or leixing='返利') and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}</nobr></p>
+					<p>本周收入：<nobr>¥{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and datediff(week, dtime ,getdate())=0 and (leixing='课程收入' or leixing='返利') and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}</nobr></p>
+					<p>本月收入：<nobr>¥{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and datediff(month, dtime ,getdate())=0 and (leixing='课程收入' or leixing='返利') and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0.00{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}</nobr></p>
+					<div class="clear"></div>
+				</div>
+				<div class="act-detail">
+					<div class="act-title">
+						<p>账户明细</p>
+						<a href="/search.aspx?m=teachermoney&leixing=返利">分销记录</a>
+						<a href="/search.aspx?m=teachermoney&leixing=课程收入">课程记录</a>
+						<a href="/search.aspx?m=teachermoney&leixing=提现">提现记录</a>
+						<a href="/search.aspx?m=teachermoney&leixing=充值">充值记录</a>
+						<a href="/search.aspx?m=teachermoney">全部记录</a>
+						<div class="clear"></div>
+					</div>
+					<script type="text/javascript">
+						var a = '{fzw:url:leixing/}';
+						if (a=='返利') {
+							$(".act-title").children("a").eq(0).addClass("on");
+						}else if(a=='课程收入'){
+							$(".act-title").children("a").eq(1).addClass("on");
+						}
+						else if(a=='提现'){
+							$(".act-title").children("a").eq(2).addClass("on");
+						}
+						else if(a=='充值'){
+							$(".act-title").children("a").eq(3).addClass("on");
+						}
+						else if(a==''){
+							$(".act-title").children("a").eq(4).addClass("on");
+						}
+					</script>
+					{fzw:search table="sl_caiwu" sqlvalue="yonghuming='{fzw:cookie:name="user_name"}'" number="10" id="p1" order="dtime" orderby="desc"}
+					<div class="dd-info">
+						<p class="act-date">{fzw:p1:dtime datetime="yyyy.MM.dd"/}</p>
+						<p class="act-what">{fzw:p1:miaoshu/}</p>
+						<p class="act-money">{fzw:p1:jine/}</p>
+						<p class="act-state">{fzw:p1:zhuangtai/}</p>
+					</div>
+					<div class="clear"></div>
+					{/fzw:search}
+					<script type="text/javascript">
+						$(".dd-info .act-money").each(function(){
+							var a = $(this).html();
+							var b = parseInt(a);
+							if (b>0) {
+								$(this).html("+"+b);
+							}
+						})
+						var el = $('.act-detail'); 
+						el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关记录'));
+					</script>
+					<!--页码-->
+					<div class="footpage">
+						{fzw:search:page id="p1" size="5"/}
+					</div>
+				</div>
+				
+			</div>
+				
+				
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

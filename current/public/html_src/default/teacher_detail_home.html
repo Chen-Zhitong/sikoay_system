@@ -1,0 +1,67 @@
+				
+		<div class="teacher-home max-width">
+			<div class="teacher-home-top">
+				{fzw:sql="select * from sl_laoshi where id={fzw:url:id//}" id="p1"}
+				<p> <span aa='{fzw:p1:yonghuming string="shouji"/}' bb='{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}' class="GN_name" style="margin-left: 0px;">{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}</span> <span>{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}</span></p>
+				
+				<div class="teacher-home-tipe">
+					{fzw:p1:gerenbiaoqian lable="/search.aspx?m=shizizhenrong&gerenbiaoqian=&dangqian"/}
+				</div>
+				<div class="teacher-home-top-content">
+					座右铭：{fzw:p1:zuoyouming/}<br><br>
+					<div style="height:150px;overflow-y:auto">
+					    {fzw:p1:jianjie/}
+					</div>
+				</div>
+				{/fzw:sql}
+			</div>
+			<div class="teacher-home-pic">
+				{fzw:sql="select top 1 * from sl_xiangche where yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/}) and leixing='照片' and moren='是'" id="p1"}
+				<img src="{fzw:p1:suoluetu/}">
+				<p>{fzw:p1:biaoti/}</p>
+				{/fzw:sql}
+			</div>
+			<div class="clear"></div>
+			<div class="teacher-home-course">
+				<p><img src="img/teacher-icon4.png">TA的课程<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=kecheng">更多>></a></p>
+				<div class="teacher-course max-width">
+					<ul class="kc_list mart_30 h_content">
+
+						{fzw:sql="select top 5 * from sl_kecheng where classid=37 and yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/}) order by paixu desc,id desc" id="p1"}
+				        <li>
+				        	<a href='{pageurl classid="{fzw:p1:classid/}" id="{fzw:p1:id/}"/}'>
+				        		<img src="{fzw:p1:suoluetu/}" width="100%" height="128"/>
+				        		<p class="title">{fzw:p1:biaoti size="30"/}</p>
+				        	</a>
+				        	<span class="icon_user color_gray fr">{fzw:p1:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='视频学习'|count"/}人在学</span>
+				        	<span class="price_sm">￥{fzw:p1:jiage string="￥"/}</span>
+				        </li>
+				        {/fzw:sql}
+
+				       	<div class="clear"></div>
+				    </ul>
+				</div>
+			</div>
+			<div class="teacher-home-photo">
+				<p><img src="img/teacher-icon5.png">相册展示<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=xiangche">更多>></a></p>
+				<ul>
+					{fzw:sql="select top 4 * from sl_xiangche where leixing='照片' and yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/}) order by id desc" id="p1"}
+					<li><a href=""> <img src="{fzw:p1:suoluetu/}" height="277">{fzw:p1:biaoti size="34"/}</a></li>
+					{/fzw:sql}
+					<div class="clear"></div>
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<script type="text/javascript">
+			function GN_name(obj){
+				var aa=$(obj).attr('aa');
+				var bb=$(obj).attr('bb');
+				if(bb==''){
+					$(obj).text(aa);
+				}else{
+					$(obj).text(bb);
+				}
+			}
+			GN_name('.GN_name');
+		</script>

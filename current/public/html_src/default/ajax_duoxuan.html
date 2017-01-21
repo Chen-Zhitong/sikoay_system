@@ -1,0 +1,27 @@
+﻿<table width="100%" style="text-align:center" cellspacing="0" id="input-table">
+    <tr>
+        <td width="50%">选项</td>
+        <td>得分</td>
+        <td>正确</td>
+        <td><button type="button" style="background-color: #1dbca6;border: 0;outline: medium;font-size: 13px;color: #fff;cursor: pointer;font-family: '微软雅黑';padding:5px 10px;border-radius:3px" onclick="shurudaan('请输入选项名','请输入分数',0,'多选')">添加</button></td>
+    </tr>
+    {fzw:sql="select * from sl_tiku_daan where laiyuanbianhao={fzw:url:id/}" id="p1"}
+    <tr>
+        <td>{fzw:p1:biaoti/}</td>
+        <td>{fzw:p1:fenshu/}</td>
+        <td>
+            <select name='zhengque' style="margin-bottom:0;width:50px;" onchange="right({fzw:p1:id/},this,'多选')">
+                {if value1="{fzw:p1:zhengque/}" value2="是" bi="=="}
+                <option>是</option>
+                <option>否</option>
+                {else}
+                <option>否</option>
+                <option>是</option>
+                {/if}
+            </select>
+        </td>
+        <td><button style="background-color: #fe835a;border: 0;outline: medium;font-size: 13px;color: #fff;cursor: pointer;font-family: '微软雅黑' ;padding:5px 10px;border-radius:3px" onclick="deldaan({fzw:p1:id/})">删除</button></td>
+    </tr>
+    {/fzw:sql}
+</table>
+<br />

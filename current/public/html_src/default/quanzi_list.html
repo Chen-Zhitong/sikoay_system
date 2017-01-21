@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<title>圈子列表</title>
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		
+		<!-- forum-group-list -->
+		<div class="forum-group-list-top">
+			<div class="max-width">
+				{fzw:for:sql="select *,(select count(id) from sl_bbsshow where quanzibianhao={fzw:url:quanzibianhao/} and laiyuanbianhao=0) as tiezishu,(select count(id) from sl_bbsshow where quanzibianhao={fzw:url:quanzibianhao/} and laiyuanbianhao<>0) as huitieshu,(select count(id) from sl_history where leixing='加入圈子' and laiyuanbianhao={fzw:url:quanzibianhao/}) as chengyuanshu from sl_bbs where id={fzw:url:quanzibianhao/}" id="p1"}
+				<img src="{fzw:p1:suoluetu/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">
+				<p>{fzw:p1:quanziming/}</p>
+				<div class="forum-group-list-top-right">
+					主贴：{fzw:p1:tiezishu/}  /  回帖： {fzw:p1:huitieshu/}  /  成员：{fzw:p1:chengyuanshu/}
+					<a href="javascript:void(0)" onclick="joinquanzi({fzw:url:quanzibianhao/})"><img src="img/group-icon8.png">加入圈子</a>
+				</div>
+				圈主：{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}{/fzw:for:sql}<br>
+				简介：{fzw:p1:jianjie/}
+				{/fzw:for:sql}
+			</div>		
+		</div>
+		<div class="max-width" style="margin-top: 20px;">
+			<div class="forum-find-group-top" style="float:left;margin-top: 0">
+				<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:url:quanzibianhao/}&ordertype=shuxing&lingshi1=1"><img src="img/group-icon3-not.png">全部</a>
+				<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:url:quanzibianhao/}&ordertype=dtime&lingshi1=2"><img src="img/group-icon4.png">最新</a>
+				<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:url:quanzibianhao/}&ordertype=shuxing&shuxing=精华&lingshi1=3"><img src="img/group-icon7.png">精华</a>
+				<a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:url:quanzibianhao/}&ordertype=renqi&lingshi1=4"><img src="img/group-icon6.png">热圈</a>
+				<form>
+					<input type="text" name="search" placeholder="搜索内容，回车跳转" id="key_value" onkeydown="onKeyDown_quanzi()">
+					<button onclick="return fromSubmit_quanzi()" type="button"><img src="img/search.png"></button>
+				</form>
+			</div>
+			<script type="text/javascript">
+				var a = {fzw:url:lingshi1/};
+				if (a==1) {
+					$(".forum-find-group-top").children("a").eq(0).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(0).children("img").attr("src","/template/default/img/group-icon3.png")
+				}else if (a==2) {
+					$(".forum-find-group-top").children("a").eq(1).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(1).children("img").attr("src","/template/default/img/group-icon4-on.png")
+				}else if (a==3) {
+					$(".forum-find-group-top").children("a").eq(2).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(2).children("img").attr("src","/template/default/img/group-icon7-on.png")
+				}else if (a==4) {
+					$(".forum-find-group-top").children("a").eq(3).attr("id","find-group-on");
+					$(".forum-find-group-top").children("a").eq(3).children("img").attr("src","/template/default/img/group-icon6-on.png")
+				}
+				function fromSubmit_quanzi() {
+					if ($("#key_value").val()=='') {
+						layer.alert("请输入关键字！");
+						return false;
+					}
+				    window.location.href = "/search.aspx?m=quanzi_list&quanzibianhao={fzw:url:quanzibianhao/}&all=" + document.getElementById("key_value").value;
+				    return false;
+				}
+				function onKeyDown_quanzi() {
+				    var code = event.keyCode;
+				    if (code == 13) {
+				        fromSubmit_kepuzhishi();
+				        return false;
+				    }
+				}
+			</script>
+			<div class="forum-group-list-left">
+				<table>
+					{fzw:search table="sl_bbsshow" sqlvalue="laiyuanbianhao=0" number="20" order="{fzw:url:ordertype/}" orderby="desc" id="p1"}
+					<tr>
+						<td><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}"><img src="{fzw:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}{fzw:p2:touxiang/}{/fzw:sql}" onerror="this.src='/template/default/img/lingshitouxiang.png'"></a></td>
+						<td class="shuxing" data-shuxing="{fzw:p1:shuxing/}"><span class="zhiding" style="display: none;">置顶</span><span class="jinghua" style="display: none;">精华</span><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></td>
+						<td>{fzw:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}{/fzw:sql}</td>
+						<td>{fzw:p1:dtime string="shijian"/}</td>
+						<td>{fzw:sql="select count(id) as huitieshu from sl_bbsshow where laiyuanbianhao={fzw:p1:id/}" id="p2"}{fzw:p2:huitieshu/}{/fzw:sql}评 / {fzw:p1:renqi/}阅</td>
+					</tr>
+					{/fzw:search}
+				</table>
+				<div class="classhome-right-page" style="margin: 20px 0">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			<div class="forum-home-content-right">
+				<div class="forum-home-right-top">
+					<a href="/single.aspx?m=fatie&quanzibianhao={fzw:url:quanzibianhao}"><img src="img/forum-icon10.png">我要发帖</a>
+				</div>
+				<div class="forum-home-right-list">
+					<p>精彩推荐</p>
+					<ol>
+						{fzw:sql="select top 9 * from sl_bbsshow where shuxing like '%推荐%' order by paixu desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ol>
+				</div>
+				<div class="forum-home-right-list forum-home-right-list2">
+					<p>回答雷锋榜</p>
+					<table class="leifengbang">
+						{fzw:sql="select top 5 * ,(select count(id) from sl_bbsshow as bs where bs.yonghuming=u.yonghuming and laiyuanbianhao<>0) as huidashu from sl_user as u order by huidashu desc" id="p1"}
+						<tr>
+							<td class="paixu"></td>
+							<td><a href=""><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a><br>{fzw:p1:leixing/}</td>
+							<td>{fzw:p1:huidashu/}回答</td>
+						</tr>
+						{/fzw:sql}
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+	$(".shuxing").each(function(){
+		var a = $(this).data("shuxing");
+		var b = a.indexOf("置顶");
+		var c = a.indexOf("精华");
+		if (b!=-1) {
+			$(this).children(".zhiding").css("display","inline-block");
+		}
+		if (c!=-1) {
+			$(this).children(".jinghua").css("display","inline-block");
+		}
+	})
+	var d = $(".leifengbang").find("tr").length;
+    for(var i=0;i<d;i++){
+    	$(".leifengbang").children().children("tr").eq(i).children(".paixu").html(i+1);
+    }
+    var el = $('.forum-group-list-left'); 
+	el.html(el.html().replace(/您搜索的信息不存在/ig, '该圈子目前还没有任何帖子，去其他圈子看看吧！'));
+	function joinquanzi(num){
+		var yonghuming;
+		yonghuming='{fzw:cookie:name="user_name"}';
+		if (yonghuming=='') {
+			layer.alert("请先登录！");
+			return false;
+		}
+		var x;
+		$.ajax({
+			type: "GET", 
+			async:false,
+			url: "/single.aspx?m=ajax_chaxunjiaruquanzi&id="+num+"&yonghuming="+yonghuming,
+			success: function(data) {
+				x = data;
+			}
+		});
+		if (x>0) {
+			layer.msg("您已经在圈子里了！");
+			return false;
+		}
+		$.ajax({
+			type: "POST", 
+			async:false,
+			url: "/Execution.aspx?t=history&type=add",
+			data:"&leixing=加入圈子&laiyuanbianhao="+num+"&yonghuming="+yonghuming,
+			success: function(data) {
+				layer.msg("加入成功！");
+				location.reload(true);
+			},error: function(data){
+				layer.msg("加入失败！请重试");
+			}
+		});
+	}
+</script>		
+	</body>
+</html>

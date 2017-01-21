@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+        <title>购买成功_{fzw:key:sitename/}</title>
+        {if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+	</head>
+	<body>
+		<!--top-->
+        {fzw:inside src="top.html"/}
+		<!--top end-->
+		<!--header-->
+		<div class="header">
+		    <div class="wrap">
+		        <div class="fl">
+		            <a href="/"><img src="images/logo.png" height="84"/></a>
+		        </div>
+		        <div class="pay-state">
+		        	<ul>
+		        		<li class="pay-before">
+		        			<span>1</span>
+		        			<div class="pay-state-line"></div>
+		        			选择课程
+		        		</li>
+		        		<li class="pay-before">
+		        			<span>2</span>
+		        			<div class="pay-state-line"></div>
+		        			网上支付
+		        		</li>
+		        		<li class="pay-on">
+		        			<span>3</span>
+		        			<div class="pay-state-line"></div>
+                            购买成功
+		        		</li>
+		        	</ul>
+		        </div>
+		        
+		        <p class="clear"></p>
+		    </div>
+		</div>
+		<!--header end-->
+		<!-- payment -->
+		<div class="payment pay-result max-width">
+			<div class="pay-result-content">
+				<img src="img/ok.png">
+				<p>购买成功！</p>
+				欢迎你下次购买
+				<a href="/">返回首页</a>
+			</div>
+		</div>
+		
+		
+		<div class="clear"></div>
+		<!-- pay-bottom -->
+		<div class="pay-bottom">
+            {fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}{fzw:p1:u4/}{/fzw:sql}
+		</div>
+		<!-- bottom-end -->
+        {fzw:inside src="右侧.html"/}	
+	</body>
+</html>

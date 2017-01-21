@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>数据统计</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script> 
+<style type="text/css">
+	.shuju-top{
+		margin: 0 -9px;
+	}
+	.shuju-top ul li{
+		width: 25%;
+		padding: 0 9px;
+		float: left;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		
+	}
+	.shuju-top ul li div{
+		padding: 9px;
+		border: 1px solid #e8e8e8;
+		border-bottom: 2px solid #1dbca6;
+	}
+	.shuju-top ul li img{
+		float: left;
+		margin: 0 10px;
+	}
+	.shuju-top ul li span{
+		display: block;
+		font-size: 14px;
+		color: #333333;
+		line-height: 22px;
+	}
+	.shuju-top ul li i{
+		font-style: normal;
+		font-size: 20px;
+		color: #848383;
+	}
+	.shujubiao-title{
+		color: #333333;
+		font-size: 16px;
+		padding: 10px 0;
+		border-bottom: 1px solid #e8e8e8;
+		margin-top: 15px;
+		margin-bottom: 30px;
+	}
+	.shujubiaotitle-a{
+		float: right;
+		font-size: 14px;
+		margin-top: 3px;
+	}
+	.shujubiaotitle-a a{
+		display: inline-block;
+		margin-left: 20px;
+	}
+	.shujubiaotitle-a a:hover{
+		color: #1dbca6
+	}
+	.paihang-title{
+		color: #333333;
+		font-size: 16px;
+		padding: 10px 0;
+		border-bottom: 1px solid #e8e8e8;
+		margin-top: 15px;
+		margin-bottom: 10px;
+	}
+	.shuju-paihang table{
+		width: 100%;
+	}
+	.shuju-paihang table tr td{
+		padding: 10px 0;
+	}
+	.shuju-paihang table tr td:first-child{
+		width: 18px;
+	}
+	.shuju-paihang table tr td:first-child span{
+		width: 100%;
+		height: 18px;
+		background-color: #1dbca6;
+		border-radius: 2px;
+		font-size: 13px;
+		color: #fff;
+		display: block;
+		text-align: center;
+		line-height: 18px;
+	}
+	.shuju-paihang table tr:first-child td:first-child span,
+	.shuju-paihang table tr:nth-child(2) td:first-child span,
+	.shuju-paihang table tr:nth-child(3) td:first-child span{
+		background-color: #dd2f39;
+	}
+	.shuju-paihang table tr td:nth-child(2){
+		width: 700px;
+		padding: 0 10px;
+		font-size: 13px;
+		color: #333333;
+	}
+	.shuju-paihang table tr td:nth-child(3){
+		color: #747474;
+		font-size: 13px;
+		width: 185px;
+	}
+	.shuju-paihang table tr td:nth-child(3) span{
+		color: #dd2f39;
+	}
+	table img{
+		vertical-align: middle;
+	}
+</style>
+<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+<script src="js/highcharts.js"></script>    
+<script src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+            <script>
+                $(".zhanghuguanli").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>数据统计</p>
+				</div>
+				<div class="shuju-top">
+					<ul>
+						<li>
+							<div><img src="img/shuju1.png"><span>已发布课程数</span><i>{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}' and shenhe='已发布'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}</i></div>
+						</li>
+						<li>
+							<div><img src="img/shuju2.png"><span>已发布资料数</span><i>{fzw:sql="select count(id) as count_id from sl_kepuzhishi where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}</i></div>
+						</li>
+						<li>
+							<div><img src="img/shuju3.png"><span>已发布课件数</span><i>{fzw:sql="select count(id) as count_id from sl_wendang where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}</i></div>
+						</li>
+						<li>
+							<div><img src="img/shuju4.png"><span>学生总数</span><i>{fzw:sql="select count(id) as count_id from sl_kc_order where laoshi='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}</i></div>	
+					</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+                <iframe src="/single.aspx?m=ifr_xueshengshu" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%" id="ifm" name="ifm" target="_self" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>
+				
+				<div class="shuju-paihang">
+					<div class="paihang-title">
+						学生数排行榜
+					</div>
+					<table>
+						<tr>
+							<td><span class="paixu"></span></td>
+							<td><a href="">华予教育学院资格护士执业考试高级识破课程</a></td>
+							<td>学生数量：<span>55</span></td>
+							<td><img src="img/shang.png"></td>
+						</tr>
+						<tr>
+							<td><span class="paixu"></span></td>
+							<td><a href="">华予教育学院资格护士执业考试高级识破课程</a></td>
+							<td>学生数量：<span>55</span></td>
+							<td><img src="img/shang.png"></td>
+						</tr>
+						<tr>
+							<td><span class="paixu"></span></td>
+							<td><a href="">华予教育学院资格护士执业考试高级识破课程</a></td>
+							<td>学生数量：<span>55</span></td>
+							<td><img src="img/shang.png"></td>
+						</tr>
+						<tr>
+							<td><span class="paixu"></span></td>
+							<td><a href="">华予教育学院资格护士执业考试高级识破课程</a></td>
+							<td>学生数量：<span>55</span></td>
+							<td><img src="img/xia.png"></td>
+						</tr>
+						<tr>
+							<td><span class="paixu"></span></td>
+							<td><a href="">华予教育学院资格护士执业考试高级识破课程</a></td>
+							<td>学生数量：<span>55</span></td>
+							<td><img src="img/xia.png"></td>
+						</tr>
+						<tr>
+							<td><span class="paixu"></span></td>
+							<td><a href="">华予教育学院资格护士执业考试高级识破课程</a></td>
+							<td>学生数量：<span>55</span></td>
+							<td><img src="img/shang.png"></td>
+						</tr>
+					</table>
+				</div>
+				<!--页码-->
+				<div class="footpage">
+					<a href="">首页</a>
+					<a href="">上一页</a>
+					<strong><a href="">1</a></strong>
+					<a href="">2</a></li>
+					<a href="">3</a></li>
+					<a href="">4</a></li>
+					...
+					<a href="">100</a>
+					<a href="">下一页</a>
+					<a href="">末页</a>
+				</div>
+			</div>
+			
+		</div>
+<script type="text/javascript">
+	var x = $(".shuju-paihang table tr").length;
+	for (var i = 0;i<x;i++) {
+		$(".shuju-paihang table tbody").children("tr").eq(i).find(".paixu").html(i+1);
+	}
+</script>		
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'column',
+            inverted: false,
+        },
+        title: {
+            text: ' '
+        },
+        subtitle: {
+            text: ' '
+        },
+        xAxis: {
+            categories: ['第一名', '第二名', '第三名', '第四名', '第五名'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' '
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            },
+            column: {
+                colorByPoint:true,
+                dataLabels: {
+		            enabled: true
+		        }
+            },
+
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'right',
+            verticalAlign: 'bottom',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: '学生数',
+            data: [55, 24, 16, 8, 4]
+        }]
+    });
+});
+</script>		
+	</body>
+</html>

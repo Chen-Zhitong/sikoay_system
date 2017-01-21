@@ -1,0 +1,10 @@
+					<ul class="ziliaoguanli-list">
+						{fzw:sql="select * from sl_laoshi_jiaoyujingli where laiyuanbianhao in (select gongzuojingli from sl_laoshi where yonghuming='{fzw:cookie:name="user_name"}')" id="p1"}
+						<li>
+							<img src="img/circle.png">
+							<span>{fzw:p1:kaishishijian/}~{fzw:p1:jieshushijian/}</span>
+							<p style="width: 730px;">{fzw:p1:neirong/}</p>
+							<div class="clear"></div>
+						</li>
+						{/fzw:sql}
+					</ul>

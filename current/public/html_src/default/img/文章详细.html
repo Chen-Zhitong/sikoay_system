@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{fzw:database:biaoti/}</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<title>{fzw:database:u2/}_{fzw:key:sitename/}</title>
+    	<meta name="keywords" content="{fzw:database:u3/}" />
+   		<meta name="description" content="{fzw:database:u4/}" />
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="max-width">
+		    <div class="classvideo-detail-title">
+				<a href="">{fzw:sql="select * from sl_sort where id={fzw:database:classid/}" id="p1"}{fzw:p1:u1/}{/fzw:sql}</a>
+				<span>&gt;</span>
+				<a href="">{fzw:database:biaoti/}</a>
+			</div>
+			<style type="text/css">
+				.wenzhang_A1{
+					padding-bottom: 30px;
+				}
+				.wenzhang_A1_h1{
+					font: 22px/36px "microsoft yahei";
+					color: #4f4f4f;
+					text-align: center;
+				}
+				.wenzhang_A1_h2{
+					font: 12px/24px "microsoft yahei";
+					color: #999;
+					text-align: center;
+				}
+				.wenzhang_A1_neirong{
+				    font: 14px/24px "microsoft yahei";
+				    color: #666;
+				}
+				.wenzhang_A1_neirong img{
+					max-width: 100%;
+					overflow: hidden;
+				}
+			</style>
+			<div class="wenzhang_A1">
+			    <p class="wenzhang_A1_h1">{fzw:database:biaoti/}</p>
+			    <p class="wenzhang_A1_h2">时间：{fzw:database:dtime datetime="yyyy-MM-dd"/}&nbsp;&nbsp;&nbsp;浏览量：<span id="renqi"></span></p><script type="text/javascript">{ajax:table="sl_article" id="{fzw:database:id/}" type="+" span_id="renqi" value="renqi"/}</script>
+			    <hr class="wenzhang_A1_hr" />
+			    <div class="wenzhang_A1_neirong">
+			        {fzw:database:neirong/}
+			    </div>
+			</div>
+		</div>
+		{fzw:inside src="底部.html"/}
+	</body>
+</html>

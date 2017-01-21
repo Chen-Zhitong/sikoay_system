@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}_个人中心</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	.class-text a:first-child {
+	    line-height: 20px;
+	    color: #4f4f4f;
+	    font-size: 20px;
+	    font-weight: 500;
+	    margin-bottom: 10px;
+	    margin-top: 0;
+	}
+	.class-text a:hover{
+		color: #1dbca6;
+	}
+	.class-box{
+		width: 934px;
+	}
+	.class-text{
+		width: 580px;
+	}
+	.kc_list{
+		zoom: 1;
+		margin-left: -20px;
+	}
+	.kc_list li{
+		display: inline;
+		float: left;
+		width: 218px;
+		margin-left: 20px;
+		margin-bottom: 20px;
+	}
+	.kc_list li .title{
+		display: block;
+		font-size: 14px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding: 5px 0;
+	}
+	.mart_30{
+		margin-top: 30px;
+	}
+	.price_sm{
+		color: #d03924;
+		font-size: 14px;
+	}
+	.home_gg{
+		border: 1px solid #ecebeb;
+		padding: 10px;
+	}
+	.s_tab{
+		margin-left: 215px;
+	}
+	 .s_tab li{
+	 	float: left;
+	 	padding:0 1.5em 12px 1.5em;
+	 	font-size: 16px;
+	 	color: #949494;
+	 	cursor: pointer;
+	 }
+	  .s_tab li.on{
+	  	border-bottom: 2px solid #1DBCA6;
+	  	margin-bottom: -1px;
+	  }
+	.icon_user{
+		background: url(./images/icon_user.png) left center no-repeat;
+		padding-left: 20px;
+	}
+	.color_gray{
+		color: #b0b0b0;
+	}
+	.fr {
+    	float: right;
+	}
+	.kc_list li .title span {
+	    float: right;
+	}
+	.guess-like-title{
+		font-size: 22px;
+		color: #6a7177;
+		padding-bottom: 9px;
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.guess-like-title a{
+		float: right;
+		color: #828282;
+		font-size: 15px;
+		margin-top: 8px;
+	}
+	.guess-like-title a img{
+		width: 21px;
+		height: 19px;
+		margin-left: 8px;
+	}
+	.guess-like-title a:hover{
+		text-decoration: none;
+		color: #1dbca6;
+	}
+</style>        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right" style="height: auto;min-height: 1361">
+				
+				<div class="info-top">
+					<div class="userpic">
+						{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+						<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" />
+						{/fzw:sql}
+					</div>
+					<div class="username">
+						<h4>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}</h4>
+						<img src="img/woman.png"/>
+						<div class="clear"></div>
+						<a href="/single.aspx?m=stugerenziliao">修改账号资料</a>
+						<!-- <a href="">查看个人主页</a> -->
+					</div>
+					<div class="opera">
+						<!-- <a href=""><img src="img/tc2.png"/><p>发布通知</p></a> -->
+						<a href="/search.aspx?m=stuxitongmsg"><img src="img/tc3.png"/><p>通知消息</p></a>
+						<a href="/search.aspx?m=stusixin"><img src="img/tc4.png"/><p>我的私信</p></a>
+					</div>
+				</div>
+				
+				<div class="info-mid">
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=stukcshoucang"><p>{fzw:sql="select count(id) as count_id from sl_history where yonghuming='{fzw:cookie:name="user_name"}' and leixing='视频收藏'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>课程收藏</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=stukcdingdan"><p>{fzw:sql="select count(id) as count_id from sl_xiaoshou where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>我的订单</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=stumyzl"><p>{fzw:sql="select count(id) as count_id from sl_kc_order where yonghuming='{fzw:cookie:name="user_name"}' and zhuangtai='已付款'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>已购课程</a>
+					</div>
+					<div class="info-box">
+						<a href="/search.aspx?m=stumoney&leixing=充值"><p>{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>账户余额</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+			
+				<div class="dongtai" style="margin-top: 20px;">
+					<div class="dt-title">
+						<img src="img/tc6.png"/>
+						<h4>我的动态</h4>
+						<a href="/search.aspx?m=studongtai">更多 》</a>
+					</div>
+					<div class="clear"></div>
+					
+					<div id="getdongtai">
+						
+					</div>
+					
+					
+					<div class="quanz">
+						<div class="qz-title">
+							<img src="img/tc5.png"/>
+							<h4>我的视频</h4>
+							<a href="">更多 》</a>
+						</div>
+						<div class="class-info">
+				
+							<div class="classtime-line"></div>
+							<div id="kechengjilu"></div>
+							<script type="text/javascript">
+								$.ajax({
+									type: "GET", 
+									url: "/search.aspx?m=ajax_kechengjilu&classid=37",
+									success: function(data) {
+										$("#kechengjilu").html(data);
+									}
+								});
+							</script>
+							<div class="guess-like clear">
+								<div class="qz-title">
+									<img src="img/tc87.png"/>
+									<h4>推荐课程</h4>
+									<a href="">换一换<img src="img/check-icon.png"></a>
+								</div>
+								
+								<ul class="kc_list mart_30 h_content clear">
+									{fzw:for:sql="select top 4 * from sl_kecheng where classid=37 order by newid()" id="p1"}
+								    <li>
+								       	<a href="/page.aspx?id={fzw:p1:id/}&classid=37">
+								        	<img src="{fzw:p1:suoluetu/}" width="100%" height="128"/>
+								        	<p class="title">{fzw:p1:biaoti/}</p>
+								       	</a>
+								      	<span class="icon_user color_gray fr">{fzw:for:sql="select count(id) as count_id from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='视频学习'" id="p2"}{if value1="{fzw:p2:count_id/}" value2="" bi="=="}0{else}{fzw:p2:count_id/}{/if}{/fzw:for:sql}人在学</span>
+								       	<span class="price_sm">￥{fzw:p1:jiage string="￥"/}</span>
+								   	</li>
+								    {/fzw:for:sql}
+								   <div class="clear"></div>
+							 	</ul>
+							</div>
+							<div class="guess-like clear">
+								<div class="qz-title">
+									<img src="img/tc88.png"/>
+									<h4>推荐老师</h4>
+									<a href="">换一换<img src="img/check-icon.png"></a>
+								</div>
+								
+								<ul class="kc_list mart_30 h_content clear">
+									{fzw:for:sql="select top 4 * from sl_laoshi order by newid()" id="p1"}
+								    <li>
+								    	{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+								       	<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}">
+								        	{if value1="{fzw:p2:touxiang/}" value2="" bi="=="}
+								       		<img src="images/img2.jpg" width="100%" height="200"/>
+							       		    {else}
+							       		    <img src="{fzw:p2:touxiang/}" width="100%" height="200"/>
+							       		    {/if}
+								        	<p class="title">{if value1="{fzw:p2:xingming/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji" /}{else}{fzw:p2:xingming/}{/if}<span>{fzw:p1:jiaoling/}年教龄</span></p>
+								       	</a>
+								       	{/fzw:for:sql}
+								      	<span class=" color_gray fr">{fzw:p1:yonghuming sql="sl_kecheng|where&nbsp;yonghuming='&dangqian'|count"/}课时</span>
+								       	<span class="price_sm">{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}</span>
+								   	</li>
+								    {/fzw:for:sql}
+								   <div class="clear"></div>
+							 	</ul>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			$.ajax({
+				type: "GET", 
+				url: "/search.aspx?m=ajax_dongtai",
+				success: function(data) {
+					$("#getdongtai").html(data);
+				}
+			});	
+		</script>
+        <script type="text/javascript" src="js/circle.js" ></script>
+        <script type="text/javascript">
+			var x = $(".class-info").children(".class-box").length;
+			var y = (x-1)*145;
+			$(".classtime-line").css("height",y);
+		</script>	
+	</body>
+</html>

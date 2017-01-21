@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<title>{fzw:database:u1/}_{fzw:key:sitename/}</title>
+    	<meta name="keywords" content="{fzw:database:u3/}" />
+   		<meta name="description" content="{fzw:database:u4/}" />
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="news-top max-width">
+			<a href="/list.aspx?id=43&Model_id=54">公告</a>
+			<a href="/list.aspx?id=44&Model_id=54">新闻</a>
+			<a href="/list.aspx?id=45&Model_id=54">活动</a>
+		</div>
+		<script type="text/javascript">
+			var a = {fzw:url:id/};
+			if (a==43) {
+				$(".news-top").children("a").eq(0).addClass("news-on");
+			}else if (a==44) {
+				$(".news-top").children("a").eq(1).addClass("news-on");
+			}else if (a==45) {
+				$(".news-top").children("a").eq(2).addClass("news-on");
+			}
+		</script>
+		<div class="max-width">
+			<ul class="news-list">
+				{fzw:list number="9" order="dtime" orderby="desc" id="p1"}
+				<li>
+					<a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}"></a>
+					<a href="{fzw:pageurl/}">{fzw:p1:biaoti/}</a>
+					<p><img src="img/class-time.png">{fzw:p1:dtime datetime="yyyy-MM-dd"/}</p>
+					<p>{fzw:p1:zhaiyao size="200"/}</p>
+					<div class="clear"></div>
+				</li>
+				{/fzw:list}
+			</ul>
+			<div class="classhome-right-page" style="margin: 20px 0">
+				{fzw:list:page id="p1" size="5"/}
+			</div>
+		</div>	
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		
+	</body>
+</html>

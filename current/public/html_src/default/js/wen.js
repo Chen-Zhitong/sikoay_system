@@ -1,0 +1,14 @@
+$(window).ready(function(){
+	$("#classvideo-list").bind("click",function(){
+		$(".classvideo-askA1").css("display","none");
+	})
+	$("#classvideo-note").bind("click",function(){
+		$(".classvideo-askA1").css("display","none");
+	})
+	$("#classvideo-ask_A").bind("click",function(){
+		$(".classvideo-askA1").toggle();
+	})
+	$("#classvideo-write").bind("click",function(){
+		$(".classvideo-askA1").css("display","none");
+	})
+});

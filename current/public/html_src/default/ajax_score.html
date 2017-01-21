@@ -1,0 +1,10 @@
+<div class="ta_inner">
+        <p class="title"> 您的得分:{fzw:sql="select sum(defen) as fenshu from sl_zuotijilu where dingdanhao={fzw:url:dingdanhao/} and yonghuming='{fzw:cookie name="user_name" /}'" id="p1"}{fzw:p1:fenshu/}{/fzw:sql}</p>
+       <p> <img src="images/img_dongwu.jpg"/></p>
+       <br />
+        <a href="/single.aspx?m=test&id={fzw:url:tiku/}" class="btn_green">再测一次</a>&nbsp;&nbsp;
+        <a href="/search.aspx?m=stucuoti" class="btn_green">查看错题</a>
+        
+        <a href="javascript:closeAlert();" class="closealert"><img src="images/test_close.png"/></a>
+</div>
+

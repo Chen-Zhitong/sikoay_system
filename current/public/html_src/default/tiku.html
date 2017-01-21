@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="{fzw:key:sitekey/}" />
+    <meta name="description" content="{fzw:key:sitedesc/}" />
+	<title>练习题库_{fzw:key:sitename/}</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+</head>
+<body>
+	{fzw:inside src="顶部.html"/}
+<!-- classhome -->
+<div class="max-width">
+<!-- classhome-left -->
+<div class="classhome-left datacenter-right datacenter-practice-right" style="float:right;width: 273px;">
+	<div class="classhome-left-tab" style="margin-top:0">
+		<ul class="nav nav-pills nav-tabs">
+			<li role="presentation" class="active"><a href="#tab-1"  data-toggle="tab">热门试题</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="tab-1">
+				<ul class="classhome-tab-list">
+					{fzw:sql="select top 8 *,(select count(distinct jl.yonghuming) from sl_zuotijilu as jl where jl.tikubianhao=tk.id) as shu from sl_tiku as tk order by shu desc" id="p1"}
+					<li>
+						<a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}"><span>1</span>{fzw:p1:biaoti size="24"/}</a>						
+						<span class="playtimes">{fzw:p1:shu/}人在学</span>
+					</li>
+					 {/fzw:sql}
+					
+				</ul>	
+			</div>
+		</div>
+	</div>
+	<div class="datacenter-practice-right-bottom">
+		<p>猜你喜欢</p>
+		<ul class="datacenter-practice-list">
+			{fzw:sql="select top 5 *,(select count(distinct jl.yonghuming) from sl_zuotijilu as jl where jl.tikubianhao=tk.id) as shu from sl_tiku as tk where tk.fenlei like '%{fzw:url:fenlei/}%' order by id desc" id="p1"}
+			<li>
+				<div>
+					<a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}"><img src="{fzw:p1:suoluetu/}"></a>
+					<div class="practice-list-word" style="width:100%">
+						<p><a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}">{fzw:p1:biaoti size="28"/}</a></p>
+						{fzw:p1:shuoming size="70"/}
+					</div>
+					<div class="practice-list-hover1">
+						{fzw:p1:shu/}人在学
+						<!--<span>￥88.00</span>-->
+					</div>
+					<div class="practice-list-hover2">
+						<a href="/single.aspx?m=practice&id={fzw:p1:id/}">开始练习</a>
+						<a href="/single.aspx?m=test&id={fzw:p1:id/}">模拟测试</a>
+					</div>
+				</div>	
+			</li>
+			{/fzw:sql}
+			
+			<div class="clear"></div>
+		</ul>
+	</div>
+</div>
+<div class="classhome-right" style="float:left;width:900px;">
+	<div class="datacenter-class-top">
+		<ul>
+			<li>内容分类</li>
+			{fzw:sql="select * from sl_Parameter where classid=322 order by id asc" id="p1"}
+			<li><a href="/search.aspx?m=tiku&fenlei={fzw:p1:id/}">{fzw:p1:u1/}</a></li>
+			{/fzw:sql}
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="datacenter-class-search">
+		<form onkeydown="if(event.keyCode==13){fromSubmit();return false;}">
+			<input type="text" name="" placeholder="搜索内容，回车跳转" id="sousuo" style="color: #333">
+			<button onclick="fromSubmit()" type="button"><img src="img/search.png"></button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		function fromSubmit() {
+			//alert($("#sousuo").val());
+			if (document.getElementById("sousuo").value==''){
+			layer.alert("请输入关键字!");
+				return false;
+			}
+			window.location.href = "/search.aspx?m=tiku&all=" + document.getElementById("sousuo").value;
+			return false;
+		}
+	</script>
+	<div class="classhome-right-nav" style="width:665px;">
+		<ul>
+			<li>
+				<a href="">全部课程</a>
+			</li>
+			<li>
+				<a >最新&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide" style="z-index: 999">
+					<a href="/search.aspx?m=tiku&ordertype=renqi">最热</a>
+					<a href="/search.aspx?m=tiku&ordertype=dtime">最新</a>
+					<a href="/search.aspx?m=tiku&jiage=0between0">免费</a>
+				</div>
+			</li>
+			<li>
+				<a >课程级别&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide" style="z-index: 999">
+					{fzw:sql="select * from sl_Parameter where classid=318 order by id asc" id="p1"}
+					<a href="/search.aspx?m=tiku&kechengjibie={fzw:p1:id/}">{fzw:p1:u1/}</a>
+					{/fzw:sql}
+				</div>
+			</li>
+			<li>
+				<a >价格区间&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide" style="z-index: 999">
+					{fzw:sql="select * from sl_Parameter where classid=282 order by id asc" id="p1"}
+					<a href="/search.aspx?m=tiku&jiage={fzw:p1:u2/}">{fzw:p1:u1/}</a>
+					{/fzw:sql}
+				</div>
+			</li>
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="datacenter-practice">
+		<ul class="datacenter-practice-list">
+			{fzw:search table="sl_tiku" order="{fzw:url:ordertype/}" orderby="desc" number="16" id="p1"}
+			<li>
+				<div>
+					<a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}"><img src="{fzw:p1:suoluetu/}"></a>
+					<div class="practice-list-word" style="width:100%">
+						<p><a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}">{fzw:p1:biaoti size="28"/}</a></p>
+						{fzw:p1:shuoming size="70"/}
+					</div>
+					<div class="practice-list-hover1">
+						{fzw:sql="select count(distinct yonghuming) as shu from sl_zuotijilu where tikubianhao={fzw:p1:id/}" id="p2"}{fzw:p2:shu/}{/fzw:sql}人在学
+						<!--<span>￥88.00</span>-->
+					</div>
+					<div class="practice-list-hover2">
+						<a href="/single.aspx?m=practice&id={fzw:p1:id/}">开始练习</a>
+						<a href="/single.aspx?m=test&id={fzw:p1:id/}">模拟测试</a>
+					</div>
+				</div>	
+			</li>
+			{/fzw:search}
+			
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="classhome-right-page">
+		{fzw:search:page id="p1" size="8"/}
+	</div>
+</div>
+<div class="clear"></div>
+</div>
+
+{fzw:inside src="底部.html"/}
+</body>
+</html>

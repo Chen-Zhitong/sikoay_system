@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>
+		<script src="js/wookmark.js"></script>
+		<title>我为学院代言_{fzw:key:sitename/}</title>
+		<style type="text/css">
+			.pubuliu-content g img {
+			    width: 42px;
+			    height: 42px;
+			    border-radius: 100%;
+			    float: left;
+			    margin-right: 10px;
+			}
+			.pubuliu-content g {
+			    color: #323232;
+			    font-size: 14px;
+			}
+			.tiles-wrap a{
+				font-weight: normal;
+			}
+		</style>
+	</head>
+	<body style="background-color: #fff;">
+		{fzw:inside src="顶部.html"/}
+		
+		<!-- forum-group-list -->
+		<div class="forum-group-list-top" style="background-image: url(/template/default/img/banner3.png)">
+			<div class="max-width">
+				{fzw:sql="select *,(select count(id) from sl_bbsshow as bbs where bbs.quanzibianhao=bs.id and bbs.laiyuanbianhao=0) as tiezishu,(select count(id) from sl_bbsshow as bbs where bbs.quanzibianhao=bs.id and laiyuanbianhao<>0) as huitieshu from sl_bbs as bs where bs.id=4" id="p1"}
+				<img src="{fzw:p1:suoluetu/}">
+				<p>{fzw:p1:quanziming/}</p>
+				<div class="forum-group-list-top-right">
+					主贴：{fzw:p1:tiezishu/}  /  回帖： {fzw:p1:huitieshu/}  
+					
+				</div>
+				标签：代言  发表评论<br>
+				简介：{fzw:p1:jianjie/} 
+				{/fzw:sql}
+			</div>		
+		</div>
+		<div class="max-width" style="margin-top: 20px;">
+			<div  id="sortbys" class="forum-find-group-top" style="float:left;margin-top: 0;margin-left: 0">
+				<a href="/search.aspx?m=xueyuandaiyan" onClick="window.location.href='/search.aspx?m=xueyuandaiyan'" data-sortby="good" class="active"><img src="img/group-icon3.png">全部</a>
+				<a href="" data-sortby="new"><img src="img/group-icon4.png">最新</a>
+			
+				<a href="" data-sortby="hot"><img src="img/group-icon6.png">热圈</a>
+				<form onkeydown="if(event.keyCode==13){fromSubmit();return false;}">
+					<input type="text" name="" placeholder="搜索内容，回车跳转" id="sousuo">
+					<button type="button" onclick="fromSubmit()" onkeydown="if(event.keyCode==13){fromSubmit();}"><img src="img/search.png"></button>
+				</form>
+				<script type="text/javascript">
+					function fromSubmit() {
+						if (document.getElementById("sousuo").value==''){
+							layer.alert("请输入关键字!");
+							return false;
+						}
+						window.location.href = "/search.aspx?m=xueyuandaiyan&all=" + document.getElementById("sousuo").value;
+						return false;
+					}
+				</script>
+			</div>
+			<div class="forum-group-list-left">
+				<ul id="container" class="tiles-wrap animated pubuliu" style="position: relative;width:100%;">
+			        <!--
+			          These are our grid items. Notice how each one has a data-attribute assigned that
+			          are used for sorting. The classes match the "data-sortby" properties above.
+			          -->
+			        {fzw:search table="sl_bbsshow" sqlvalue="laiyuanbianhao=0&nbsp;and&nbsp;quanzibianhao=4" number="20" id="p1"}
+			        
+			        <li data-good="{fzw:sql="select count(id) as dianzanshu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='点赞'" id="p2"}{fzw:p2:dianzanshu/}{/fzw:sql}" data-new="{fzw:p1:id/}" data-hot="{fzw:p1:renqi/}">
+			        	<a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao=4"><img src="{fzw:p1:suoluetu/}">
+			        	<div class="pubuliu-content">
+			        		{fzw:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+			        		<g>
+			        			<img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">
+			        			{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}
+			        		</g><br>
+			        		{fzw:p2:leixing/}<br>
+			        		{/fzw:sql}
+							<p>{fzw:p1:biaoti/}</p>
+							<div>
+								<img src="img/daiyan-icon1.png"> {fzw:p1:renqi/}&nbsp;&nbsp;
+								<img src="img/daiyan-icon2.png"> {fzw:sql="select count(id) as huitieshu from sl_bbsshow where laiyuanbianhao={fzw:p1:id/}" id="p2"}{fzw:p2:huitieshu/}{/fzw:sql}&nbsp;&nbsp;
+								<img src="img/daiyan-icon3.png"> {fzw:sql="select count(id) as dianzanshu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='点赞'" id="p2"}{fzw:p2:dianzanshu/}{/fzw:sql}&nbsp;&nbsp;
+							</div>
+			        	</div></a>
+			        </li>
+			        {/fzw:search}
+			        <!-- End of grid blocks -->
+			    </ul>
+			    <div class="classhome-right-page">
+					{fzw:search:page id="p1" size="8"/}
+				</div>
+			</div>
+			<div class="forum-home-content-right">
+				<div class="forum-home-right-top">
+					<a href="/single.aspx?m=daiyanfatie&quanzibianhao=4"><img src="img/forum-icon10.png">我要代言</a>
+					<a href='/search.aspx?m=xueyuandaiyan&yonghuming={fzw:cookie:name="user_name"/}' style="color: #7a7a7a;background-color: #fff;border: 1px solid #e5e5e5"><img src="img/daiyan.png">我的代言</a>
+				</div>
+				<div class="forum-home-right-list">
+					<p>精彩推荐</p>
+					<ol>
+						{fzw:sql="select top 9 * from sl_bbsshow where quanzibianhao=4 and laiyuanbianhao=0 and shuxing like '%推荐%' order by dtime desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao=4">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ol>
+				</div>
+				<div class="forum-home-right-list forum-home-right-list2">
+					<p>最佳代言人</p>
+					<table id="zuijiadaiyan">
+						{fzw:sql="select *,(select count(id) from sl_bbsshow as bbs where bbs.quanzibianhao=4 and bbs.laiyuanbianhao<>0 and bbs.yonghuming=u.yonghuming) as huitieshu from sl_user as u where u.yonghuming in (select yonghuming from sl_bbsshow as bbs where bbs.quanzibianhao=4) order by huitieshu desc" id="p1"}
+						<tr>
+							<td class="zuijiadaiyan-num">1</td>
+							<td><a href=""><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a><br>{fzw:p1:leixing/}</td>
+							<td>{fzw:p1:huitieshu/}回答</td>
+						</tr>
+						{/fzw:sql}
+					</table>
+					<script type="text/javascript">
+						var a = $("#zuijiadaiyan").find("tr").length;
+						for(var i=0;i<a;i++){
+							$("#zuijiadaiyan").find("tr").eq(i).children(".zuijiadaiyan-num").html(i+1)
+						}
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+	(function ($) {
+	      imagesLoaded('#container', function () {
+	        function comparatorHot(a, b) {
+	          return $(a).data('hot') > $(b).data('hot') ? -1 : 1;
+	        }
+	        function comparatorNew(a, b) {
+	          return $(a).data('new') > $(b).data('new') ? -1 : 1;
+	        }
+	        function comparatorGood(a, b) {
+	          return $(a).data('good') > $(b).data('good') ? -1 : 1;
+	        }
+	        // Get a reference to your grid items.
+	        var wookmark,
+	            $sortbys = $('#sortbys a');
+	        // Call the layout function.
+	        wookmark = new Wookmark('#container', {
+	          offset: 10, // Optional, the distance between grid items
+	          comparator: comparatorGood,
+	          container: $('#container'),
+	          itemWidth: 280 ,
+	          direction: 'left',
+	        });
+	        /**
+	         * When a filter is clicked, toggle it's active state and refresh.
+	         */
+	        var onClickSortBy = function(e) {
+	          e.preventDefault();
+	          var comparator;
+	          $currentSortby = $(this);
+	          switch ($currentSortby.data('sortby')) {
+	            case 'good':
+	              comparator = comparatorGood;
+	              break;
+	            case 'new':
+	              comparator = comparatorNew;
+	              break;
+	            case 'hot':
+	            default:
+	              comparator = comparatorHot;
+	              break;
+	          }
+	          $sortbys.removeClass('active');
+	          $currentSortby.addClass('active');
+	          wookmark.updateOptions({
+	            comparator: comparator
+	          });
+	        }
+	        // Capture filter click events.
+	        $sortbys.click(onClickSortBy);
+	      });
+	    })(jQuery);
+</script>
+
+		
+	</body>
+</html>

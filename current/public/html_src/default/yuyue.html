@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考试预约</title>
+    <link href="css/teacher.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <script type="text/javascript" src="js/class.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    {fzw:inside src="顶部.html"/}
+    <div class="content">
+        {fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}
+        {if value1="{fzw:p1:leixing/}" value2="老师" bi="=="}
+        {fzw:inside src="老师左侧.html"/}
+        {else}
+        {/if}
+        {if value1="{fzw:p1:leixing/}" value2="会员" bi="=="}
+        {fzw:inside src="会员左侧.html"/}
+        {else}
+        {/if}
+        {if value1="{fzw:p1:leixing/}" value2="代理" bi="=="}
+        {fzw:inside src="代理左侧.html"/}
+        {else}
+        {/if}
+        {/fzw:sql}
+        <script>
+            $(".yuyueguanli").addClass("lefton");
+        </script>
+        <!--右侧内容栏-->
+        <div class="content-right2">
+            <div class="right-title">
+                <p>考试预约</p>
+            </div>
+            <form class="kecheng-info" id="yuyueform">
+                <div class="kc-info">
+                    <span>考试预约科目：</span>
+                    <select class="txt1" id="kemu">
+                        <option value="">请选择预约科目</option>
+                        {fzw:sql="select * from sl_Parameter where id in (select classid from sl_Parameter where id  in (select kechengfenlei from sl_kecheng as kc where kc.kechengjie in (select laiyuanbianhao from sl_jie where id in (select laiyuanbianhao from sl_playtime where yonghuming='{fzw:cookie:name="user_name"/}' and wancheng='是')) and id in (select laiyuanbianhao from sl_kc_cart where dingdanhao in (select dingdanhao from sl_kc_order where yonghuming='{fzw:cookie:name="user_name"/}' and zhuangtai='已付款')) and kc.classid=37 and (select 1.0*(select COUNT(id) from sl_jie where laiyuanbianhao=kc.kechengjie and id in (select laiyuanbianhao from sl_playtime where yonghuming='{fzw:cookie:name="user_name"/}' and wancheng='是'))/(select COUNT(id) from sl_jie where laiyuanbianhao=kc.kechengjie))>0.8)) and id not in (select classid from sl_Parameter where id in (select kemujibie from sl_appointment where yonghuming='{fzw:cookie:name="user_name"/}' and (jindu='正在预约' or jindu='预约成功')))" id="p1"}
+                        <option value="{fzw:p1:u1/}" data-id="{fzw:p1:id/}">{fzw:p1:u1/}</option>
+                        {/fzw:sql}
+                    </select>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;请选择考试预约科目</label>
+                    <br clear="all" />
+                    <span>考试预约级别：</span>
+                    <select class="txt1" id="jibie" name="kemujibie">
+                        <option value="">请选择预约级别</option>
+                    </select>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;请选择考试预约级别</label>
+                    <br clear="all" />
+                    <div id="diqushijian"></div>
+                    <div id="sczl" style="display:none">
+                        <span>预约资料上传：</span>
+                        <input class="txt1" name="ziliao" id="ziliao" />
+                        <label><input type="button" class="tz-btn" value="上传资料" style="margin-left: 10px;display:inline-block;height:36px;" onclick="shangchuan()" /></label>
+                        <br clear="all" />
+                    </div>
+                    <div>
+                        <input type="button" class="tz-btn" value="立即预约" style="margin-left: 92px;" onclick="yuyuego()" />
+                    </div>
+                    <input type="hidden" name="jindu" value="正在预约"/>
+                    <input type="hidden" name="yonghuming" value="{fzw:cookie:name="user_name"/}"/>
+                    <input type="hidden" name="chuli" value="否"/>
+                </div>
+            </form>
+            <div class="charge">
+                <div class="charge-title">
+                    <img src="img/tc15.png" />
+                    <p>预约流程</p>
+                </div>
+                <div class="clear"></div>
+
+                <div class="charge-info">
+                    {fzw:sql="select top 1 * from sl_banner where classid=72 order by id desc" id="p1"}
+                    {fzw:p1:u4/}
+                    {/fzw:sql}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    {fzw:inside src="底部.html"/}
+    {fzw:inside src="右侧.html"/}
+    <script>
+        $("#kemu").on('change', function () {
+            var a = $(this).find("option:checked").data("id");
+            $.ajax({
+                type: "get",
+                aysnc:false,
+                url: "/single.aspx?m=ajax_huoqukemujibie&id=" + a,
+                success: function (data) {
+                    $("#jibie").html(data)
+                }
+            });
+        })
+        $("#jibie").on('change', function () {
+            var a = $(this).find("option:checked").data("id");
+            $.ajax({
+                type: "get",
+                aysnc: false,
+                url: "/single.aspx?m=ajax_huoqudiqu&id=" + a,
+                success: function (data) {
+                    $("#diqushijian").html(data)
+                }
+            });
+        })
+        $("#shijian").on('change', function () {
+            if ($(this).val() != '') {
+                $("#sczl").toggle();
+            }
+        })
+        function shangchuan() {
+            var a = $("#jibie").val();
+            var index = layer.open({
+                type: 2,
+                title: '预约说明',
+                area: ['700px', '80%'],
+                fix: false, //不固定
+                maxmin: true,
+                content: '/single.aspx?m=yuyueupload&id='+a
+            });
+            layer.iframeAuto(index);
+        }
+        function yuyuego() {
+            if ($("#kemu").val() == '') {
+                layer.tips('请选择科目', '#kemu');
+                return false;
+            }
+            if ($("#jibie").val() == '') {
+                layer.tips('请选择级别', '#jibie');
+                return false;
+            }
+            if ($("#diqu").val() == '') {
+                layer.tips('请选择地区', '#diqu');
+                return false;
+            }
+            if ($("#shijian").val() == '') {
+                layer.tips('请选择时间', '#shijian');
+                return false;
+            }
+            if ($("#ziliao").val() == '') {
+                layer.tips('请上传资料', '#ziliao');
+                return false;
+            }
+            var formData = $("#yuyueform").serialize();
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/Execution.aspx?t=appointment&type=add",
+                data: formData,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function (data) {
+                    layer.msg("预约成功！");
+                    window.location.href='/search.aspx?m=yuyuelist'
+                }, error: function (data) {
+                    layer.msg("预约失败！请重试");
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

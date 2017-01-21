@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>圈子设置_圈子管理</title>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link href="css/teacher.css" rel="stylesheet">
+        <style type="text/css">
+        	input,select,button{
+        		font-family: "微软雅黑"
+        	}
+        </style>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body style="font-family: '微软雅黑'">
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>圈子设置</p>
+				</div>
+				<div class="quanzi">
+					<h4>为了更好的管理圈子，请对您的圈子进行设置哟！</h4>
+					<form id="quanziform">
+						<p>请设置您的圈子名</p>
+						<input type="text" name="quanziming" style="padding: 2px 10px;">
+						<br><br>
+						<img src="" id="touxiang-display" width="60" height="60"><button onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=suoluetu&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')" id="shangchuan" type="button" style="background: #1dbca6;border-radius: 5px;color: #fff;font-size: 13px;padding: 5px 10px;border: none;outline: none;cursor: pointer;margin-top: 10px;margin-left: 10px;">请上传您圈子的头像</button>
+						<p>请选择你的圈子类别</p>
+						<select name="quanzileibie" style="padding: 2px 10px;width: 193px;">
+							{fzw:sql="select * from sl_Parameter where classid=289" id="p1"}
+							<option value="{fzw:p1:id/}">{fzw:p1:u1/}</option>
+							{/fzw:sql}
+						</select>
+						<input type="hidden" name="suoluetu" id="suoluetu">
+						<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+						<p>请编辑您的圈子简介</p>
+						<input type="text" name="jianjie" style="padding: 2px 10px;">
+						<p>请对您圈子的访问进行设置</p>
+						<input type="radio" name="fangwenshezhi" id="all"  value="允许任何人" />
+						<label for="all">允许任何人</label>
+						<br />
+						<input type="radio" name="fangwenshezhi" id="part"  value="只允许圈内人"/>
+						<label for="part">只允许圈内人</label>
+						<br />
+						<input type="radio" name="fangwenshezhi" id="noone" value="不允许任何人"/>
+						<label for="noone">不允许任何人</label>
+						<br />
+						<p>请对您圈子的加入进行设置</p>
+						<input type="radio" name="jiarushezhi" id="all2"  value="允许任何人"/>
+						<label for="all2">允许任何人</label>
+						<br />
+						<input type="radio" name="jiarushezhi" id="part3"  value="只允许购买了课程的人"/>
+						<label for="part3">只允许购买了课程的人</label>
+						<br />
+						<p>请对您圈子内的帖子进行管理</p>
+						<input type="radio" name="fatieshezhi" id="every" value="允许任何人发帖"/>
+						<label for="every">允许任何人发帖</label>
+						<br />
+						<input type="radio" name="fatieshezhi" id="part2"  value="只允许圈内人员进行发帖"/>
+						<label for="part2">只允许圈内人员进行发帖</label>
+						<br />
+						<input type="radio" name="fatieshezhi" id="nobody" value="不允许任何人发帖" />
+						<label for="nobody">不允许任何人发帖</label>
+					</form>
+						<button class="crtsec-btn" style="font-size: 13px" id="savequanzi">保存设置</button>
+					
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+function tupian(id,url){
+	document.getElementById(id).value=url;
+	$('#touxiang-display').attr('src',url);
+}
+	$('#suoluetu').change(function(){
+    	var x = $(this).val();
+		$("#touxiang-display").attr("src",x);
+		console.log(x);
+    })
+    var origin;
+    var quan=0;
+    {fzw:sql="select * from sl_bbs where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}
+    origin = "{fzw:p1:suoluetu/}";
+    quan = "{fzw:p1:id/}";
+    $("#quanziform input[name=quanziming]").val("{fzw:p1:quanziming/}");
+    $("#quanziform input[name=jianjie]").val("{fzw:p1:jianjie/}");
+    var fangwenshezhi = "{fzw:p1:fangwenshezhi/}";
+    var jiarushezhi = "{fzw:p1:jiarushezhi/}";
+    var fatieshezhi = "{fzw:p1:fatieshezhi/}";
+    $("#quanziform input[type=radio]").each(function(){
+    	if ($(this).val()==fangwenshezhi) {
+    		$(this).attr("checked","checked");
+    	}
+    	if ($(this).val()==jiarushezhi) {
+    		$(this).attr("checked","checked");
+    	}
+    	if ($(this).val()==fatieshezhi) {
+    		$(this).attr("checked","checked");
+    	}
+    })
+    {/fzw:sql}
+    $("#touxiang-display").attr("src",origin);
+    $("#suoluetu").val(origin);
+    $("#savequanzi").click(function(){
+    	var count = 0;
+		$('#quanziform input').each(function() {
+			if ($(this).val() == "") {
+				count++;
+			}
+		});
+		var radio = $('#quanziform input[type=radio]:checked').length;
+		if (radio!=3) {
+			count++;
+		}
+		if (count > 0) {
+			layer.msg('请完整设置您的圈子!');
+			return false;
+		}
+		var formData = $("#quanziform").serialize();
+    	if (quan==0) {
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=bbs&type=add&tip_string=提交成功！&tipurl=/",
+				data: formData,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					layer.msg("设置成功！");
+					location.reload(true);
+				}
+			});
+			return false;
+    	}else{
+    		$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=bbs&type=edit&tip_string=提交成功！&tipurl={fzw:url:tipurl /}",
+				data: formData,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					layer.msg("设置成功！");
+					location.reload(true);
+				}
+			});
+			return false;
+    	}
+    })
+</script>		
+	</body>
+</html>

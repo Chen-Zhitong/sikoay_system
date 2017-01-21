@@ -1,0 +1,114 @@
+<form id="jbxx-form">
+	{fzw:sql="select * from sl_geren as ls,sl_user as u where u.yonghuming=ls.yonghuming and ls.yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+	<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+	<div class="zl-box">
+		<div class="baseinfo">
+			<p><nobr>*</nobr>请输入真实姓名：</p>
+			<input type="text" name="xingming" class="txt2" value="{fzw:p1:xingming/}" />
+		</div>
+		<div class="baseinfo">
+			<p><nobr>*</nobr>请选择学历：</p>
+			<select name="xueli" value="{fzw:p1:xueli/}" id="xueli">
+				<option value="专科">专科</option>
+				<option value="本科">本科</option>
+				<option value="硕士">硕士</option>
+				<option value="博士">博士</option>
+			</select>
+		</div>
+        <script>
+            var xueli = '{fzw:p1:xueli/}'
+            $("#xueli option").each(function(){
+                if($(this).val()==xueli){
+                    $(this).attr("selected","selected")
+                }
+            })
+        </script>
+		<div class="clear"></div>
+		<div class="baseinfo">
+			<p><nobr>*</nobr>您的昵称：</p>
+			<input type="text" name="nicheng" class="txt2" value="{fzw:p1:nicheng/}" />
+		</div>
+		<div class="baseinfo">
+			<p><nobr>*</nobr>请选择出生日期：</p>
+			<input type="text" name="shengri" class="txt2" id="dtime" value='{fzw:p1:shengri datetime="yyyy-MM-dd"/}' onClick="WdatePicker({dateFmt:&#39;yyyy-MM-dd&#39;})"/>
+		</div>
+		<div class="clear"></div>
+		<div class="baseinfo">
+			<p><nobr>*</nobr>请选择性别：</p>
+			<input type="radio" name="xingbie" id="man" value="男" /><label for="man">男</label>
+			<input type="radio" name="xingbie" id="woman" value="女" /><label for="woman">女</label>
+			<script type="text/javascript">
+				var x = '{fzw:p1:xingbie/}'
+				if (x=='男') {
+					$("#man").prop("checked",true);
+				}else if (x=='女') {
+					$("#woman").prop("checked",true);
+				}
+			</script>
+		</div>
+		<div class="baseinfo">
+			<p>请输入毕业大学：</p>
+			<input type="text" name="jiuduxuexiao" class="txt2" value="{fzw:p1:jiuduxuexiao/}" />
+		</div>
+		<div class="clear"></div>
+		<!-- <div class="baseinfo">
+			<p><nobr>*</nobr>请选择身份：</p>
+			<input type="radio" name="zhiye" id="stu" /><label for="stu">学生</label>
+			<input type="radio" name="zhiye" id="tea" checked/><label for="tea">老师</label>
+		</div> -->
+		<div class="clear"></div>
+		<div class="baseinfo">
+			<p>请输入座右铭：</p>
+			<input type="text" name="zuoyouming" class="txt2" value="{fzw:p1:zuoyouming/}" />
+		</div>
+		<div class="clear"></div>
+		<div class="base-pic" onclick="window.open('/inc/touxiang/index.aspx?editname=touxiang&avatar_sizes=220*219&imgurl=touxiang_','','status=no,scrollbars=no,top=20,left=0,width=700,height=500')">
+			<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" style="width: 100%;height: 100%;" id="touxiang_"/>
+			<div class="active1">
+				<p>上传图片</p>
+			</div>
+			<input type="hidden" name="touxiang" class="base-file" value="{fzw:p1:touxiang/}" id="touxiang"/>
+		</div>	
+		<input type="button" class="base-btn" value="保存" onclick="savejbxx({fzw:p1:id/})" />
+		<input type="button" class="basecan-btn" value="取消" onclick="getjbxx()" />
+		<div class="clear"></div>
+	</div>
+	{/fzw:sql}
+</form>
+<script type="text/javascript">
+	function savejbxx(id){
+		var formData = $("#jbxx-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=user&type=edit&tip_string=提交成功！&tipurl={fzw:url:tipurl /}",
+			data: formData,
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				console.log("y");
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=geren&type=edit&id="+id,
+			data: formData,
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("保存成功！");
+				getjbxx();
+			},error:function(data){
+				layer.msg("网络错误，请重试！");
+				return false;
+			}
+		});
+		return false;
+	}
+	function tupian(id,url){
+		document.getElementById(id).value=url;
+		$('#touxiang-display').attr('src',url);
+	}
+</script>				

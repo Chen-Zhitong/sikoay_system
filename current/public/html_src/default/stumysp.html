@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>我的视频_我的课程</title>
+        <link rel="stylesheet" href="css/jquery.raty.css">
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery.raty.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	.com-reply1 a{
+		font-size: 13px;
+		color: #656565;
+	}
+	.com-info2 label{
+		font-size: 13px;
+		color: #8d8d8d;
+	}
+	.com-detail{
+		color: #333;
+	}
+	.conments2 img{
+		border-radius: 100%;
+	}
+	.com-time{
+		color: #8d8d8d;
+		font-size: 13px;
+	}
+	.class-text{
+		width: 550px;
+	}
+	.class-box{
+		width: 937px
+	}
+</style>        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+        
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+            $(".mykc").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>学习记录</p>
+                    <a href="/search.aspx?m=stuspbiji&laiyuanbianhao={fzw:url:laiyuanbianhao/}">笔记（{fzw:sql="select count(id) as bijishu from sl_biji where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:bijishu/}{/fzw:sql}）</a>
+                    <a href="/search.aspx?m=stusptw&laiyuanbianhao={fzw:url:laiyuanbianhao/}">提问（{fzw:sql="select count(id) as tiwenshu from sl_wenda where leixing='提问' and fasongren='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:tiwenshu/}{/fzw:sql}）</a>
+                    <a href="/search.aspx?m=stusppl&laiyuanbianhao={fzw:url:laiyuanbianhao/}">评论（{fzw:sql="select count(id) as pinglunshu from sl_pinglun where leixing='视频' and yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:pinglunshu/}{/fzw:sql}）</a>
+				</div>
+				<!-- <div class="creatxy">
+					<a href="">＋ 我要发帖</a>
+					<form>
+					<input type="text" name="" class="txt3 search" placeholder="搜索学员，回车跳转" />
+					<input type="submit" name="" class="txt4" value="" />
+					</form>
+				</div> -->
+				<div class="class-info">
+				
+					<div class="classtime-line"></div>
+					{fzw:search table="sl_kecheng" sqlvalue="classid=37&nbsp;and&nbsp;kechengjie&nbsp;in&nbsp;(select&nbsp;laiyuanbianhao&nbsp;from&nbsp;sl_jie&nbsp;where&nbsp;id&nbsp;in&nbsp;(select&nbsp;laiyuanbianhao&nbsp;from&nbsp;sl_history&nbsp;where&nbsp;yonghuming='{fzw:cookie:name="user_name"}'&nbsp;and&nbsp;leixing='视频学习'))" number="10" order="dtime" orderby="desc" id="p1"}
+					{fzw:for:sql="select *,(select top 1 biaoti from sl_jie as j,sl_history as h where j.laiyuanbianhao={fzw:p1:kechengjie/} and j.id=h.laiyuanbianhao order by h.dtime desc) as jiebiaoti,(select count(id) from sl_jie as j where j.laiyuanbianhao={fzw:p1:kechengjie/}) as zongshu,(select count(id) from sl_jie as j where j.id<=(select top 1 h.laiyuanbianhao from sl_history as h where h.yonghuming='{fzw:cookie:name="user_name"/}' and h.leixing='视频学习' order by dtime desc) and j.laiyuanbianhao={fzw:p1:kechengjie/}) as xuexishu,(select count(id) from sl_biji where laiyuanbianhao={fzw:p1:id/}) as bijishu,(select count(id) from sl_wenda where laiyuanbianhao={fzw:p1:id/} and leixing='提问' and fasongren='{fzw:cookie:name="user_name"/}') as tiwenshu,(select count(id) from sl_pinglun where laiyuanbianhao={fzw:p1:id/} and leixing='视频' and yonghuming='{fzw:cookie:name="user_name"}') as pinglunshu from sl_kecheng as kc where kc.id={fzw:p1:id/}" id="p2"}
+					<div class="class-box" data-zongshu="{fzw:p2:zongshu/}" data-xuexishu="{fzw:p2:xuexishu/}">
+						<div class="class-time">
+							<p>{fzw:p2:dtime datetime="yyyy/MM/dd"/}<img src="img/circle.png"></p>
+						</div>
+						<div class="class-pic">
+							<a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}"/></a>
+						</div>
+						<div class="class-text">
+							<h3><a href="/page.aspx?id={fzw:p1:id/}&classid=37" style="margin:0">{fzw:p1:biaoti/}</a></h3>
+							<label class="xuexibaifenbi">已学2%</label>
+							<span>用时<nobr>{fzw:for:sql="select count(id) as count_id from sl_time where yonghuming='{fzw:cookie:name="user_name"/}' and leixing='课程视频' and laiyuanbianhao={fzw:p1:id/}" id="p3"}{fzw:p3:count_id/}{/fzw:for:sql}分</nobr></span>
+							<span> 学习至{fzw:p2:jiebiaoti size="30"/}</span>
+							<br />
+							<a href="/search.aspx?m=stuspbiji&laiyuanbianhao={fzw:p1:id/}">笔记（{fzw:p2:bijishu/}）</a>
+							<a href="/search.aspx?m=stusptw&laiyuanbianhao={fzw:p1:id/}">提问（{fzw:p2:tiwenshu/}）</a>
+							<a href="/search.aspx?m=stusppl&laiyuanbianhao={fzw:p1:id/}">评论（{fzw:p2:pinglunshu/}）</a>
+						</div>
+						<div class="clear"></div>
+					</div>
+					{/fzw:for:sql}
+					{/fzw:search}
+					<div class="clear"></div>
+				</div>
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+			<!--右侧内容栏结束-->
+		</div>
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关视频学习记录'));
+		</script>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+			var x = $(".class-info").children(".class-box").length;
+			var y = (x-1)*145;
+			$(".classtime-line").css("height",y);
+		</script>	
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有任何记录'));
+			function del(id){
+				$.ajax({
+					type: "POST",
+					url: "/Execution.aspx?t=zuotijilu&type=del&id="+id,
+					success: function(data) {
+						layer.msg("删除成功！");
+						location.reload(true);
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+					}
+				});
+				return false;
+			}
+			$(".class-box").each(function(){
+				var a = $(this).data("xuexishu");
+				var b = $(this).data("zongshu");
+				var c = (a/b).toFixed(2);
+				
+				$(this).find(".xuexibaifenbi").html("已学"+c*100+"%");
+			})
+		</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

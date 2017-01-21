@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 管理员设置选项来决定命令和视图的工作方式 -->
+<control>
+  <!-- 第一个view定义了可用于所有命令的默认视图 -->
+  <view>main</view>
+  <!-- 同级的另一个view元素声明了status属性，该属性与Command类中的状态标志相对应，比第一个view优先级高 -->
+  <view status="CMD_OK">main</view>
+  <view status="CMD_ERROR">error</view>
+
+  <!-- command元素，默认情况下，这些元素直接映射到Command类，字符串AddVenue被用于组合成一个指向AddVenue.php类文件的路径 -->
+  <command name="Default">
+    <classroot name="DefaultCommand" />
+  </command>
+  <command name="ListVenues">
+    <view>listvenues</view>
+  </command>
+
+  <!-- 配置文件还支持别名,这里真正是映射到AddVenue类 -->
+  <command name="QuickAddVenue">
+    <classroot name="AddVenue" />
+    <view>quickadd</view>
+  </command>
+
+  <!-- 由于xml内部优先级高，所以command命令会加载属于他自己的view -->
+  <!-- 在下面这个里view总是先被加载，除非status被匹配 -->
+  <!-- 若status被匹配，那么将转向到另外一个（AddSpace）命令,注意转向(forward) -->
+  <command name="AddVenue">
+    <view>addvenue</view>
+    <status value="CMD_OK">
+      <forward>AddSpace</forward>
+    </status>
+    <status value="CMD_ERROR">
+      <forward>AddSpace</forward>
+    </status>
+  </command>
+
+  <command name="AddSpace">
+    <view>addspace</view>
+    <status value="CMD_OK">
+      <view>error</view>
+    </status>
+  </command>
+
+  <!-- 以下为真实生产代码上面为示例代码  -->
+</control>

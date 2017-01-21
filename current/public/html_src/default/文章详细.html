@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<title>{fzw:database:biaoti/}_{fzw:key:sitename/}</title>
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="max-width clear" style="padding-top: 5px;">
+			<div class="news-detail-title">
+				<p>{fzw:database:biaoti/}</p>
+				发布时间：{fzw:database:dtime datetime="yyyy-MM-dd"/}&nbsp;&nbsp;&nbsp;&nbsp;浏览次数：<span id="renqi"></span>
+			</div>
+			<div class="news-detail-word">
+				{fzw:database:neirong/}
+			</div>
+			<div class="bdsharebuttonbox" style="margin-top: 20px;">
+				<span style="float: left;margin-top: 4px;">分享到：</span>
+				<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+				<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+				<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+				<a href="#" class="bds_sqq" data-cmd="sqq" title="分享给QQ好友"></a>
+				<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+				<a href="#" class="bds_more" data-cmd="more"></a>
+			</div>
+			<div class="news-detail-bottom fl">
+				{fzw:sql="select top 1 * from sl_article where classid={fzw:database:classid/} and id>{fzw:database:id/} order by id asc" id="p1"}
+				<a href="{fzw:pageurl/}">上一篇：{fzw:p1:biaoti/}</a>
+				{/fzw:sql}
+			</div>
+			<div class="news-detail-bottom fr">
+				{fzw:sql="select top 1 * from sl_article where classid={fzw:database:classid/} and {fzw:database:id/}>id order by id desc" id="p1"}
+				<a href="{fzw:pageurl/}">下一篇：{fzw:p1:biaoti/}</a>
+				{/fzw:sql}
+			</div>
+			<div class="clear"></div>
+		</div>	
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","sqq","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<script type="text/javascript">
+{ajax:table="sl_article" id="{fzw:database:id/}" type="+" span_id="renqi" value="renqi"/}
+</script>
+	</body>
+</html>

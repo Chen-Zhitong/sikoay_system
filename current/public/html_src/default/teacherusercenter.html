@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}_个人中心</title>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link href="css/teacher.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right">
+				
+				<div class="info-top">
+					<div class="userpic">
+						{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+						<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" />
+						{/fzw:sql}
+					</div>
+					<div class="username">
+						<h4>{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}{/fzw:sql}</h4>
+						<img src="img/woman.png"/>
+						<div class="clear"></div>
+						<a href="/single.aspx?m=teachergerenziliao">修改账号资料</a>
+						{fzw:sql="select * from sl_laoshi where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+						<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}">查看个人主页</a>
+						{/fzw:sql}
+					</div>
+					<div class="opera">
+						<a href="/search.aspx?m=teachermsgfabu"><img src="img/tc2.png"/><p>发布通知</p></a>
+						<a href="/search.aspx?m=teacherxitongmsg"><img src="img/tc3.png"/><p>系统消息</p></a>
+						<a href="/search.aspx?m=teachersixin"><img src="img/tc4.png"/><p>我的私信</p></a>
+					</div>
+				</div>
+				
+				<div class="info-mid">
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=teacherchengyuanguanli"><p>{fzw:sql="select count(id) as count_id from sl_history where laiyuanbianhao in (select id from sl_bbs where yonghuming='{fzw:cookie:name="user_name"}') and leixing='加入圈子'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>学生总数</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=teacherdingdankc"><p>{fzw:sql="select count(id) as count_id from sl_xiaoshou where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>我的订单</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href="/search.aspx?m=teachershipinguanli&lingshi1=1"><p>{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>课程数量</a>
+					</div>
+					<div class="info-box">
+						<a href="/search.aspx?m=teachermoney&leixing=充值"><p>{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie:name="user_name"}' and (zhuangtai='已付款' or zhuangtai='交易成功')" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}</p>账户余额</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="act-sta">
+					<div class="act-title">
+						<img src="img/tc5.png"/>
+						<h4>账户状态：</h4>
+						<p>当前信息不完整，还不能被学生搜到，快完善下述信息吧！</p>
+					</div>
+					<div class="act-box1 clear">
+						<h4>身份认证</h4>
+						<div class="jqm-round-wrap">
+						    <div class="jqm-round-bg"></div>
+						    <canvas id="jqm-round-sector0" class="jqm-round-sector"></canvas>
+						    <div class="jqm-round-circle"><p class="yanse1" id="renzhengbaifenbi">82%</p></div>
+						</div>
+						<p>入驻华予的老师都需要经过身份认证哦</p>
+						<a href="/single.aspx?m=teacherrenzheng">马上去认证</a>
+					</div>
+					<div class="act-box2">
+						<h4>资料管理</h4>
+						<div class="jqm-round-wrap">
+						    <div class="jqm-round-bg"></div>
+						    <canvas id="jqm-round-sector1" class="jqm-round-sector"></canvas>
+						    <div class="jqm-round-circle"><p class="yanse2" id="ziliaobaifenbi">46%</p></div>
+						</div>
+						<p>一句话简介，教龄，过往经历，让学生更清楚的认识你</p>
+						<a href="/single.aspx?m=teachergerenziliao">马上去完善</a>
+					</div>
+					<div class="act-box3">
+						<h4>课程设置</h4>
+						<div class="jqm-round-wrap">
+						    <div class="jqm-round-bg"></div>
+						    <canvas id="jqm-round-sector2" class="jqm-round-sector"></canvas>
+						    <div class="jqm-round-circle"><p class="yanse3" id="kechengbaifenbi">50%</p></div>
+						</div>
+						<p>您提交的课程正在审核中，请耐心等待</p>
+						<a href="/search.aspx?m=teachershipinguanli&lingshi1=1">马上去上传</a>
+					</div>
+					<div class="act-box4">
+						<h4>圈子管理</h4>
+						<div class="jqm-round-wrap">
+						    <div class="jqm-round-bg"></div>
+						    <canvas id="jqm-round-sector3" class="jqm-round-sector"></canvas>
+						    <div class="jqm-round-circle"><p class="yanse4" id="quanzibaifenbi">82%</p></div>
+						</div>
+						<p>管理你的圈子，更好的与学生交流互动</p>
+						<a href="/single.aspx?m=teacherquanzishezhi">马上去设置</a>
+					</div>					
+				</div>
+				<div class="clear"></div>
+				
+				<div class="dongtai">
+					<div class="dt-title">
+						<img src="img/tc6.png"/>
+						<h4>我的动态</h4>
+						<a href="/search.aspx?m=teacherdongtai">更多 》</a>
+					</div>
+					<div class="clear"></div>
+					<div id="getdongtai">
+						
+					</div>
+					<script type="text/javascript">
+						$.ajax({
+							type: "GET", 
+							url: "/search.aspx?m=ajax_dongtai",
+							success: function(data) {
+								$("#getdongtai").html(data);
+							}
+						});	
+					</script>
+					<div class="quanz">
+						<div class="qz-title">
+							<img src="img/tc8.png"/>
+							<h4>圈子动态</h4>
+							<a href="/search.aspx?m=teachertieziguanli">更多 》</a>
+						</div>
+						{fzw:for:sql="select top 5 * from sl_bbsshow where quanzibianhao in (select id from sl_bbs where yonghuming='{fzw:cookie:name="user_name"/}') and laiyuanbianhao=0 order by dtime desc" id="p1"}
+						<div class="qz-box" style="border-bottom:1px dotted #6e6e6e">
+							{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+							<div class="qz-pic">
+								<img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+							</div>
+							<div class="qz-text">
+								<p>来自</p>
+								<label>{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</label>
+								<span>{fzw:p1:dtime string="shijian"/}</span>
+							</div>
+							{/fzw:for:sql}							
+							<a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a>
+						</div>
+						{/fzw:for:sql}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ajaxziliao" style="display: none;"></div>
+		<div class="ajaxkecheng" style="display: none;"></div>
+		<div class="ajaxquanzi" style="display: none;"></div>
+		<div class="ajaxrenzheng" style="display: none;"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+	// JavaScript Document
+var pie = {
+    run:function(opts){
+        if(!opts.id) throw new Error("must be canvas id.");
+        var canvas = document.getElementById(opts.id), ctx;
+        if(canvas && (ctx = canvas.getContext("2d"))){
+            canvas.width = canvas.height = "200";
+            var noop = function(){};
+            var before = opts.onBefore || noop;
+            var after = opts.onAfter || noop;
+            before(ctx);
+            if(opts.id=="jqm-round-sector0"){
+            	ctx.fillStyle = opts.color || '#28a4fd';
+            }	else 
+            	if(opts.id=="jqm-round-sector1"){
+            	ctx.fillStyle = opts.color || '#fe835a';
+            }
+            	else 
+            	if(opts.id=="jqm-round-sector2"){
+            	ctx.fillStyle = opts.color || '#1dbca6';
+            }
+            	else 
+            	if(opts.id=="jqm-round-sector3"){
+            	ctx.fillStyle = opts.color || '#f42d4b';
+            }
+            
+            var step = opts.step || 1;
+            var delay = opts.delay || 10;
+            var i = 0, rage = 360 * (opts.percent || 0);
+            var sRage = -Math.PI * 0.5;
+            var djs = function(){
+                i = i + step;
+                if(i <= rage){
+                    ctx.beginPath();
+                    ctx.moveTo(100, 100);   
+                    ctx.arc(100, 100, 100, sRage, Math.PI * 2 * (i/360)+sRage);
+                    ctx.fill();
+                    setTimeout(djs, delay);
+                } else {
+                    after(ctx);
+                }
+            };
+            djs();
+        }
+    }
+};
+function percentTofloat(km){
+		if(km.substring(km.length-1,km.length)=="%"){
+			km = km.substring(0,km.length-1);
+			km = km/100;
+		}
+		return km;
+	}
+	$.ajax({
+		type: "GET",
+		async: false, 
+		url: "/single.aspx?m=ajax_renzhengbaifenbi",
+		success: function(data) {
+			$(".ajaxrenzheng").html(data);
+			$("#renzhengbaifenbi").html(renzhengbaifenbi);
+		}
+	});
+	$.ajax({
+		type: "GET",
+		async: false, 
+		url: "/single.aspx?m=ajax_ziliaobaifenbi",
+		success: function(data) {
+			$(".ajaxziliao").html(data);
+			$("#ziliaobaifenbi").html(ziliaobaiefnbi);
+		}
+	});
+	$.ajax({
+		type: "GET",
+		async: false, 
+		url: "/single.aspx?m=ajax_quanzibaifenbi",
+		success: function(data) {
+			$(".ajaxquanzi").html(data);
+			$("#quanzibaifenbi").html(quanzibaifenbi);
+		}
+	});
+	$.ajax({
+		type: "GET",
+		async: false, 
+		url: "/single.aspx?m=ajax_kechengbaifenbi",
+		success: function(data) {
+			$(".ajaxkecheng").html(data);
+			$("#kechengbaifenbi").html(kechengbaifenbi);
+			var p=0;
+		    var len=$(".jqm-round-wrap").length;
+		    for(p=0;p<len;p++){
+		        var k=$("#jqm-round-sector"+p).next(".jqm-round-circle").find("p").html();
+		            k=percentTofloat(k);
+		        pie.run({
+		            id:"jqm-round-sector"+p,
+		            percent: k,
+		            onBefore:function(ctx){
+		                ctx.fillStyle = '#e8e8e8';
+		                ctx.beginPath();
+		                ctx.moveTo(100, 100);   
+		                ctx.arc(100, 100, 100, 0, Math.PI * 2);
+		                ctx.fill();
+		            }
+		        });
+		    }
+		}
+	});
+	
+
+</script>		
+       
+	</body>
+</html>

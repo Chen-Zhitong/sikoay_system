@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<title>学院论坛_{fzw:key:sitename/}</title>
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		
+		<!--forum-banner-->
+		<div class="max-width">
+			<div class="forum-banner" style="height: auto">
+			    <div class="swiper-container">
+			    	<div class="swiper-wrapper">
+			    		{fzw:sql="select * from sl_banner where classid=47 order by dtime desc" id="p1"}
+			    		<div class="swiper-slide">
+			    			<a href="{fzw:p1:u2/}" target="_blank"><img src="{fzw:p1:u3/}"></a>
+			    		</div>
+			    		{/fzw:sql}
+			    	</div>
+			    	<div class="swiper-pagination"></div>
+			    </div>
+			</div>
+		</div>
+		<!--banner end-->
+		<!-- forum-home-top -->
+		<div class="max-width">
+			<div class="forum-home-top">
+			<ul>
+				<li>
+					<p>最新主题<!-- <a href="">更多》</a> --></p>
+					<ul>
+						{fzw:sql="select top 5 * from sl_bbsshow where laiyuanbianhao=0 order by dtime desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ul>
+				</li>
+				<li>
+					<p>社区热帖<!-- <a href="">更多》</a> --></p>
+					<ul>
+						{fzw:sql="select top 5 *,(select count(id) as count_id from sl_bbsshow as bbs2 where laiyuanbianhao=bbs.id) as huidashu from sl_bbsshow as bbs where bbs.laiyuanbianhao=0 order by huidashu desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ul>
+				</li>
+				<li>
+					<p>最新回复<!-- <a href="">更多》</a> --></p>
+					<ul>
+						{fzw:sql="select top 5 * from sl_bbsshow where laiyuanbianhao<>0 order by dtime desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:neirong size="30"/}</a></li>
+						{/fzw:sql}
+					</ul>
+				</li>
+				<li>
+					<p>我为学院代言<!-- <a href="">更多》</a> --></p>
+					<ul>
+						{fzw:sql="select top 5 * from sl_bbsshow where tiezileibie=298 and laiyuanbianhao=0 order by dtime desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ul>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		</div>
+		<!-- forum-home-content -->
+		<div class="max-width" style="margin-top: 20px;">
+			<div class="forum-home-content-left">
+				<div class="forum-home-left-table">
+					<p>学院论坛</p>
+					<table>
+						{fzw:for:sql="select * ,(select count(id) from sl_bbsshow as bs where datediff(day, dtime ,getdate())=0 and bs.tiezileibie=p.id and laiyuanbianhao=0) as jinrishu from sl_Parameter as p where p.id=299 order by id desc" id="p1"}
+						<tr>
+							<td><a href="/search.aspx?m=quanzi_list&tiezileibie={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="{fzw:p1:u4/}"></a></td>
+							<td style="width: 280px;"><a href="/search.aspx?m=quanzi_list&tiezileibie={fzw:p1:id/}&ordertype=shuxing&lingshi1=1">{fzw:p1:u1/}<span>（今日发帖：{fzw:p1:jinrishu/}）</span></a>{fzw:p1:u2/}</td>
+							{fzw:for:sql="select top 1 *,(select count(id) from sl_bbsshow as bs where bs.laiyuanbianhao=0 and bs.tiezileibie={fzw:p1:id/}) as tiezizongshu,(select count(id) from sl_bbsshow as bs where bs.laiyuanbianhao<>0 and bs.tiezileibie={fzw:p1:id/}) as huitieshu from sl_bbsshow as bs,sl_user as u where tiezileibie={fzw:p1:id/} and u.yonghuming=bs.yonghuming" id="p2"}
+							<td>主贴：{fzw:p2:tiezizongshu/} / 回帖：{fzw:p2:huitieshu/}</td>
+							<td><a href="/single.aspx?m=quanzi_detail&id={fzw:p2:id/}&quanzibianhao={fzw:p2:quanzibianhao/}">{fzw:p2:biaoti size="30"/}</a>{fzw:p2:dtime string="shijian"/}&nbsp;&nbsp;&nbsp;&nbsp;{if value1="{fzw:p2:nicheng/} value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</td>
+							{/fzw:for:sql}
+						</tr>
+						{/fzw:for:sql}
+						{fzw:for:sql="select * ,(select count(id) from sl_bbsshow as bs where datediff(day, dtime ,getdate())=0 and bs.tiezileibie=p.id and laiyuanbianhao=0 and bs.quanzibianhao=4) as jinrishu from sl_Parameter as p where p.id=298 order by id desc" id="p1"}
+						<tr>
+							<td><a href="/search.aspx?m=xueyuandaiyan"><img src="{fzw:p1:u4/}"></a></td>
+							<td style="width: 280px;"><a href="/search.aspx?m=xueyuandaiyan">{fzw:p1:u1/}<span>（今日发帖：{fzw:p1:jinrishu/}）</span></a>{fzw:p1:u2/}</td>
+							{fzw:for:sql="select top 1 *,(select count(id) from sl_bbsshow as bs where bs.laiyuanbianhao=0 and bs.tiezileibie={fzw:p1:id/} and bs.quanzibianhao=4) as tiezizongshu,(select count(id) from sl_bbsshow as bs where bs.laiyuanbianhao<>0 and bs.tiezileibie={fzw:p1:id/}) as huitieshu from sl_bbsshow as bs,sl_user as u where tiezileibie={fzw:p1:id/} and u.yonghuming=bs.yonghuming and bs.quanzibianhao=4" id="p2"}
+							<td>主贴：{fzw:p2:tiezizongshu/} / 回帖：{fzw:p2:huitieshu/}</td>
+							<td><a href="/single.aspx?m=quanzi_detail&id={fzw:p2:id/}&quanzibianhao={fzw:p2:quanzibianhao/}">{fzw:p2:biaoti size="30"/}</a>{fzw:p2:dtime string="shijian"/}&nbsp;&nbsp;&nbsp;&nbsp;{if value1="{fzw:p2:nicheng/} value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</td>
+							{/fzw:for:sql}
+						</tr>
+						{/fzw:for:sql}
+					</table>
+				</div>
+				<div class="forum-home-left-table forum-home-quanzi">
+					<p>学院圈子<span>热门圈子</span></p>
+					<table>
+						{fzw:for:sql="select * ,(select count(id) from sl_bbs as bbs where bbs.quanzileibie=p.id) as quanzishu from sl_Parameter as p where p.classid=289 order by id desc" id="p1"}
+						<tr>
+							<td><a href="/search.aspx?m=quanzi_find&quanzileibie={fzw:p1:id/}"><img src="{fzw:p1:u4/}"></a></td>
+							<td style="width: 300px;"><a href="/search.aspx?m=quanzi_find&quanzileibie={fzw:p1:id/}">{fzw:p1:u1/}<span>（{fzw:p1:quanzishu/}个圈子）</span></a>{fzw:p1:u2/}</td>
+							{fzw:for:sql="select top 2 *,(select count(id) from sl_bbsshow as bs where datediff(day, dtime ,getdate())=0 and bs.quanzibianhao=bbs.id and laiyuanbianhao=0) as jinrishu from sl_bbs as bbs where quanzileibie={fzw:p1:id/} order by jinrishu desc" id="p2"}
+							<td><a href="/search.aspx?m=quanzi_list&quanzibianhao={fzw:p2:id/}&ordertype=shuxing&lingshi1=1"><img src="{fzw:p2:suoluetu/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">{fzw:p2:quanziming/}<span>（今日发帖：{fzw:p2:jinrishu/}）</span></a>{fzw:p2:jianjie/}</td>
+							{/fzw:for:sql}
+						</tr>
+						{/fzw:for:sql}
+					</table>
+				</div>
+				<div class="forum-home-left-table">
+					<p>学院专区</p>
+					<table>
+						{fzw:for:sql="select * ,(select count(id) from sl_bbsshow as bs where datediff(day, dtime ,getdate())=0 and bs.tiezileibie=p.id and laiyuanbianhao=0) as jinrishu from sl_Parameter as p where p.classid=288 order by id desc" id="p1"}
+						<tr>
+							<td><a href="/search.aspx?m=quanzi_list&tiezileibie={fzw:p1:id/}&ordertype=shuxing&lingshi1=1"><img src="{fzw:p1:u4/}"></a></td>
+							<td style="width: 280px;"><a href="/search.aspx?m=quanzi_list&tiezileibie={fzw:p1:id/}&ordertype=shuxing&lingshi1=1">{fzw:p1:u1/}<span>（今日发帖：{fzw:p1:jinrishu/}）</span></a>{fzw:p1:u2/}</td>
+							{fzw:for:sql="select top 1 *,(select count(id) from sl_bbsshow as bs where bs.laiyuanbianhao=0 and bs.tiezileibie={fzw:p1:id/}) as tiezizongshu,(select count(id) from sl_bbsshow as bs where bs.laiyuanbianhao<>0 and bs.tiezileibie={fzw:p1:id/}) as huitieshu from sl_bbsshow as bs,sl_user as u where tiezileibie={fzw:p1:id/} and u.yonghuming=bs.yonghuming" id="p2"}
+							<td>主贴：{fzw:p2:tiezizongshu/} / 回帖：{fzw:p2:huitieshu/}</td>
+							<td><a href="/single.aspx?m=quanzi_detail&id={fzw:p2:id/}&quanzibianhao={fzw:p2:quanzibianhao/}">{fzw:p2:biaoti size="30"/}</a>{fzw:p2:dtime string="shijian"/}&nbsp;&nbsp;&nbsp;&nbsp;{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</td>
+							{/fzw:for:sql}
+						</tr>
+						{/fzw:for:sql}
+					</table>
+				</div>
+			</div>
+			<div class="forum-home-content-right">
+				<div class="forum-home-right-top">
+					<a href="/single.aspx?m=fatie"><img src="img/forum-icon10.png">我要发帖</a>
+					<table>
+						<tr>
+							{fzw:sql="select count(id) as jinrishu from sl_bbsshow where datediff(day, dtime ,getdate()) = 0" id="p1"}
+							<td><span>{fzw:p1:jinrishu/}</span>论坛今日发帖</td>
+							{/fzw:sql}
+							{fzw:sql="select count(id) as benyueshu from sl_bbsshow where datediff(month, dtime ,getdate()) = 0" id="p1"}
+							<td><span>{fzw:p1:benyueshu/}</span>论坛今日发帖</td>
+							{/fzw:sql}
+						</tr>
+						<tr>
+							{fzw:sql="select count(id) as tiezishu from sl_bbsshow where laiyuanbianhao=0" id="p1"}
+							<td><span>{fzw:p1:tiezishu/}</span>帖子</td>
+							{/fzw:sql}
+							{fzw:sql="select count(id) as huiyuanshu from sl_user" id="p1"}
+							<td><span>{fzw:p1:huiyuanshu/}</span>会员</td>
+							{/fzw:sql}
+						</tr>
+					</table>
+				</div>
+				<div class="forum-home-right-list">
+					<p>精彩推荐</p>
+					<ol>
+						{fzw:sql="select top 9 * from sl_bbsshow where shuxing like '%推荐%' order by paixu desc" id="p1"}
+						<li><a href="/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}">{fzw:p1:biaoti/}</a></li>
+						{/fzw:sql}
+					</ol>
+				</div>
+				<div class="forum-home-right-list forum-home-right-list2">
+					<p>回答雷锋榜</p>
+					<table class="leifengbang">
+						{fzw:sql="select top 5 * ,(select count(id) from sl_bbsshow as bs where bs.yonghuming=u.yonghuming and laiyuanbianhao<>0) as huidashu from sl_user as u order by huidashu desc" id="p1"}
+						<tr>
+							<td class="paixu"></td>
+							<td><a href="/single.aspx?m=user-homepage&id={fzw:p1:id/}"><img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</a><br>{fzw:p1:leixing/}</td>
+							<td>{fzw:p1:huidashu/}回答</td>
+						</tr>
+						{/fzw:sql}
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+<script type="text/javascript">
+	var mySwiper = new Swiper('.forum-banner .swiper-container', {
+        direction: 'horizontal',
+        loop: true,
+        autoplay : 4000,
+        effect : 'slide',
+        speed: 1000,
+        autoResize: true,
+        pagination : '.swiper-pagination',
+        paginationClickable :true,
+    })
+    var a = $(".leifengbang").find("tr").length;
+    for(var i=0;i<a;i++){
+    	$(".leifengbang").children().children("tr").eq(i).children(".paixu").html(i+1);
+    }
+</script>		
+	</body>
+</html>

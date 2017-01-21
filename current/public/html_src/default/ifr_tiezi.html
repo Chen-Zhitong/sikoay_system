@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link rel="stylesheet" href="css/jquery.raty.css">
+    <link rel="stylesheet" type="text/css" href="css/class.css" />
+    <style type="text/css">
+        .bottom-2 {
+            margin-top: 0;
+        }
+    </style>
+    <script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/class.js"></script>
+    <script src="js/jquery.raty.js" type="text/javascript"></script>
+    <title>会员帖子_{fzw:key:sitename/}</title>
+    <script src="js/layer.js"></script>
+</head>
+<body style="width:100%;min-width:inherit">
+    <!-- student-vip -->
+    <div class="student-container" style="background:transparent;padding-top:0">
+        <div class="max-width" style="width:100%;">
+            <ul class="student-tiezi-list">
+                {fzw:search table="sl_bbsshow" order="dtime" orderby="desc" id="p1" sqlvalue="yonghuming&nbsp;in&nbsp;(select&nbsp;yonghuming&nbsp;from&nbsp;sl_user&nbsp;where&nbsp;id={fzw:url:lingshi1/})&nbsp;and&nbsp;laiyuanbianhao=0" number="10"}
+                <li>
+                    <img src="img/user-touxiang.png" class="student-tiezi-touxiang">
+                    <p class="student-tiezi-title">TA发布了<a href="javascript:void(0)" onclick="parent.window.location.href = '/single.aspx?m=quanzi_detail&id={fzw:p1:id/}&quanzibianhao={fzw:p1:quanzibianhao/}'">查看</a><a href="javascript:void(0)" onclick="huifuthis(this)">回复帖子</a></p>
+                    <p class="student-tiezi-word">{fzw:p1:biaoti/}</p>
+                    <p class="student-tiezi-time">{fzw:p1:dtime datetime="yyyy-MM-dd&nbsp;hh:mm"/}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{fzw:sql="select count(id) as shu from sl_bbsshow where laiyuanbianhao={fzw:p1:id/}" id="p2"}{fzw:p2:shu/}{/fzw:sql}评 / {fzw:p1:renqi/}阅</p>
+                    <div class="student-homepage-text">
+                        <form>
+                            <textarea placeholder="请输入回复..." rows="4" name="neirong"></textarea>
+                            <input type="hidden" name="laiyuanbianhao" value="{fzw:p1:id/}"/>
+                            <input type="hidden" name="yonghuming" value="{fzw:cookie:name="user_name"/}" />
+                            <input type="hidden" name="tiezileibie" value="{fzw:p1:tiezileibie/}" />
+                            <input type="hidden" name="biaoti" value="{fzw:p1:biaoti/}" />
+                            <input type="hidden" name="quanzibianhao" value="{fzw:p1:quanzibianhao/}"/>
+                        </form>
+                        
+                        <button class="student-button" onclick="fabiao(this)">发表</button>
+                        <div class="clear"></div>
+                    </div>
+                </li>
+                {/fzw:search}
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <script type="text/javascript">
+	function huifuthis(e){
+	    $(e).parent().parent().find(".student-homepage-text").slideToggle();
+	    setInterval('parent.autoheight($("body").innerHeight())', 100)
+	}
+	function fabiao(e) {
+	    if ($(e).parent().find("textarea").val() == '') {
+	        parent.layer.alert("请输入回复内容！");
+	        return false;
+	    }
+	    var formData = $(e).parent().find("form").serialize();
+	    $.ajax({
+	        type: "POST",
+	        async: false,
+	        url: "/Execution.aspx?t=bbsshow&type=add",
+	        data: formData,
+	        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	        success: function (data) {
+	            layer.msg("回复成功！");
+	            window.location.reload(true);
+	        }, error: function (data) {
+	            layer.msg("回复失败！请重试");
+	            return false;
+	        }
+	    });
+	}
+    </script>
+</body>
+</html>

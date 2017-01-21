@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>创建课程_视频管理</title>
+    <link href="css/teacher.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/class.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/inc/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+        body {
+            padding: 20px;
+        }
+
+        label {
+            padding: 10px 0;
+            border-bottom: 1px solid #707070;
+        }
+
+        select {
+            width: 173px;
+            height: 38px;
+            font-size: 13px;
+            font-family: 微软雅黑;
+            line-height: 26px;
+            margin-bottom: 10px;
+            outline: none;
+            padding: 6px 10px;
+            border: 1px solid #e8e8e8;
+            color: #595959;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url(/template/default/img/down.png) no-repeat scroll right center transparent;
+            padding-right: 14px;
+        }
+
+        input[type=radio] {
+            width: 20px;
+            height: 20px;
+        }
+        input.txt1{
+            float:none
+        }
+        textarea.txt1 {
+            resize:none;
+            width: 314px;
+            vertical-align:text-top;
+            font-family: 微软雅黑;
+            font-size: 14px;
+            text-indent: 10px;
+            box-sizing: border-box;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(232, 232, 232);
+            border-image: initial;
+            outline: none;
+           
+        }
+        td {
+            padding: 6px 10px;
+            border: 1px solid #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+    {if value1="{fzw:url:id/}" value2="" bi="=="}
+    <form id="timu-form">
+        题目：<input class="txt1" name="biaoti" type="text" id="timu" /><br />
+        分值：<input class="txt1" name="fenzhi" type="number" min="0" id="fenzhi" /><br />
+        类型：<select name="leixing" onchange="changedaan(this.value)" id="leixing">
+            <option value="">请选择题目类型</option>
+            <option value="单选">单选</option>
+            <option value="多选">多选</option>
+            <option value="填空">填空</option>
+            <option value="问答">问答</option>
+        </select><br />
+        解析：<textarea name="jiexi" class="txt1" rows="5" id="jiexi"></textarea><br /><br />
+        <input type="hidden" name="daan" id="daan" value="{fzw:key:bianhao/}"/>
+        <input type="hidden" name="laiyuanbianhao" value="{fzw:url:laiyuanbianhao/}" id="laiyuanbianhao"/>
+    </form>
+    {else}
+    {fzw:sql="select * from sl_tiku_timu where id={fzw:url:id/}" id="p1"}
+    <form id="timu-form">
+        题目：<input class="txt1" name="biaoti" type="text" id="timu" value="{fzw:p1:biaoti/}"/><br />
+        分值：<input class="txt1" name="fenzhi" type="number" min="0" id="fenzhi" value="{fzw:p1:fenzhi/}"/><br />
+        类型：<select name="leixing" onchange="changedaan(this.value)" id="leixing">
+            <option value="">请选择题目类型</option>
+            <option value="单选">单选</option>
+            <option value="多选">多选</option>
+            <option value="填空">填空</option>
+            <option value="问答">问答</option>
+        </select><br />
+        <script>
+            var a = '{fzw:p1:leixing/}'
+            $("#leixing option").each(function () {
+                if ($(this).val() == a) {
+                    $(this).attr("selected", "selected");
+                }
+            })
+            
+        </script>
+        解析：<textarea name="jiexi" class="txt1" rows="5" id="jiexi">{fzw:p1:jiexi/}</textarea><br /><br />
+        <input type="hidden" name="daan" id="daan" value="{fzw:p1:daan/}" />
+        <input type="hidden" name="laiyuanbianhao" value="{fzw:url:laiyuanbianhao/}" id="laiyuanbianhao" />
+    </form>
+    {/fzw:sql}
+    {/if}
+    答案：<br /><br />
+    <div id="daanbox"></div>
+    <button style="background-color: #1dbca6;border: 0;outline: medium;font-size: 13px;color: #fff;width: 80px;height: 38px;cursor: pointer;font-family: '微软雅黑';margin-right: 20px; margin-left:53px;" onclick="bind()">确定添加</button>
+    <form id="right-form">
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="zhengque"/>
+    </form>
+    <script type="text/javascript">
+        var daan = $("#daan").val();
+        //添加题目
+        function bind() {
+            if ($("#timu").val() == '') {
+                layer.alert('请填写题目');
+                return false;
+            }
+            if ($("#fenzhi").val() == '') {
+                layer.alert('请填写分值');
+                return false;
+            }
+            if ($("#类型").val() == '') {
+                layer.alert('请选择类型');
+                return false;
+            }
+            if ($("#jiexi").val() == '') {
+                layer.alert('请填写解析');
+                return false;
+            }
+            var id = '{fzw:url:id}'
+            var laiyuanbianhao = $("#laiyuanbianhao").val();
+            var formData1 = $("#timu-form").serialize();
+            $.ajax({
+                type: "POST",
+                async: false,
+                {if value1="{fzw:url:id/}" value2="" bi="=="}
+                url: "/Execution.aspx?t=tiku_timu&type=add",
+                {else}
+                {fzw:sql="select * from sl_tiku_timu where id={fzw:url:id/}" id="p1"}
+                url: "/Execution.aspx?t=tiku_timu&type=add&id="+id,
+                {/fzw:sql}
+                {/if}
+                data: formData1,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function (data) {
+                    parent.axjazhangjie({fzw:url:tiku/});
+                    parent.layer.closeAll();
+                }, error: function (data) {
+                    alert("网络错误，请重试！")
+                }
+            });
+        }
+        //变更答案框
+        function changedaan(a) {
+            if (a == '单选') {
+                $.ajax({
+                    type: "get",
+                    async: false,
+                    url: "/single.aspx?m=ajax_danxuan&id=" + daan,
+                    success: function (data) {
+                        $("#daanbox").html(data);
+                    }, error: function (data) {
+                        alert("网络错误，请重试！")
+                    }
+                });
+            }else if(a=='多选'){
+                $.ajax({
+                    type: "get",
+                    async: false,
+                    url: "/single.aspx?m=ajax_duoxuan&id=" + daan,
+                    success: function (data) {
+                        $("#daanbox").html(data);
+                    }, error: function (data) {
+                        alert("网络错误，请重试！")
+                    }
+                });
+            }else if(a=='填空'){
+                $.ajax({
+                    type: "get",
+                    async: false,
+                    url: "/single.aspx?m=ajax_tiankong&id=" + daan,
+                    success: function (data) {
+                        $("#daanbox").html(data);
+                    }, error: function (data) {
+                        alert("网络错误，请重试！")
+                    }
+                });
+            }else if(a=='问答'){
+                $.ajax({
+                    type: "get",
+                    async: false,
+                    url: "/single.aspx?m=ajax_wenda&id=" + daan,
+                    success: function (data) {
+                        $("#daanbox").html(data);
+                    }, error: function (data) {
+                        alert("网络错误，请重试！")
+                    }
+                });
+            }
+        }
+        changedaan($("#leixing").val());
+        //弹出输入框
+        function shurudaan(word1,word2,type,leixing) {
+            layer.prompt({ title: word1, formType: type }, function (x1, index) {
+                layer.close(index);
+                layer.prompt({ title: word2, formType: 0 }, function (x2, index) {
+                    daanupload(daan, x1, x2, leixing)
+                    layer.close(index);
+                });
+            });
+        }
+        layer.config({
+            extend: 'extend/layer.ext.js'
+        });
+        //上传答案
+        function daanupload(id,x1,x2,leixing) {
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/Execution.aspx?t=tiku_daan&type=add",
+                data: "&laiyuanbianhao=" + id + "&biaoti=" + x1 + "&zhengque=否&fenshu="+x2,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function (data) {
+                    changedaan(leixing);
+                    console.log('y')
+                }, error: function (data) {
+                    alert("网络错误，请重试！")
+                }
+            });
+        }
+        //修改正确与否
+        function right(id,e,leixing) {
+            var a = $(e).val();
+            $("#right-form input[name=id]").val(id);
+            $("#right-form input[name=zhengque]").val(a);
+            var formData = $("#right-form").serialize();
+            console.log(formData)
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/Execution.aspx?t=tiku_daan&type=edit_inid&id=" + id,
+                data: formData,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function (data) {
+                    changedaan(leixing);
+                    console.log('y')
+                }, error: function (data) {
+                    alert("网络错误，请重试！")
+                }
+            });
+        }
+    </script>
+</body>
+</html>

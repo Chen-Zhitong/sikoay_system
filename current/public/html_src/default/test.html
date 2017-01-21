@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="{fzw:key:sitekey/}" />
+    <meta name="description" content="{fzw:key:sitedesc/}" />
+	<title>{fzw:sql="select * from sl_tiku where id={fzw:url:id/}" id="p1"}{fzw:p1:biaoti/}{/fzw:sql}_练习题库_{fzw:key:sitename/}</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/jquery.raty.css">
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<script src="js/jquery.raty.js" type="text/javascript"></script>
+<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+
+ {if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+    <script type="text/javascript">
+	window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+</script>
+    {else}
+    
+    {/if}
+</head>
+<body>
+	{fzw:inside src="顶部.html"/}
+<!-- classvideo-detail -->
+<div class="max-width">
+<div class="classvideo-detail-title">
+	<a href="/search.aspx?m=tiku">练习题库</a>
+	<span>></span>
+	<a href="/single.aspx?m=tiku_show&id={fzw:url:id/}">{fzw:sql="select * from sl_tiku where id={fzw:url:id/}" id="p1"}{fzw:p1:biaoti/}{/fzw:sql}</a>
+</div>
+<p class="practice-top" >{fzw:sql="select * from sl_tiku where id={fzw:url:id/}" id="p1"}{fzw:p1:biaoti/}{/fzw:sql}</p>
+<div style="width: 940px;float: left;">
+	<div class="timu_box" id="timu_box"></div>
+</div>
+<div style="width: 240px;float: right;">
+    <div class="datika">
+        <p class="datika_h">答题卡</p>
+        <br />
+        <p class="center"><img src="images/test_clock.jpg"/></p>
+        
+        <p class="p_time">剩余时间：<span id="daojishi"></span></p>
+        <div class="timuNolist">
+           <div class="slidebox">
+            	{fzw:sql="select * from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) order by id asc" id="p1"}
+            	 {if value1="{fzw:p1:id sql="sl_zuotijilu|where&nbsp;timubianhao=&dangqian&nbsp;and&nbsp;tikubianhao={fzw:url:id/}&nbsp;and&nbsp;leixing='测试'&nbsp;and&nbsp;yonghuming='{fzw:cookie name="user_name" /}'&nbsp;and&nbsp;datediff(minute,kaishishijian,getdate())<30|id"/}" value2="" bi="=="}
+            	    <li onclick="goto('{fzw:p1:id/}')" class="timu_{fzw:p1:id/}"></li>
+            	    {else}
+            	    <li class="done timu_{fzw:p1:id/}" onclick="goto('{fzw:p1:id/}')"></li>
+            	    {/if}
+            	
+            	{/fzw:sql}
+            </div>
+            <p class="center op_btn">
+            	<a href="javascript:;" class="prev" title="上一页"><</a>
+            	<a href="javascript:;" class="next" title="下一页">></a>
+            </p>
+        </div>
+        <div class="pad_10">
+             <p class="dati_state">
+            	<span class="span"></span> 未答&nbsp;
+            	<span class="span done"></span> 已答&nbsp;
+            	<span class="span on"></span> 当前
+        	</p>
+         	<a href="javascript:isAssignment();" class="btn_green btn_jiaojuan">确定交卷</a>
+        </div>
+       
+    </div>
+    <script type="text/javascript">
+    	$(".timuNolist li").each(function(i){
+    		$(this).html(i+1);
+    	})
+    	$(".timuNolist li").each(function(i){
+    		$(".timuNolist li").slice(i*30,i*30+30).wrapAll("<ul class='bd'></ul>");
+    	})
+    	jQuery(".timuNolist").slide({mainCell:".slidebox",effect:"leftLoop",pnLoop:false});
+    </script>
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="practice_alert">
+    
+</div>
+
+<script type="text/javascript">
+//删除所有已过期并且未完成的试卷
+	var jiluId = '{fzw:sql="select id from sl_zuotijilu where tikubianhao={fzw:url:id/} and yonghuming='{fzw:cookie name="user_name" /}' and leixing='测试' and datediff(minute,kaishishijian,getdate())>30 and kaoshizhuangtai<>'完成'" id="p1"}{fzw:p1:id/},{/fzw:sql}';
+	if(jiluId!=''){
+		jiluId = jiluId.substring(0,jiluId.length - 1);
+		$.ajax({
+			type:"get",
+			url:"/Execution.aspx?t=zuotijilu&type=del&id="+jiluId,
+			success:function(data){
+				//window.location.reload();
+			}
+		});
+	}
+  	
+
+
+
+function getRTime(sTime,nTime) { //获取考试剩余秒数
+	
+	var StartTime = new Date(sTime); //开始时间
+	var NowTime = new Date(nTime);//当前时间
+	
+	
+	var pastT = NowTime.getTime() - StartTime.getTime(); //已用时间
+	var count = Math.floor((30*60*1000-pastT) / 1000);//剩余秒数
+	
+	countDown(count);
+	return count;
+}
+
+function countDown(t){ //倒计时
+	var c = setInterval(function(){
+		if(t >0) {
+			t--;
+		} else {
+			clearInterval(c);
+		}
+//		var d = Math.floor(t / 60 / 60 / 24);
+//		var h = Math.floor(t / 60 / 60 % 24);
+		var m = Math.floor(t / 60 % 60);
+		var s = Math.floor(t % 60);
+		$("#daojishi").html(m+":"+s);
+	}, 1000)
+}
+
+
+
+
+
+	var nowTime = '{fzw:key:time/}';
+	
+	var timuNum = {fzw:sql="select count(id) as cid from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/})" id="p1"}{fzw:p1:cid/}{/fzw:sql}; //题目总数
+	
+	var doneNum; //已做题目数
+	{if value1="{fzw:sql="select top 1 id from sl_zuotijilu where tikubianhao={fzw:url:id/} and yonghuming='{fzw:cookie name="user_name" /}' and leixing='测试' and datediff(minute,kaishishijian,getdate())<30 and kaoshizhuangtai<>'完成' order by id asc" id="p1"}{fzw:p1:id/}{/fzw:sql}" value2="" bi="=="}
+	 //没有做题记录
+    var dingdanhao = '{fzw:key:bianhao/}';
+    var timubianhao ='{fzw:sql="select top 1 id from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) order by id asc" id="p1"}{fzw:p1:id/}{/fzw:sql}';
+    var startTime = nowTime;
+    countDown(1800);
+    {else}
+    //有做题记录
+    var dingdanhao = '{fzw:sql="select top 1 dingdanhao from sl_zuotijilu where tikubianhao={fzw:url:id/} and yonghuming='{fzw:cookie name="user_name" /}' and leixing='测试' and datediff(minute,kaishishijian,getdate())<30 and kaoshizhuangtai<>'完成' order by id asc" id="p1"}{fzw:p1:dingdanhao/}{/fzw:sql}';
+    
+     var timubianhao = '{fzw:sql="select top 1 id from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) and id not in(select timubianhao from sl_zuotijilu where tikubianhao={fzw:url:id/} and yonghuming='{fzw:cookie name="user_name" /}' and leixing='测试' and datediff(minute,kaishishijian,getdate())<30 and kaoshizhuangtai<>'完成') order by id asc" id="p1"}{fzw:p1:id/}{/fzw:sql}';
+  
+    var doneNum = {fzw:sql="select count(id) as cid from sl_zuotijilu where tikubianhao={fzw:url:id/} and yonghuming='{fzw:cookie name="user_name" /}' and leixing='测试' and datediff(minute,kaishishijian,getdate())<30 and kaoshizhuangtai<>'完成'" id="p1"}{fzw:p1:cid/}{/fzw:sql};
+    var startTime = '{fzw:sql="select top 1 kaishishijian from sl_zuotijilu where tikubianhao={fzw:url:id/} and yonghuming='{fzw:cookie name="user_name" /}' and leixing='测试' and datediff(minute,kaishishijian,getdate())<30 and kaoshizhuangtai<>'完成' order by id asc" id="p1"}{fzw:p1:kaishishijian/}{/fzw:sql}';
+    getRTime(startTime,nowTime);
+    {/if}
+    
+  	
+  	
+  	if(timuNum==doneNum){ //本练习题已做完
+    	//$(".practice_alert").show();
+    	timubianhao ='{fzw:sql="select top 1 id from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) order by id asc" id="p1"}{fzw:p1:id/}{/fzw:sql}';
+    }
+	
+	//loadTimu("/single.aspx?m=ajax_test&id={fzw:url:id/}&dingdanhao="+dingdanhao+"&timubianhao="+timubianhao);
+	goto(timubianhao);
+	
+	
+
+//题目跳转
+function loadTimu(src){ //加载题目
+  		$.ajax({
+		type:"get",
+		url:src,
+		async:true,
+		success:function(data){
+			$("#timu_box").html(data);
+		}
+	});
+}
+function goto(tag) {
+	if(tag!=undefined){
+		if(tag!==''){
+			loadTimu("/single.aspx?m=ajax_test&id={fzw:url:id/}&dingdanhao="+dingdanhao+"&timubianhao=" + parseInt(tag));
+			$(".timuNolist li").removeClass("on");
+			$(".timu_"+tag).addClass("on");
+			return false;
+		}
+		if(tag==''){
+			alert('已经没有了！');
+			return false;
+		}
+	}
+}
+
+//提交试卷
+function isAssignment(){
+	if($(".timuNolist li").length>$(".timuNolist li.done").length){
+		if(confirm("您还有试题没有做完，确认要提交试卷？")){
+			Assignment();
+		}
+	}else{
+		Assignment();
+	}
+}
+function Assignment(){
+	$.ajax({
+			type:"post",
+			url:"/Execution.aspx?t=zuotijilu&type=alledit&field=dingdanhao&dingdanhao="+dingdanhao,
+			data:"kaoshizhuangtai=完成",
+			success:function(data){
+				
+			}
+		});
+	$.ajax({
+			type:"get",
+			url:"/single.aspx?m=ajax_score&dingdanhao="+dingdanhao+"&tiku={fzw:url:id/}",
+			success:function(data){
+				$(".practice_alert").html(data).show();
+			}
+		});
+	
+}
+
+
+function closeAlert(){
+	$(".practice_alert").hide();
+}
+</script>
+{fzw:inside src="底部.html"/}
+</body>
+</html>

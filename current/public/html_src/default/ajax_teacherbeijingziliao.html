@@ -1,0 +1,21 @@
+{fzw:for:sql="select * from sl_laoshi as ls,sl_user as u where u.yonghuming=ls.yonghuming and ls.yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+					<div class="baseinfo">
+						<span>教&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>
+						<label><i>{fzw:p1:jiaoling/}</i></label>
+					</div>				
+					<div class="baseinfo">
+						<span>单位/机构/学校：</span>
+						<label><i>{fzw:p1:danwei/}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="baseinfo">
+						<span>教学科目：</span>
+						<label><i>{fzw:for:sql="select * from sl_Parameter where id={fzw:p1:kechengfenlei/}" id="p2"}{fzw:p2:u1/}{/fzw:for:sql}</i></label>
+					</div>
+					<div class="clear"></div>
+					<div class="baseinfo">
+						<span>个人标签：</span>
+						<label><i>{fzw:p1:gerenbiaoqian/}</i></label>
+					</div>
+					<div class="clear"></div>
+					{/fzw:for:sql}

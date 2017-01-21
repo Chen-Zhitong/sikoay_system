@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>师资阵容_{fzw:key:sitename/}</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" href="css/jquery.raty.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<script src="js/jquery.raty.js" type="text/javascript"></script>
+<style type="text/css">
+	.kechengfenlei-on{
+		background-color: #1DBCA6;
+		border-radius: 3px;
+		color: #fff !important;
+	}
+</style>
+</head>
+<body>
+	{fzw:inside src="顶部.html"/}
+<!-- teacher-homepage -->
+<div class="max-width">
+	<div class="teacher-homepage-top">
+		<ul>
+			<li id="laoshikemu">
+				<img src="img/teacher-icon12.png">科目：
+				<a href="/search.aspx?m=shizizhenrong&kechengfenlei=&jiaoling={fzw:url:jiaoling/}&jibie={fzw:url:jibie/}" style="margin-left: 0">全部</a> 
+				{fzw:sql="select * from sl_Parameter where classid=398 order by u3 asc,id asc" id="p1"}
+				
+			    <a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:p1:id/}&jiaoling={fzw:url:jiaoling/}&jibie={fzw:url:jibie/}" data-kemu="{fzw:p1:id/}">{fzw:p1:u1/}</a>
+			       
+				{/fzw:sql}
+			</li>
+			<li id="laoshijiaoling">
+				<img src="img/teacher-icon13.png">教龄： 
+				<a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling=&jibie={fzw:url:jibie/}">全部</a> 
+				{fzw:sql="select * from sl_Parameter where classid=301 order by u3 asc,id asc" id="p1"}
+				
+			    <a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling={fzw:p1:u2/}&jibie={fzw:url:jibie/}" data-jiaoling="{fzw:p1:u2/}">{fzw:p1:u1/}</a>
+			       
+				{/fzw:sql}
+			</li>
+			<li id="laoshijiebie">
+				<img src="img/teacher-icon14.png">级别： 
+				<a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling={fzw:url:jiaoling/}&jibie=">全部</a> 
+				{fzw:sql="select * from sl_Parameter where classid=302 order by u3 asc,id asc" id="p1"}
+				
+			    <a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling={fzw:url:jiaoling/}&jibie={fzw:p1:u1/}" data-jibie="{fzw:p1:u1/}">{fzw:p1:u1/}</a>
+			       
+				{/fzw:sql}
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		var a,b,c='';
+		a = '{fzw:url:kechengfenlei/}';
+		b = '{fzw:url:jiaoling/}';
+		c = '{fzw:url:jibie/}';
+		$(".teacher-homepage-top").find("a").removeClass("kechengfenlei-on")
+		if (a=='') {
+			$("#laoshikemu").children("a").eq(0).addClass("kechengfenlei-on");
+		}
+		if (b=='') {
+			$("#laoshijiaoling").children("a").eq(0).addClass("kechengfenlei-on");
+		}
+		if (c=='') {
+			$("#laoshijiebie").children("a").eq(0).addClass("kechengfenlei-on");
+		}
+		$("#laoshikemu").children("a").each(function(){
+			var x = $(this).data("kemu");
+			if (x==a) {
+				$(this).addClass("kechengfenlei-on");
+			}
+		})
+		$("#laoshijiaoling").children("a").each(function(){
+			var x = $(this).data("jiaoling");
+			if (x==b) {
+				$(this).addClass("kechengfenlei-on");
+			}
+		})
+		$("#laoshijiebie").children("a").each(function(){
+			var x = $(this).data("jibie");
+			if (x==c) {
+				$(this).addClass("kechengfenlei-on");
+			}
+		})
+	</script>
+	<div class="guess-like">
+		<div class="guess-like-title">为您推荐<a href="">换一换<img src="img/check-icon.png"></a></div>
+		<ul class="kc_list mart_30 h_content" id="laoshiall">
+			{fzw:for:sql="select top 5 * from sl_laoshi order by newid()" id="p1"}
+		    <li>
+		    	{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+		       	<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}">
+		       		{if value1="{fzw:p2:touxiang/}" value2="" bi="=="}
+		       		<img src="img/lingshitouxiang.png" width="100%" height="220"/>
+	       		    {else}
+	       		    <img src="{fzw:p2:touxiang/}" width="100%" height="220"/>
+	       		    {/if}
+		        	<p class="title">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji" /}{else}{fzw:p2:nicheng/}{/if}<span style="float: right;">{fzw:p1:jiaoling/}年教龄</span></p>
+		       	</a>
+		       	{/fzw:for:sql}
+		      	<span class="icon_user color_gray fr">{fzw:p1:yonghuming sql="sl_kecheng|where&nbsp;yonghuming='&dangqian'|count"/}课程</span>
+		       	<span class="price_sm">{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}</span>
+		   	</li>
+		    {/fzw:for:sql}
+	 	</ul>
+	 	<ul class="kc_list mart_30 h_content" id="laoshinotall">
+			{fzw:for:sql="select top 5 * from sl_laoshi where kechengfenlei={fzw:url:kechengfenlei/} order by newid()" id="p1"}
+		    <li>
+		    	{fzw:for:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+		       	<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}">
+		       		{if value1="{fzw:p2:touxiang/}" value2="" bi="=="}
+		       		<img src="img/lingshitouxiang.png" width="100%" height="220"/>
+	       		    {else}
+	       		    <img src="{fzw:p2:touxiang/}" width="100%" height="220"/>
+	       		    {/if}
+		        	<p class="title">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji" /}{else}{fzw:p2:nicheng/}{/if}<span style="float: right;">{fzw:p1:jiaoling/}年教龄</span></p>
+		       	</a>
+		       	{/fzw:for:sql}
+		      	<span class="icon_user color_gray fr">{fzw:p1:yonghuming sql="sl_kecheng|where&nbsp;yonghuming='&dangqian'|count"/}课程</span>
+		       	<span class="price_sm">{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}</span>
+		   	</li>
+		    {/fzw:for:sql}
+	 	</ul>
+	 	<script type="text/javascript">
+	 		var a = '{fzw:url:kechengfenlei/}';
+	 		if (a=='') {
+	 			$("#laoshiall").show();
+	 			$("#laoshinotall").hide();
+	 		}else{
+	 			$("#laoshiall").hide();
+	 			$("#laoshinotall").show();
+	 		}
+	 	</script>
+	</div>
+<div class="clear"></div>
+<div class="teacher-homepage-left classhome-right datacenter-left" style="float:left">
+	<div class="classhome-right-nav" style="width:100%;">
+		<ul>
+			<li class="teacher-homepage-selecton">
+				<a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling={fzw:url:jiaoling/}&jibie={fzw:url:jibie/}">全部老师</a>
+			</li>
+			<li>
+				<a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling={fzw:url:jiaoling/}&jibie={fzw:url:jibie/}&ordertype=dtime&orderby=desc">最新</a>
+			</li>
+			<li>
+				<a href="/search.aspx?m=shizizhenrong&kechengfenlei={fzw:url:kechengfenlei/}&jiaoling={fzw:url:jiaoling/}&jibie={fzw:url:jibie/}">人气最高</a>
+			</li>
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<ul class="teacher-homepage-list">
+		{fzw:search table="sl_laoshi" number="8" order="{fzw:url:ordertype/}" orderby="{fzw:url:orderby/}" id="p1"}
+		<li>
+			{fzw:for:sql="select *,(select avg(fen) from sl_pinglun as pl where pl.laoshi=u.yonghuming and pl.leixing='老师') as fenshu from sl_user as u where u.yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+			{if value1="{fzw:p2:touxiang/}" value2="" bi="=="}
+			<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}"><img src="img/user-touxiang.png"></a>    
+		    {else}
+		    <a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}"><img src="{fzw:p2:touxiang/}"></a>
+		    {/if}
+			<div class="teacher-homepage-list-right">
+				<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}&yonghuming={fzw:p1:yonghuming/}">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji" /}{else}{fzw:p2:nicheng/}{/if}</a><span>{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}</span><br>
+				
+				职称：<span>{fzw:p1:zhicheng/}</span>		教龄：<span>{fzw:p1:jiaoling/}年</span>		学历：<span>{fzw:p1:xueli/}</span>		课程数：<span>{fzw:p1:yonghuming sql="sl_kecheng|where&nbsp;yonghuming='&dangqian'|count"/}</span>		人气：<span>{fzw:p1:renqi/}</span><br>
+				满意度评分：{if value1="{fzw:p2:fenshu/}" value2="" bi="=="}0{else}{fzw:p2:fenshu/}{/if}<span class="user-rating" data-score="{if value1="{fzw:p2:fenshu/}" value2="" bi="=="}0{else}{fzw:p2:fenshu/}{/if}"></span> 	<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}&leixing=pinglun" class="pinglunshu">{fzw:p1:yonghuming sql="sl_pinglun|where&nbsp;laoshi='&dangqian'|count"/}条评论</a>
+				<div class="teacher-homepage-tips">
+					{fzw:p1:gerenbiaoqian lable="/search.aspx?m=shizizhenrong&gerenbiaoqian=&dangqian"/}
+				</div>
+				<p>TA的课程：{fzw:for:sql="select top 1 * from sl_kecheng where yonghuming='{fzw:p1:yonghuming/}' and shenhe='已发布' order by dtime desc" id="p3"}<a href="/page.aspx?id={fzw:p3:id/}&classid=37">{fzw:p3:biaoti/}</a><span>{if value1="{fzw:p3:jiage/}" value2="0" bi="=="}免费{else}{fzw:p3:jiage/}{/if}</span>{/fzw:for:sql}<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}&leixing=kecheng">更多课程》</a></p>
+			</div>
+			{/fzw:for:sql}
+			<div class="clear"></div>
+		</li>
+		{/fzw:search}
+		
+	</ul>
+	<div class="classhome-right-page">
+		{fzw:search:page id="p1" size="8"/}
+	</div>
+</div>
+<div class="teacher-homepage-right">
+	<div class="teacher-homepage-right-like">
+		<p>猜您喜欢</p>
+		<ul>
+            {if value1="{fzw:cookie:name="user_name"/}" value2="" bi="=="}
+            {fzw:sql="select top 5 * from sl_kecheng where shenhe='已发布' and classid=37 order by newid()" id="p1"}
+            <li>
+                <a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}">{fzw:p1:biaoti/}</a>
+            </li>
+            {/fzw:sql}
+            {else}
+			{fzw:sql="select * from sl_kecheng as kc where id in (select DISTINCT top 5 kc.id from sl_kecheng as kc,sl_history as h where kc.kechengjie in (select distinct(j.laiyuanbianhao) from sl_jie as j where j.id=h.laiyuanbianhao) and h.leixing='视频学习' and h.yonghuming='{fzw:cookie:name="user_name"/}' and kc.classid=37)" id="p1"}
+			<li>
+				<a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}">{fzw:p1:biaoti/}</a>
+			</li>
+			{/fzw:sql}
+            {/if}
+		</ul>
+	</div>
+	<div class="section_side">
+		<div class="home_gg hoverslide homepage-recommand">
+		    <div class="section_h home-right-title">
+		        <span class="name">最近浏览</span>
+		        <p class="clear"></p>
+		    </div>
+		    <ul class="homepage-recommand-list" style="width: 100%;">
+		    	{fzw:for:sql="select top 5 * from sl_history where leixing='老师浏览' and (yonghuming='{fzw:cookie:name="user_name"/}' or yonghuming='{fzw:cookie:name="user_id"/}') order by id desc" id="p1"}
+		        <li>
+		        	{fzw:for:sql="select * from sl_laoshi as ls,sl_user as u where u.yonghuming=ls.yonghuming and ls.id={fzw:p1:laiyuanbianhao/}" id="p2"}
+		        	<a href="">
+		        		{if value1="{fzw:p2:touxiang/}" value2="" bi="=="}
+        				<img src="img/lingshitouxiang.png" class="homepage-vip-icon">    
+    				    {else}
+    				    <img src="{fzw:p2:touxiang/}" class="homepage-vip-icon">
+    				    {/if}
+		        		<img src="img/play.png" class="homepage-playicon">
+		        	</a>
+		        	{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}
+        			<a href="">{fzw:p2:yonghuming/}</a>    
+    			    {else}
+    			    <a href="">{fzw:p2:nicheng/}</a>
+    			    {/if}
+    			    
+		        	<!--<span>小学英语-小...</span>--><br>
+		        	{fzw:p2:jianjie nohtml="yes" size="20" /}
+                    {/fzw:for:sql}
+		        </li>
+		        <div class="clear"></div>
+		        {/fzw:for:sql}
+		        
+		    </ul>	
+		<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	$(".teacher-homepage-list-right .user-rating").each(function(){
+		$(this).raty({ 
+			hints: ['1', '2', '3', '4', '5'],
+			starType: 'i',
+			readOnly: true,
+			score: function() {
+	    		return $(this).attr('data-score');
+	  		}
+		})
+	})
+</script>
+{fzw:inside src="底部.html"/}{fzw:inside src="右侧.html"/}
+</body>
+</html>

@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>认证设置_个人设置</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+        	.content form{
+        		display: none;
+        	}
+        </style>
+        <script type="text/javascript">
+        	var yonghuming ='';
+        	{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+        	yonghuming = {fzw:p1:yonghuming/};
+        	{/fzw:sql}
+        	if (yonghuming=='') {
+        		$.ajax({
+        			type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=renzheng&type=add",
+					data: "&yonghuming={fzw:cookie:name="user_name"/}",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						
+						location.reload(true);
+					}
+        		})
+        	}
+        </script>
+        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+            <script>
+                $(".gerenshezhi").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>认证设置</p>
+				</div>
+				<div class="sfrz-title">
+					<h4>身份认证<nobr>（*必须）</nobr></h4>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="sfrz-box">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>个人身份认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>华予教育学院平台老师必须通过身份认证的真实身份老师</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="/single.aspx?m=teachergerenrenzheng">去认证</a>{/if}{/fzw:sql}
+					
+				</div>
+				<div class="clear"></div>
+				<div class="sfrz-title">
+					<h4>其他资质认证<nobr>（可选）</nobr></h4>					
+				</div>
+				<div class="clear"></div>
+				<div class="sfrz-box" style="border-bottom: 1px dotted #e8e8e8">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>学历认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>学历认证可提升学生对个人主页学历背景的信任度</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="xuelishow">去认证</a>{/if}{/fzw:sql}
+					
+				</div>
+				<div class="clear"></div>
+				<form id="xueli-form">
+                    <input type="hidden" value="否" name="chuli" />
+				<div class="shangc-box">
+					<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:xuelizhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=xuelizhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+					<input type="hidden" name="xuelizhaopian" id="xuelizhaopian" class="uppic" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:xuelizhaopian/}{/fzw:sql}" />
+				</div>
+				<div class="sfrz-pic">
+					<p>请提交你学历的证明，如职称证书、考级证书等。</p>
+					<input type="button" name="" class="sfrz-btn baochun" value="保存" />
+					<input type="reset" name="" class="sfqx-btn quxiao" value="取消" />
+				</div>
+				<div class="clear"></div>
+				</form>
+				<div class="sfrz-box" style="border-bottom: 1px dotted #e8e8e8">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>教师证认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>教师证认证可提升学生对专业教师身份的信任度</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="jiaoshishow">去认证</a>{/if}{/fzw:sql}
+				</div>
+				<div class="clear"></div>
+				<form id="jiaoshi-form">
+                    <input type="hidden" value="否" name="chuli" />
+				<div class="shangc-box">
+					<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:jiaoshizhengzhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=jiaoshizhengzhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+					<input type="hidden" name="jiaoshizhengzhaopian" id="jiaoshizhengzhaopian" class="uppic" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:jiaoshizhengzhaopian/}{/fzw:sql}" />
+				</div>
+				<div class="sfrz-pic">
+					<p>请提交你教学能力或专业能力的证明，如职称证书、考级证书等。</p>
+					<input type="button" name="" class="sfrz-btn baochun" value="保存" />
+					<input type="reset" name="" class="sfqx-btn quxiao" value="取消" />
+				</div>
+				<div class="clear"></div>
+				</form>
+				<div class="sfrz-box">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>职称认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>专业资质认证可提升学生对专业技能的认可度</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="zhichengshow">去认证</a>{/if}{/fzw:sql}
+					
+				</div>
+				<div class="clear"></div>
+				<form id="zhicheng-form">
+                    <input type="hidden" value="否" name="chuli" />
+				<div class="shangc-box">
+					<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:zhichengzhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=zhichengzhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+					<input type="hidden" name="zhichengzhaopian" id="zhichengzhaopian" class="uppic" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:zhichengzhaopian/}{/fzw:sql}" />
+				</div>
+				<div class="sfrz-pic">
+					<p>请提交你教学能力或专业能力的证明，如职称证书、考级证书等。</p>
+					<input type="button" name="" class="sfrz-btn baochun" value="保存" />
+					<input type="reset" name="" class="sfqx-btn quxiao" value="取消" />
+				</div>
+				<div class="clear"></div>
+				</form>
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			$(".xuelishow").click(function(){
+				$("#xueli-form").stop().slideToggle();
+			})
+			$(".jiaoshishow").click(function(){
+				$("#jiaoshi-form").stop().slideToggle();
+			})
+			$(".zhichengshow").click(function(){
+				$("#zhicheng-form").stop().slideToggle();
+			})
+			function tupian(id,url){
+				document.getElementById(id).value=url;
+				$("#"+id).parent('div').children("img").attr("src",url);
+			}
+			$(".baochun").click(function(){
+				if ($(this).parent().parent().find(".uppic").val()=='') {
+					layer.msg("请上传图片！");
+					return false;
+				} 
+				var formData = $(this).parent().parent("form").serialize();
+				$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=renzheng&type=edit",
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("上传成功！");
+						location.reload(true);
+					},error:function(data){
+						layer.msg("上传失败！请重试");
+						return false;
+					}
+				});
+			})
+			$(".quxiao").click(function(){
+				$(this).parent().parent().find("img").attr("src","");
+				$(this).parent().parent().find(".uppic").val("");
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>老师认证</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+        	.content form{
+        		display: none;
+        	}
+        	.shangc-box .tips p{
+        		text-align: left;
+        	}
+        	.shangc-box #sfz-form p{
+        		text-align: left;
+        	}
+        </style>
+        <script type="text/javascript">
+        	var yonghuming ='';
+        	{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+        	yonghuming = '{fzw:p1:yonghuming/}';
+        	{/fzw:sql}
+        	if (yonghuming=='') {
+        		yonghuming='{fzw:cookie:name="user_name"}'
+        		$.ajax({
+        			type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=renzheng&type=add",
+					data: "&yonghuming="+yonghuming,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						
+						location.reload(true);
+					}
+        		})
+        	}
+        </script>
+        
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content" style="height: auto">
+			
+			
+			<!--右侧内容栏-->
+			<div class="content-right2" style="height:auto;min-height: auto">
+				<div class="right-title">
+					<p>老师认证</p>
+				</div>
+				<div class="sfrz-title">
+					<h4>身份认证<nobr>（*必须）</nobr></h4>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="sfrz-box">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>个人身份认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>华予教育学院平台老师必须通过身份认证的真实身份老师</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="sfzshow">去认证</a>{/if}{/fzw:sql}
+					
+				</div>
+				<div class="clear"></div>
+				<div class="shangc-box" style="display: none;width: auto;height: auto;border:0;text-align: left;float: none" id="sfz-box">
+					<div class="tips">
+						<img src="img/tc48.png" style="width: 20px;height:20px;margin:0" />
+						<span>温馨提示：</span>
+						<p>1、您的证件信息华予将为您保密，只用于认证身份，不会挪作他用</p>
+						<p>2、请选择以下任一方式，完成身份认证</p>
+						<p>3、带有*的项目为必填项，但是上传“身份证正面”或者“护照信息、签证页”的照片可以有效提高审核通过的概率</p>
+						<p>4、照片大小不要超过5M</p>
+						<p>5、照片上传后鼠标可放在照片上放大查看是否清晰</p>
+					</div>
+					
+					<form class="shenfen-info" id="sfz-form" style="display: block">
+						<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+						<p>姓名*</p>
+                        <input type="hidden" value="否" name="chuli" />
+						<input type="text" name="xingming" class="txt1" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:xingming/}{/fzw:sql}' id="xm" />
+						<span>请输入您的真实姓名</span>
+						<br  clear="all"/>
+						<p>身份证号码*</p>
+						
+						
+						<input type="text" name="shenfenzhenghaoma" class="txt1" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:shenfenzhenghaoma/}{/fzw:sql}' id="sfzhm"/>
+						<span>请输入您的真实身份证号码</span>
+						<br  clear="all"/>
+						<p>手持身份证照片*</p>
+						<div class="shangc-box">
+							<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:shouchishenfenzhengzhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" id="touxiang-display2" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=shouchishenfenzhengzhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')">
+							<input type="hidden" name="shouchishenfenzhengzhaopian" id="shouchishenfenzhengzhaopian" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:shouchishenfenzhengzhaopian/}{/fzw:sql}">
+						</div>
+						<div class="example">
+							<label>示例</label>
+							<img src="img/tc49.png"/>
+							<span>1、免冠，保证五官清晰可见</span><br />
+							<span>2、手持证件，不要遮挡证件上的信息</span>	
+						</div>
+						<div class="clear"></div>
+						<br />
+						<p>身份证背面*</p>
+						<div class="shangc-box">
+							<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:shenfenzhengzhengfanmian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" id="touxiang-display" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=shenfenzhengzhengfanmian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')">
+							<input type="hidden" name="shenfenzhengzhengfanmian" id="shenfenzhengzhengfanmian" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:shenfenzhengzhengfanmian/}{/fzw:sql}">
+						</div>
+						<div class="example">
+							<label>示例</label>
+							<img src="img/tc50.png"/>
+							<span>1、免冠，保证五官清晰可见</span><br />
+							<span>2、手持证件，不要遮挡证件上的信息</span>
+						</div>
+						<div class="clear"></div>
+					</form>	
+					<input type="button" class="tjrz-btn" value="提交认证" id="tijiao" />
+					<br>
+				</div>
+				<div class="clear"></div>
+				<div class="sfrz-title">
+					<h4>其他资质认证<nobr>（可选）</nobr></h4>					
+				</div>
+				<div class="clear"></div>
+				<div class="sfrz-box" style="border-bottom: 1px dotted #e8e8e8">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>学历认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>学历认证可提升学生对个人主页学历背景的信任度</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="xuelishow">去认证</a>{/if}{/fzw:sql}
+					
+				</div>
+				<div class="clear"></div>
+				<form id="xueli-form">
+                    <input type="hidden" value="否" name="chuli" />
+				<div class="shangc-box">
+					<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:xuelizhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=xuelizhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+					<input type="hidden" name="xuelizhaopian" id="xuelizhaopian" class="uppic" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:xuelizhaopian/}{/fzw:sql}" />
+				</div>
+				<div class="sfrz-pic">
+					<p>请提交你学历的证明，如职称证书、考级证书等。</p>
+					<input type="button" name="" class="sfrz-btn baochun" value="保存" />
+					<input type="reset" name="" class="sfqx-btn quxiao" value="取消" />
+				</div>
+				<div class="clear"></div>
+				</form>
+				<div class="sfrz-box" style="border-bottom: 1px dotted #e8e8e8">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>教师证认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>教师证认证可提升学生对专业教师身份的信任度</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="jiaoshishow">去认证</a>{/if}{/fzw:sql}
+				</div>
+				<div class="clear"></div>
+				<form id="jiaoshi-form">
+                    <input type="hidden" value="否" name="chuli" />
+				<div class="shangc-box">
+					<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:jiaoshizhengzhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=jiaoshizhengzhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+					<input type="hidden" name="jiaoshizhengzhaopian" id="jiaoshizhengzhaopian" class="uppic" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:jiaoshizhengzhaopian/}{/fzw:sql}" />
+				</div>
+				<div class="sfrz-pic">
+					<p>请提交你教学能力或专业能力的证明，如职称证书、考级证书等。</p>
+					<input type="button" name="" class="sfrz-btn baochun" value="保存" />
+					<input type="reset" name="" class="sfqx-btn quxiao" value="取消" />
+				</div>
+				<div class="clear"></div>
+				</form>
+				<div class="sfrz-box">
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}/template/default/img/tc51.png{else}/template/default/img/tc48.png{/if}{/fzw:sql}'/>
+					<p>职称认证<nobr>{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:zhichengrenzhengzhuangtai/}" value2="已通过" bi="=="}（已认证）{else}（尚未认证）{/if}{/fzw:sql}</nobr></p>
+					<span>专业资质认证可提升学生对专业技能的认可度</span>
+					{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{if value1="{fzw:p1:renzhengzhuangtai/}" value2="已通过" bi="=="}{else}<a href="javascript:void(0)" class="zhichengshow">去认证</a>{/if}{/fzw:sql}
+					
+				</div>
+				<div class="clear"></div>
+				<form id="zhicheng-form">
+                    <input type="hidden" value="否" name="chuli"/>
+				<div class="shangc-box">
+					<input type="hidden" name="id" value='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:id/}{/fzw:sql}'>
+					<img src='{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:zhichengzhaopian/}{/fzw:sql}' onerror="this.src='/template/default/img/shangchuanpic.png'" style="width: 100%;height: 100%;margin: 0;cursor: pointer;" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=zhichengzhaopian&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')"/>
+					<input type="hidden" name="zhichengzhaopian" id="zhichengzhaopian" class="uppic" value="{fzw:sql="select * from sl_renzheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:zhichengzhaopian/}{/fzw:sql}" />
+				</div>
+				<div class="sfrz-pic">
+					<p>请提交你教学能力或专业能力的证明，如职称证书、考级证书等。</p>
+					<input type="button" name="" class="sfrz-btn baochun" value="保存" />
+					<input type="reset" name="" class="sfqx-btn quxiao" value="取消" />
+				</div>
+				<div class="clear"></div>
+				</form>
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			$(".sfzshow").click(function(){
+				$("#sfz-box").slideToggle();
+			})
+			$(".xuelishow").click(function(){
+				$("#xueli-form").slideToggle();
+			})
+			$(".jiaoshishow").click(function(){
+				$("#jiaoshi-form").slideToggle();
+			})
+			$(".zhichengshow").click(function(){
+				$("#zhicheng-form").slideToggle();
+			})
+			function tupian(id,url){
+				document.getElementById(id).value=url;
+				$("#"+id).parent('div').children("img").attr("src",url);
+			}
+			$(".baochun").click(function(){
+				if ($(this).parent().parent().find(".uppic").val()=='') {
+					layer.msg("请上传图片！");
+					return false;
+				} 
+				var formData = $(this).parent().parent("form").serialize();
+				$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=renzheng&type=edit",
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("上传成功！");
+						location.reload(true);
+					},error:function(data){
+						layer.msg("上传失败！请重试");
+						return false;
+					}
+				});
+			})
+			$(".quxiao").click(function(){
+				$(this).parent().parent().find("img").attr("src","");
+				$(this).parent().parent().find(".uppic").val("");
+			})
+		</script>
+		<script type="text/javascript">
+	$("#tijiao").click(function(){
+    	var count = 0;
+		$('#sfz-form input').each(function() {
+			if ($(this).val() == "") {
+				count++;
+			}
+		});
+		if (count > 0) {
+			layer.msg('请完整填写、上传您的认证!');
+			return false;
+		}
+		var xm = /^[\u4E00-\u9FA5]{2,4}$/;
+		if (!xm.test(document.getElementById('xm').value)) {
+			layer.alert("姓名不正确！请输入2-4位中文汉字姓名");
+			return false;
+		}
+		var sfz = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+		if (!sfz.test(document.getElementById('sfzhm').value)) {
+			layer.alert("身份证号码不正确！请重新输入正确的身份证号码");
+			return false;
+		}
+		var formData = $("#sfz-form").serialize();
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=renzheng&type=edit&tip_string=提交成功！&tipurl=/",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("提交成功！");
+				location.reload(true);
+			},error: function(data){
+				layer.msg("提交失败！请重试");
+			}
+		});
+		return false;
+    })
+</script>
+	</body>
+</html>

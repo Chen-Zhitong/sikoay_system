@@ -1,0 +1,51 @@
+<!-- bottom -->
+<div class="clear"></div>
+<div class="bottom-2">
+			<div class="max-width">
+				<div class="bottom-2-left">
+					<ul>
+						<li>
+							{fzw:for:sql="select * from sl_sort where id=49" id="p1"}
+							{fzw:p1:u1/}<br><br>
+								{fzw:for:sql="select * from sl_article where classid={fzw:p1:id/} order by paixu desc,id asc" id="p2"}
+								<a href='{pageurl classid="{fzw:p2:classid/}" id="{fzw:p2:id/}"/}'>{fzw:p2:biaoti/}</a><br>
+								{/fzw:for:sql}
+							{/fzw:for:sql}
+							<a href='{listurl classid="43" m="54"/}'>华予公告</a><br>
+							<a href='{listurl classid="44" m="54"/}'>华予新闻</a><br>
+							<a href='{listurl classid="44" m="54"/}'>华予活动</a><br />
+						</li>
+						{fzw:for:sql="select * from sl_sort where id in (50,51,52) order by id asc" id="p1"}
+						<li>
+							{fzw:p1:u1/}<br><br>
+							{fzw:for:sql="select * from sl_article where classid={fzw:p1:id/} order by paixu desc,id asc" id="p2"}
+							<a href='{pageurl classid="{fzw:p2:classid/}" id="{fzw:p2:id/}"/}'>{fzw:p2:biaoti/}</a><br>
+							{/fzw:for:sql}
+						</li>
+						{/fzw:for:sql}
+					</ul>
+				</div>
+				{fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}
+				<div class="bottom-2-right">
+					<ul>
+						<li>
+							<p>联系我们</p>
+							<br>
+							全国统一客服热线：<br>
+							<span>{fzw:p1:u1/}</span>
+							<img src="img/qq.png" style="vertical-align: bottom">QQ客服：{fzw:p1:u2/}
+						</li>
+						<li>
+							<img src="{fzw:p1:u3/}" style="float: left;">
+							<br><br>关注华予教育微信，参与<br>活动互动，获取超值优惠
+						</li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+				<div class="bottom-2-bottom">
+					{fzw:p1:u4/}
+				</div>
+				{/fzw:sql}
+			</div>
+		</div>
+		<!-- bottom-end -->

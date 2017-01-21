@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html style="background-color: #3aabd2;">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link rel="stylesheet" href="css/jquery.raty.css">
+    <link rel="stylesheet" type="text/css" href="css/class.css" />
+    <style type="text/css">
+        .bottom-2 {
+            margin-top: 0;
+        }
+        .bdshare-button-style0-16:after{
+            display:inline-block!important;
+        }
+        .bdshare-button-style0-16 a, .bdshare-button-style0-16 .bds_more{
+            padding-left:0!important;
+        }
+    </style>
+    <script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/class.js"></script>
+    <script src="js/jquery.raty.js" type="text/javascript"></script>
+    <script src="js/layer.js"></script>
+    <title>会员主页_{fzw:key:sitename/}</title>
+</head>
+<body>
+    <!-- student-vip -->
+    <div class="student-container" style="padding-top:0;">
+        <div class="max-width" style="background-color: transparent;padding: 0">
+            <div class="student-homepage-left">
+                <ul class="student-homepage-list" id="shuoshuolist">
+                    {fzw:search table="sl_shuoshuo" order="dtime" orderby="desc" id="p1" sqlvalue="yonghuming&nbsp;in&nbsp;(select&nbsp;yonghuming&nbsp;from&nbsp;sl_user&nbsp;where&nbsp;id={fzw:url:lingshi1/})&nbsp;and&nbsp;laiyuanbianhao=0" number="10"}
+                    <li>
+                        {fzw:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+                        <a href="/single.aspx?m=user-homepage&id={fzw:p2:id/}" class="student-homepage-list-user"><img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" style="border-radius:3px">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji"/}{else}{fzw:p2:nicheng/}{/if}</a>
+                        {/fzw:sql}
+                        <p class="student-homepage-list-time">{fzw:p1:dtime datetime="yyyy年MM月dd日&nbsp;&nbsp;&nbsp;hh:mm"/}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye" aria-hidden="true"></i><!--浏览（11）--></p>
+                        <div class="student-homepage-list-word clear clearfix">
+                            {fzw:p1:neirong/}
+                        </div>
+                        <div class="student-homepage-list-a">
+                            {if value1="{fzw:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='说说点赞' and yonghuming='{fzw:cookie:name="user_name"/}'" id="p2"}{fzw:p2:shu/}{/fzw:sql}" value2="" bi="=="}
+                            {fzw:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='说说点赞'" id="p2"}
+                            <a href="javascript:void(0)" onclick="dianzan({fzw:p1:id/})"><img src="img/zan-off.png">&nbsp;赞（{fzw:p2:shu/}）</a>
+                            {/fzw:sql}
+                            {else}
+                            {fzw:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='说说点赞'" id="p2"}
+                            <a><img src="img/zan-off.png">&nbsp;已赞（{fzw:p2:shu/}）</a>
+                            {/fzw:sql}
+                            {/if}
+                            {fzw:sql="select count(id) as shu from sl_shuoshuo where laiyuanbianhao={fzw:p1:id/}" id="p2"}
+                            <a href="javascript:void(0)" onclick="showhuifu(this)"><img src="img/huifu.png">&nbsp;回复（{fzw:p2:shu/}）</a>
+                            {/fzw:sql}
+                            <div class="bdsharebuttonbox" style="display: inline-block;"><a href="#" class="bds_more" data-cmd="more" style="background: none;margin: 0;font-size: 13px;line-height: 20px;color: #727272"><i class="iconfont">&#xe68f;</i>&nbsp;分享</a></div>
+                        </div>
+                        <ul class="student-homepage-list-hide">
+                            {fzw:sql="select *,u.id as userid from sl_shuoshuo as ss,sl_user as u where ss.laiyuanbianhao={fzw:p1:id/} and ss.yonghuming=u.yonghuming" id="p2"}
+                            <li>
+                                <a href="/single.aspx?m=user-homepage&id={fzw:p2:userid/}"><img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'" class="student-homepage-list-touxiang"></a>
+                                <div class="student-homepage-list-hide-word"><a href="" class="student-homepage-list-user2">{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming string="shouji"/}{else}{fzw:p2:nicheng/}{/if}</a>:{fzw:p2:neirong/}</div>
+                                <!--<div class="clear"></div>-->
+                                <p class="student-homepage-list-hide-time">{fzw:p2:dtime datetime="yyyy年MM月dd日&nbsp;&nbsp;&nbsp;hh:mm"/}&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="huifuthis(this)"><img src="img/huifu.png">&nbsp;回复</a></p>
+                            </li>
+                            {/fzw:sql}
+                            <div class="student-homepage-list-text">
+                                <form class="huifu-form">
+                                    <input type="hidden" name="yonghuming" value="{fzw:cookie:name=" user_name"/}"/>
+                                    <input type="hidden" name="laiyuanbianhao" value="{fzw:p1:id/}" />
+                                    <textarea rows="3" name="neirong"></textarea>
+                                </form>
+
+                                <button class="student-button" onclick="huifu(this)">回复</button>
+                                <div class="clear"></div>
+                            </div>
+                        </ul>
+                    </li>
+                    {/fzw:search}
+                </ul>
+                <a href="javascript:void(0)" class="student-homepage-list-more" onclick="loadmore()">加载更多</a>    
+                <div id="page" style="display:none">
+                    {fzw:search:page id="p1" size="4" lan="pagenext"/}
+                </div>
+                <script>
+                    if($("#page").html()==''){
+                        $(".student-homepage-list-more").hide();
+                    }
+                </script>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <script type="text/javascript">
+	function showhuifu(e){
+	    $(e).parent().parent().children(".student-homepage-list-hide").slideToggle();
+	}
+	setInterval('parent.autoheight($("body").innerHeight())',100)
+	function huifuthis(e){
+		var a = $(e).parent().parent().find(".student-homepage-list-user2").html();
+		$(e).parent().parent().parent().find("textarea").val("回复 "+a+"：")
+	}
+	window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+	function dianzan(id){
+	    $.ajax({
+	        type: "POST",
+	        async: false,
+	        url: "/Execution.aspx?t=history&type=add",
+	        data: "&laiyuanbianhao="+id+"&yonghuming={fzw:cookie:name="user_name"/}&leixing=说说点赞",
+	        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	        success: function (data) {
+	            layer.msg("点赞成功！");
+	            window.location.reload(true);
+	        }, error: function (data) {
+	            layer.msg("点赞失败！请重试");
+	            return false;
+	        }
+	    });
+	}
+	    function huifu(e){
+	        if($(e).parent().find("textarea").val()==''){
+	            layer.alert("请输入回复内容！");
+	            return false;
+	        }
+	        var formData = $(e).parent().find(".huifu-form").serialize();
+	        $.ajax({
+	            type: "POST",
+	            async: false,
+	            url: "/Execution.aspx?t=shuoshuo&type=add",
+	            data: formData,
+	            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	            success: function (data) {
+	                layer.msg("回复成功！");
+	                window.location.reload(true);
+	            }, error: function (data) {
+	                layer.msg("回复失败！请重试");
+	                return false;
+	            }
+	        });
+	    }
+	    var page = 2;
+	    function loadmore(){
+	        
+	        $.ajax({
+	            type: "get",
+	            async: false,
+	            url: "/search.aspx?m=ajax_shuoshuolist&lingshi1=4&page="+page,
+	            success: function (data) {
+	                console.log("ok");
+	                if(data=='您搜索的信息不存在'){
+	                    layer.msg("已经没有更多说说了");
+	                    return false;
+	                }
+	                $("#shuoshuolist").append(data);
+	                page++;
+	            }, error: function (data) {
+	                console.log("false")
+	                return false;
+	            }
+	        });
+	    }
+    </script>
+</body>
+</html>

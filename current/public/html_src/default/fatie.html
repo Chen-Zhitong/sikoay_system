@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wangEditor.min.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/wangEditor.min.js"></script>
+		<title>我要发帖_学院论坛</title>
+		<style type="text/css">
+			button{
+				font-family: "微软雅黑"
+			}
+			.forum-post-left .edui-container{
+				float: right;
+				margin-bottom: 20px;
+				z-index: 9 !important;
+			}
+		</style>
+		{if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		
+		<!-- forum-post -->
+		<div class="max-width" style="margin-top: 30px">
+			<div class="forum-post-left">
+				<p>发帖</p>
+				<form id="fatie-form">
+				标题：<input type="text" name="biaoti">
+				<select name="tiezileibie">
+					<option value="298">我为学院代言</option>
+					<option value="297">公共营养师</option>
+					<option value="296">孕婴师</option>
+					<option value="295">资格护士考试</option>
+					<option value="294">心理咨询师</option>
+					<option value="293">健康管理师</option>
+					<option value="292">学习分享</option>
+					<option value="291">侃天侃地</option>
+				</select>
+				{if value1="{fzw:url:quanzibianhao/}" value2="" bi="=="}
+		        
+		        {else}
+		        <input type="hidden" name="quanzibianhao" value="{fzw:url:quanzibianhao/}">
+		        {/if}
+				<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+				内容：
+				<textarea id="neirong" name="neirong" style="width: 650px;height: 300px;"></textarea>
+				{fzw:server type="Editor" id="neirong" user="{fzw:cookie name="user_name" /}" width="650px" height="180" /}
+				<!-- <div id="ask-input" style="height:360px;margin-bottom: 20px;">
+							    	
+				</div> -->
+				<div class="clear"></div>
+				<!-- <input type="text" name="yzm" placeholder="请输入验证码">
+				<img src="img/check.png">
+				<img src="img/check-icon.png"> -->
+				<button id="forum-post" type="button">发布</button>
+				</form>
+			</div>
+			<div class="forum-post-right">
+				<p><img src="img/forum-icon11.png">发帖注意事项</p>
+				<div class="forum-post-right-content">
+					1、大家每天可以免费提出两个问题，从第三个问题起，测试文字充字数的，内容后台可定义<br><br>
+
+					2、您是来解决问题？请先搜索是否已经有同类问题吧。这样您就省心少打字。<br><br>
+
+					3、没找到是么？就在发问题时精确描述你的问题，不要写与问题无关的内容哟；<br><br>
+
+					4、华予教育讨论更热衷于解达您想要的答案。能引起思考和讨论的知识性问题；<br><br>
+
+					问答禁止这些提问<br><br>
+
+					1、禁止发布求职、交易、推广、广告类与问答无关信息将一律清理。<br><br>
+
+					2、尽可能详细描述您的问题，如标题与内容不符，或与问答无关的信息将被删除扣分。<br><br>
+
+					3、问答刷屏用户一律冻结帐号
+				</div>
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+
+<script type="text/javascript">
+	/*var editor = new wangEditor('ask-input');
+    editor.config.menus = [
+        'bold',
+        'italic',
+        'underline',
+        'img',
+        'strikethrough',
+        'eraser',
+        'alignleft',
+        'aligncenter',
+        'alignright',
+        'quote',
+        'undo',
+        'redo',
+    ];
+    editor.create();*/
+    $("#forum-post").click(function(){
+		if ($("#fatie-form").find("input").val()=='') {
+			layer.msg("请输入标题！");
+			return false;
+		}
+		var a = $("#fatie-form").find("textarea").val();
+		if (a=='') {
+			layer.msg("请输入内容！");
+			return false;
+		}
+		var formData = $("#fatie-form").serialize();
+		$.ajax({
+			type: "POST", 
+			url: "/Execution.aspx?t=bbsshow&type=add",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("发布成功！");
+				location.reload(true);
+			},error: function(data){
+				layer.msg("发布失败！请重试");
+			}
+		});
+	})    
+</script>		
+	</body>
+</html>

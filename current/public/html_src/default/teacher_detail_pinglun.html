@@ -1,0 +1,120 @@
+<div class="student-rate max-width">
+			<div class="classword" style="width:867px;margin: auto">
+				<div class="classplay-user-rating" id="pinglunbox">
+					评分：<span id="classplay-user-rating" data-score="0"></span>
+					<form method="post" action="/Execution.aspx?t=pinglun&type=add&tip_string=留言成功！&tipurl=/single.aspx?m=teacher_detail" id="pinglun_laoshi">
+						<textarea name="neirong" id='neirong' onkeydown="checkMaxInput(this,300)" onkeyup="checkMaxInput(this,300)" onfocus="checkMaxInput(this,300)" onblur="checkMaxInput(this,300)"></textarea>
+						<input type="hidden" name="fen" id="fen" />
+						<input type="hidden" name="leixing" id="leixing" value="老师" />
+						<input type="hidden" name="shenhe" id="shenhe" value="未审核" />
+						<input type="hidden" name="laoshi" value='{fzw:sql="select * from sl_laoshi where id={fzw:url:id/}" id="p1"}{fzw:p1:yonghuming/}{/fzw:sql}'>
+						<input type="hidden" name="yonghuming" id='yonghuming_man' value='{fzw:cookie name="user_name"/}' />
+						<input type="hidden" name="laiyuanbianhao" id="laiyuanbianhao" value="{fzw:url:id/}" />
+						<!--<span>0/300</span>-->
+						<div class="clear"></div>
+					</form>
+					<input type="submit" class="pinglun_laoshi" onclick="return pinglun_laoshi()" value="发表评论" />
+					<div class="clear"></div>
+				</div>
+				<script type="text/javascript">
+					function pinglun_laoshi(){
+						var yhm=$('#yonghuming_man').val();
+						if(yhm==''){
+							layer.alert('您还没登录哦');
+							return false;
+						}
+
+						var score1=$('#classplay-user-rating').raty('score');
+						if(score1==''){
+							alert('给老师打个分吧');
+							return false;
+						}else{
+							$('#fen').val(score1);
+						}
+						
+						var neirong=$('#neirong').val();
+						var n=neirong.length;
+						if(n==0||n>300){
+							layer.alert('请输入0-300字符');
+							return false;
+						}
+						var formData = $("#pinglun_laoshi").serialize();
+						$.ajax({
+							type: "POST",
+							url: "/Execution.aspx?t=pinglun&type=add",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								layer.msg("提交成功！");
+								editor.$txt.html('<p><br></p>');
+								top.frames['ifm'].location.reload()
+							},error:function(data){
+								layer.msg("网络错误请重试！");
+								return false
+							}
+						});
+						return false;
+					}
+				</script>
+				
+				
+				<iframe src="/search.aspx?m=pinglun_laoshi&leixing=老师&laiyuanbianhao={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="ifm" name="ifm" onload="javascript:dyniframesize('ifm');" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>
+
+<script type="text/javascript">
+function dyniframesize(down) { 
+var pTar = null; 
+if (document.getElementById){ 
+pTar = document.getElementById(down); 
+} 
+else{ 
+eval('pTar = ' + down + ';'); 
+} 
+if (pTar && !window.opera){ 
+//begin resizing iframe 
+pTar.style.display="block" 
+if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){ 
+//ns6 syntax 
+pTar.height = pTar.contentDocument.body.offsetHeight +20; 
+pTar.width = pTar.contentDocument.body.scrollWidth+20; 
+} 
+else if (pTar.Document && pTar.Document.body.scrollHeight){ 
+//ie5+ syntax 
+pTar.height = pTar.Document.body.scrollHeight; 
+pTar.width = pTar.Document.body.scrollWidth; 
+} 
+} 
+} 
+</script>
+
+			</div>
+		</div>
+		<div class="clear"></div>
+<script type="text/javascript">
+        var editor = new wangEditor('neirong');
+    editor.config.menus = [
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        'eraser',
+        'quote',
+        'undo',
+        'redo',
+        'emotion',
+    ];
+    editor.config.emotions = {
+        // 支持多组表情
+
+        // 第一组，id叫做 'default'
+        'default': {
+            title: '默认',  // 组名称
+            data: 'http://www.wangeditor.com/wangEditor/test/emotions.data'  // 服务器的一个json文件url
+        },
+    };
+    //editor.onchange = function () {
+    //    // 编辑区域内容变化时，实时打印出当前内容
+    //    checkMaxInput($("#neirong"),300)
+    //};
+
+    editor.create();
+</script>

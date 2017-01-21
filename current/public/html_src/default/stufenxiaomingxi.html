@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>分销明细_分销管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script> 
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="会员左侧.html"/}
+            <script>
+                $(".fenxiaoguanli").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>分销明细</p>
+				</div>
+				<div class="clear"></div>
+				{fzw:search table="sl_caiwu" sqlvalue="yonghuming='{fzw:cookie:name="user_name"/}'&nbsp;and&nbsp;leixing&nbsp;like&nbsp;'%返利%'" number="20" order="dtime" orderby="desc" id="p1"}
+				<div class="fenx-info">
+					<div class="fenx-time">
+						<p>{fzw:p1:dtime datetime="yyyy.MM.dd"/}</p>
+					</div>
+					<div class="fenx-user">
+						{fzw:sql="select * from sl_user where yonghuming in (select yonghuming from sl_caiwu where dingdanhao={fzw:p1:dingdanhao/} and leixing='消费')" id="p2"}
+						<img src="{fzw:p2:touxiang/}"/>
+						<p>{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}购买{fzw:p1:miaoshu/}获得收益</p>
+						{/fzw:sql}
+					</div>
+					<div class="fenx-money">
+						<p>+{fzw:p1:jine/}</p>
+					</div>
+					<!-- <div class="fenx-sta">
+						<p>已发放</p>
+					</div> -->
+					<div class="fenx-more">
+						<a href="/single.aspx?m=stufenxiaodetail&id={fzw:p1:id/}">查看详情</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+				{/fzw:search}
+
+	
+				
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+				
+			</div>
+		</div>
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有相关信息'));
+		</script>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+	</body>
+</html>

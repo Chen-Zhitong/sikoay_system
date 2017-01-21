@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/jquery.raty.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script src="js/jquery.raty.js" type="text/javascript"></script>
+		<title></title>
+	</head>
+	<body style="min-width: auto;">
+		<div style="width: 858px;">
+		    	<ul class="classvideo-detail-user-list">
+		    		{fzw:search table="sl_biji" number="6" order="dtime" orderby="desc" id="p1"}
+					<li>
+						{if value1="{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}" value2="" bi="=="}
+						<img src="img/videodetail-user.png">
+						{else}
+						<img src='{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|touxiang"/}'>	 
+						{/if}
+						<div class="classvideo-detail-user-word">
+							<p>来自&nbsp;&nbsp;&nbsp;&nbsp;{if value1="{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}" value2="" bi="=="}{fzw:p1:yonghuming string="shouji"/}{else}{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}{/if}</p>
+							<p>{fzw:p1:neirong nohtml="yes"/}</p>
+							<span class="rating-time">时间：{fzw:p1:dtime datetime="yyyy-MM-dd"/}</span>
+							<!--<a href="" class="useful"><i class="fa fa-thumbs-up" aria-hidden="true"></i>5</a>-->
+						</div>
+					</li>
+					{/fzw:search}
+				</ul>
+				<div class="classhome-right-page">
+					{fzw:search:page id="p1" size="8"/}
+				</div>
+		</div>
+	</body>
+</html>

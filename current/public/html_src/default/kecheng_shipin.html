@@ -1,0 +1,726 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}{fzw:p1:biaoti/}{/fzw:sql}_华予课程</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/jquery.raty.css">
+<link rel="stylesheet" type="text/css" href="css/wangEditor.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+<script src="js/jquery.raty.js" type="text/javascript"></script>
+<script type="text/javascript" src="ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/wangEditor.min.js"></script>
+<script src="js/wen.js" type="text/javascript" charset="utf-8"></script>
+<script src="/inc/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+<!--history-->
+<p style="display: none;" class="A_xuexi" data-yuan="{fzw:sql="select * from sl_history where yonghuming='{fzw:cookie name="user_name"/}' and laiyuanbianhao={fzw:url:id/} and leixing='视频学习' " id="p1"}{fzw:p1:id/}{/fzw:sql}"></p>	
+<form method="post" action="" id="base">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:shipin/}' />
+	<input type="hidden" name="leixing" value="视频学习" />
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+</form>
+<script language="javascript" type="text/javascript"> 
+	function shipin_xuexi(){
+		var yuan=$('.A_xuexi').data('yuan');
+		if(yuan==''){
+			var formData = $("#base").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=history&type=add",
+				data: formData,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					//alert("提交成功！");
+					//location.reload(true);
+				}
+			});
+		}
+   	}
+	shipin_xuexi();
+</script>
+<!--动态-->
+<p style="display: none;" class="A_dongtai" data-yuan=""></p>	
+<form method="post" action="" id="baseB">
+	<input type="hidden" name="laiyuanbianhao" value='{fzw:url:shipin/}' />
+	<input type="hidden" name="leixing" value="视频" />
+	<input type="hidden" name="yonghuming" value='{fzw:cookie name="user_name"/}' />
+</form>
+<script language="javascript" type="text/javascript"> 
+	function dongtai_shipin(){
+		var yuan=$('.A_dongtai').data('yuan');
+		if(yuan==''){
+			var formData = $("#baseB").serialize();
+			$.ajax({
+				type: "POST",
+				url: "/Execution.aspx?t=dongtai&type=add",
+				data: formData,
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					
+				}
+			});
+		}
+   	}
+	dongtai_shipin();
+	
+</script>
+
+	
+<!-- classplay-head -->
+<div class="classplay-head">
+	<a href="/page.aspx?id={fzw:url:id/}&classid=37"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a>
+	{fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}{fzw:p1:biaoti/}{/fzw:sql}
+	<div class="classvideo-detail-top-word-a">
+		<a href="javascript:;" data-bl='{fzw:sql="select * from sl_history where yonghuming='{fzw:cookie name="user_name"/}' and laiyuanbianhao={fzw:url:id/} and leixing='视频收藏' " id="p1"}{fzw:p1:id/}{/fzw:sql}' onclick="return shipin_shoucang(this)" ><i class="iconfont">&#xe637;</i>&nbsp;收藏</a>
+		<div class="bdsharebuttonbox" style="display: inline-flex;margin-left: 15px"><a href="#" style="background: transparent;color: #e5e5e5" class="bds_more" data-cmd="more"><i class="iconfont">&#xe68f;</i>&nbsp;分享</a></div>
+		<a href="javascript:void(0)" onclick="gotopinglun()"><i class="iconfont">&#xe640;</i>&nbsp;评论（{fzw:sql="select count(id) as count_id from sl_pinglun where laiyuanbianhao={fzw:url:id/} and leixing='视频'" id="p2"}{fzw:p2:count_id/}{/fzw:sql}）</a>
+	</div>
+	<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+	<script type="text/javascript">
+		function gotopinglun(){
+			$(".classplay-bottom-left>ul li a").eq(2).click();
+			$(document).scrollTop(580);
+		}
+		function shipin_shoucang(obj)
+		{
+			var bl=$(obj).data('bl');
+			if(bl==''){
+				$.ajax({
+			        type:"post",
+			        url:"/Execution.aspx?t=history&type=add&tip_string=收藏成功&tipurl=/",
+			        data:'laiyuanbianhao={fzw:url:id/}&yonghuming={fzw:cookie name="user_name"/}&leixing=视频收藏',
+			        async:false,
+			        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			        success:function(){
+			            alert('收藏成功');
+			            location.reload(true);
+			        },error:function(){
+			            alert('网络连接失败');
+			        }
+			    });
+			}else{
+				layer.alert('您已收藏了');
+			}
+		}
+	</script>
+	<div class="classplay-head-right">
+		<div class="classplay-head-vip">
+			<img src='{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie name="user_name"/}'" id="p1"}{fzw:p1:touxiang/}{/fzw:sql}' onerror="this.src='/template/default/img/lingshitouxiang.png'">
+			<div class="classplay-vip-option">
+				<span></span>
+				<ul id="topspuser">
+					{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie name="user_name"/}'" id="p1"}
+					{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}
+					<li>{fzw:p1:leixing/}-{fzw:p1:yonghuming string="shouji"/}</li>
+				    {else}
+				    <li>{fzw:p1:leixing/}-{fzw:p1:nicheng/}</li>
+				    {/if}
+					{/fzw:sql}
+					<li><a href="" id="topusercenter"><i class="iconfont">&#xe624;</i>个人中心</a></li>
+					<li><a href="" id="topuserinfo"><i class="iconfont">&#xe614;</i>账号设置</a></li>
+					<li><a href="" id="topmykc"><i class="iconfont">&#xe61a;</i>我的课程</a></li>
+					<!-- <li><a href="" id="topmywd"><i class="iconfont">&#xe640;</i>我的问答</a></li> -->
+					<li><a href="/inc/out_login.aspx" onclick="return confirm('您确认退出会员？');"><i class="fa fa-power-off" aria-hidden="true"></i>退出</a></li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var a = '';
+			{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie name="user_name"/}'" id="p1"}
+			a = "{fzw:p1:leixing/}";
+			{/fzw:sql}
+			if (a=='') {
+				$("#topspuser").html("<li><a href=\"single.aspx?m=login\">立即登录</a></li>")
+			}else if (a=='老师') {
+				$("#topusercenter").attr("href","/single.aspx?m=teacherusercenter");
+				$("#topuserinfo").attr("href","/single.aspx?m=teachergerenziliao");
+				$("#topmykc").attr("href","/search.aspx?m=teachershipinguanli&lingshi1=1");
+				
+			}else if (a=='会员') {
+				$("#topusercenter").attr("href","/single.aspx?m=stuusercenter");
+				$("#topuserinfo").attr("href","/single.aspx?m=stugerenziliao");
+				$("#topmykc").attr("href","/search.aspx?m=stumysp&classid=37");
+				
+			}else if (a=='代理') {
+				$("#topusercenter").attr("href","/single.aspx?m=stuusercenter");
+				$("#topuserinfo").attr("href","/single.aspx?m=stugerenziliao");
+				$("#topmykc").attr("href","/search.aspx?m=stumysp&classid=37");
+				
+			}
+		</script>
+		<div class="classplay-head-info">
+			<!-- <a href="">
+				<img src="img/classplay-icon1.png">
+				<span class="number">3</span>
+			</a> -->
+		</div>
+	</div>
+</div>
+<!-- classplay-video -->
+<div class="classplay-video">
+	<div id="classvideo"></div>
+	<div class="classvideo-right">
+		<ul class="classvideo-right-btn">
+			<li id="classvideo-list">
+				<img src="img/classplay-icon2.png">
+				目录
+			</li>
+			
+			<li id="classvideo-ask_A">
+				<img src="img/classplay-icon3.png">
+				提问
+			</li>
+			<li id="classvideo-note">
+				<img src="img/classplay-icon4.png">
+				笔记
+			</li>
+			<li id="classvideo-write">
+				<img src="img/classplay-icon5.png">
+				评论
+			</li>
+			
+		</ul>
+		<div class="classvideo-list">
+			<p>{fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}{fzw:p1:biaoti/}{/fzw:sql}</p>
+			<ul class="classvideo-detail-left-lists">
+				
+					{fzw:for:sql="select * from sl_zhang where laiyuanbianhao in (select kechengzhang from sl_kecheng where id={fzw:url:id/}) order by paixu asc" id="p1"}
+					<li>
+						<a><img src="img/videodetail-icon-7.png" style="opacity:1">{fzw:p1:biaoti/}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+						<ul>
+							{fzw:for:sql="select * from sl_jie where laiyuanbianhao in (select kechengjie from sl_kecheng where id={fzw:url:id/}) and zhangbiaoti='{fzw:p1:id/}' order by paixu asc" id="p2"}
+							<li><a href="/single.aspx?m=kecheng_shipin&id={fzw:url:id/}&shipin={fzw:p2:id/}" data-id="{fzw:p2:id/}"><span class="glyphicon glyphicon-play" aria-hidden="true"></span>{fzw:p2:biaoti/}<i class="fa fa-circle-thin" aria-hidden="true"></i></a></li>
+							{/fzw:for:sql}
+						</ul>
+					</li>
+					{/fzw:for:sql}
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var a = '{fzw:url:shipin/}';
+		$(".classvideo-detail-left-lists li ul li a").each(function(){
+			var b = $(this).data("id");
+			if (a==b) {
+				$(this).css("color","#1dbca6");
+				$(this).parent().parent().css("display","block")
+			}
+		})
+	</script>
+	<div class="classvideo-note">
+		<img src="img/cancle.png" class="cancle">
+		<p>笔记</p>
+		<form method="post" action="/Execution.aspx?t=biji&type=add&tip_string=提交成功！&tipurl=/" id="biji">
+			<textarea placeholder="请输入笔记内容..." onkeydown="checkMaxInput(this,1000)" onkeyup="checkMaxInput(this,1000)" onfocus="checkMaxInput(this,1000)" onblur="checkMaxInput(this,1000)" name="neirong" id="neirong_biji" ></textarea>
+			<span>0/1000</span>
+			<input type="hidden" name="laiyuanbianhao" id="laiyuanbianhao_biji" value="{fzw:url:id/}" />
+			<input type="hidden" name="yonghuming" id='yonghuming_biji' value='{fzw:cookie name="user_name"/}' />
+		</form>
+		<input type="submit" class="pinglun_laoshi" style="margin-top: 25px;" onclick="return biji()" value="保存" />
+	</div>
+				<script type="text/javascript">
+					function biji(){
+						var yhm=$('#yonghuming_biji').val();
+						if(yhm==''){
+							alert('您还没登录哦');
+							return false;
+						}
+						
+						var neirong=$('#neirong_biji').val();
+						if(neirong==''){
+							alert('请输入笔记内容');
+							return false;
+						}
+						var formData = $("#biji").serialize();
+						$.ajax({
+							type: "POST",
+							url: "/Execution.aspx?t=biji&type=add",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								layer.alert("提交成功！");
+								$(".cancle").click();
+								$("#biji")[0].reset();
+								top.frames['ifm_biji'].location.reload()
+								//location.reload(true);
+							}
+						});
+						return false;
+					}
+				</script>
+	<div class="classvideo-askA classvideo-askA1">
+		<img src="img/cancle.png" class="cancle">
+		<p>提问</p>
+		<form method="post" action="/Execution.aspx?t=wenda&type=add&tip_string=提交成功！&tipurl=/" id="wenda">
+			
+			<textarea name="neirong" id="neirong_wenda" onkeydown="checkMaxInput(this,1000)" onkeyup="checkMaxInput(this,1000)" onfocus="checkMaxInput(this,1000)" onblur="checkMaxInput(this,1000)" style="width: 100%;height:200px;"></textarea>
+			<input type="hidden" name="leixing" id="leixing_wenda" value="提问" />
+			<input type="hidden" name="laiyuanbianhao" id="laiyuanbianhao_wenda" value="{fzw:url:id/}" />
+			<input type="hidden" name="fasongren" id='yonghuming_wenda' value='{fzw:cookie name="user_name"/}' />
+			<input type="hidden" name="jieshouren" id="jieshouren_wenda" value="{fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}{fzw:p1:yonghuming/}{/fzw:sql}" />
+			<!--<div class="classvideo-ask-check">
+				<input type="text" name="check" placeholder="请输入验证码">
+				<img src="img/check.png" style="width:70px;height:40px;">
+				<a href=""><img src="img/check-icon.png"></a>
+			</div>-->
+			<input type="hidden" />
+		</form>
+		<input type="submit" class="pinglun_laoshi" style="margin-top: 25px;" onclick="return wenda()" value="发布" />
+		<!--<button>发布</button>-->
+	</div>
+				<script type="text/javascript">
+					function wenda(){
+						var yhm=$('#yonghuming_wenda').val();
+						if(yhm==''){
+							layer.alert('您还没登录哦');
+							return false;
+						}
+						var biaoti=$('#biaoti_wenda').val();
+						if(biaoti==''){
+							layer.alert('请输入提问标题');
+							return false;
+						}
+						var neirong=$('#neirong_wenda').val();
+						if(neirong==''){
+							layer.alert('请输入内容');
+							return false;
+						}
+						var formData = $("#wenda").serialize();
+						$.ajax({
+							type: "POST",
+							url: "/Execution.aspx?t=wenda&type=add",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+							    layer.alert("提交成功！");
+							    $(".cancle").click();
+							    $("#wenda")[0].reset();
+							    
+							    top.frames['ifm_wenda'].location.reload()
+								//location.reload(true);
+							}
+						});
+						return false;
+					}
+				</script>
+</div>
+
+
+
+
+
+<!-- classplay-bottom -->
+<div class="max-width">
+<div class="classplay-bottom-left classvideo-detail-left">
+	<ul class="nav nav-pills nav-tabs">
+		<li role="presentation" class="active"><a href="#tab-1"  data-toggle="tab">问答</a></li>
+		
+		<li role="presentation"><a href="#tab-2"  data-toggle="tab">笔记</a></li>
+		
+		<li role="presentation"><a href="#tab-3"  data-toggle="tab">评论</a></li>
+		<li role="presentation"><a href="#tab-4"  data-toggle="tab">课件阅览</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="class-qa tab-pane fade in active" id="tab-1">
+			<div class="classword">
+				<iframe src="/search.aspx?m=wenda_shipin&laiyuanbianhao={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="ifm_wenda" name="ifm_wenda" onload="javascript:dyniframesize('ifm_wenda');" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" ></iframe>
+			</div>
+			<div class="clear"></div>	
+		</div>
+		
+		<div class="class-note tab-pane fade" id="tab-2">
+			<div class="classword">
+				<iframe src="/search.aspx?m=biji_shipin&laiyuanbianhao={fzw:url:id/}&yonghuming={fzw:cookie name="user_name"/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="ifm_biji" name="ifm_biji" onload="javascript:dyniframesize('ifm_biji');" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" id="iframe-biji"></iframe>
+			</div>		
+		</div>
+		
+		<div class="tab-pane fade" id="tab-3">
+			<div class="classword">
+				<div class="classplay-user-rating">
+					评分：<span id="classplay-user-rating" data-score="0"></span>
+					<form method="post" action="/Execution.aspx?t=pinglun&type=add&tip_string=留言成功！&tipurl=/" id="pinglun_laoshi">
+						<textarea onkeydown="checkMaxInput(this,300)" onkeyup="checkMaxInput(this,300)" onfocus="checkMaxInput(this,300)" onblur="checkMaxInput(this,300)" name="neirong" id='neirong' style="width:100%"></textarea>
+                       
+						<input type="hidden" name="fen" id="fen" />
+						<input type="hidden" name="leixing" id="leixing" value="视频" />
+						<input type="hidden" name="shenhe" id="shenhe" value="未审核" />
+						<input type="hidden" name="yonghuming" id='yonghuming_man' value='{fzw:cookie name="user_name"/}' />
+						{fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}
+						<input type="hidden" name="laoshi" value="{fzw:p1:yonghuming/}">
+						<input type="hidden" name="biaoti" value="{fzw:p1:biaoti/}">
+						{/fzw:sql}
+						<input type="hidden" name="laiyuanbianhao" id="laiyuanbianhao" value="{fzw:url:id/}" />
+						<!--<span>0/300</span>-->
+						<div class="clear"></div>
+					</form>
+					<input type="submit" class="pinglun_laoshi" onclick="return pinglun_shipin()" value="发表评论" />
+					<div class="clear"></div>
+				</div>
+				<script type="text/javascript">
+					function pinglun_shipin(){
+						var yhm=$('#yonghuming_man').val();
+						if(yhm==''){
+							layer.alert('您还没登录哦');
+							return false;
+						}
+
+						var score1=$('#classplay-user-rating').raty('score');
+						if(score1==''){
+							layer.alert('给老师打个分吧');
+							return false;
+						}else{
+							$('#fen').val(score1);
+						}
+						var neirong=$('#neirong').val();
+						var n=neirong.length;
+						if(n==0||n>300){
+							layer.msg('请输入0-300字符');
+							return false;
+						}
+						var formData = $("#pinglun_laoshi").serialize();
+						$.ajax({
+							type: "POST",
+							url: "/Execution.aspx?t=pinglun&type=add",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+							    layer.alert("提交成功！");
+							    editor.$txt.html('<p><br></p>');
+								top.frames['ifm'].location.reload()
+							}
+						});
+						return false;
+					}
+				</script>
+				<iframe src="/search.aspx?m=pinglun_shipin&leixing=视频&laiyuanbianhao={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%"  id="ifm" name="ifm" target="_self" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>
+			</div>
+		</div>
+		<div class="class-download-list tab-pane fade" id="tab-4">
+			<div class="classword">
+                <iframe src="/search.aspx?m=ifr_kjdownload&lingshi1={fzw:url:id/}" allowtransparency="true" style="background-color=transparent" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" width="100%" id="ifm" name="ifm" target="_self" onload="this.height=this.contentWindow.document.documentElement.scrollHeight"></iframe>
+			</div>
+		</div>
+	</div>	
+</div>
+<div class="classplay-bottom-right classvideo-detail-right">
+	{fzw:sql="select * from sl_laoshi where yonghuming in (select yonghuming from sl_kecheng where id={fzw:url:id/})" id="p1"}
+	<div class="classplay-teacher">
+		<img src="img/videodetail-user.png">
+		{if value1="{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}" value2="" bi="=="}
+	    {fzw:p1:yonghuming/}<br />
+	    {else}
+	    {fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|nicheng"/}<br />
+	    {/if}
+		<span>{fzw:p1:kechengfenlei sql="sl_Parameter|where&nbsp;id='&dangqian'|u1"/}</span>
+		<a href="/single.aspx?m=teacher_detail&id={fzw:p1:id/}">老师主页</a>
+	</div>
+	{/fzw:sql}
+	{if value1="{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie name="user_name"/}' " id="p1"}{fzw:p1:leixing/}{/fzw:sql}" value2="老师" bi="=="}
+	{else}
+	<p>该课的同学还学过</p>
+	<div class="classvideo-detail-right-bottom">
+		<div class="section_content hoverslide">
+		    <ul class="kc_list mart_30 h_content">
+		    	{fzw:for:sql="select top 5 * from sl_history where yonghuming='{fzw:cookie name="user_name"/}' and leixing='视频学习' order by dtime desc" id="p1"}
+		    	{fzw:for:sql="select * from sl_kecheng where id={fzw:p1:laiyuanbianhao/} and id<>{fzw:url:id/} order by paixu desc,id desc" id="p2"}
+		        <li>
+		        	<a href='{pageurl id="{fzw:p2:id/}" classid="{fzw:p2:classid/}"/}'>
+		        		<img src="{fzw:p2:suoluetu/}" width="100%" height="128"/>
+		        		<p class="title">{fzw:p2:biaoti size="32"/}</p>
+		        	</a>
+		        	<span class="icon_user color_gray fr">{fzw:p2:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='视频学习'|count"/}人在学</span>
+		        	<span class="price_sm">￥{fzw:p2:jiage string="￥"/}</span>
+		        </li>
+		        {/fzw:for:sql}
+		        {/fzw:for:sql}
+		        <div class="clear"></div>
+		    </ul>
+		</div>
+	</div>
+	{/if}
+	
+</div>
+<div class="clear"></div>
+</div>
+
+{fzw:inside src="底部.html"/}
+
+<div id="nowTime"></div>
+<script type="text/javascript">
+    var yhm = '{fzw:cookie:name="user_name"/}';
+    {fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}
+    var kcyhm = '{fzw:p1:yonghuming/}'
+    {/fzw:sql}
+        if(yhm!=kcyhm){
+            video_alert("{fzw:cookie name="user_name"/}", "{fzw:url:shipin/}", {fzw:sql="select * from sl_jie where id={fzw:url:shipin/} order by paixu desc,id asc" id="p1"}"{fzw:p1:jiage/}"{/fzw:sql},'{fzw:url:id/}');
+        }
+    
+/*    bofangqi2('{fzw:sql="select * from sl_jie where id={fzw:url:shipin/} order by paixu desc,id asc" id="p1"}{fzw:p1:shipindizhi/}{/fzw:sql}');
+function bofangqi2(shipindizhi) {*/
+    function loadedHandler(){
+        if(CKobject.getObjectById('ckplayer_a1').getType()){
+            CKobject.getObjectById('ckplayer_a1').addListener('time',timeHandler);
+            CKobject.getObjectById('ckplayer_a1').addListener('time',playtime);
+            CKobject.getObjectById('ckplayer_a1').addListener('totaltime',alltime);
+        }
+        else{
+            CKobject.getObjectById('ckplayer_a1').addListener('time','timeHandler');
+            CKobject.getObjectById('ckplayer_a1').addListener('time','playtime');
+            CKobject.getObjectById('ckplayer_a1').addListener('totaltime','alltime');
+        }
+        
+    }
+  function timeHandler(t){
+  	var yhm = '{fzw:cookie:name="user_name"/}';
+  	{fzw:sql="select * from sl_kecheng where id={fzw:url:id/}" id="p1"}
+  	var kcyhm = '{fzw:p1:yonghuming/}'
+  	{/fzw:sql}
+  	if (yhm!=kcyhm) {
+  		if(t>300){
+	        //CKobject.getObjectById('ckplayer_a1').videoPause();//暂停播放
+			//判断时间是否购买
+			video_Load("{fzw:cookie name="user_name"/}", "{fzw:url:shipin/}", {fzw:sql="select * from sl_jie where id={fzw:url:shipin/} order by paixu desc,id asc" id="p1"}"{fzw:p1:jiage/}","{fzw:p1:shipindizhi/}"{/fzw:sql},'{fzw:url:id/}');
+			//end
+	    }
+  	}
+    
+  }
+  var flashvars={
+    f:'{fzw:sql="select * from sl_jie where id={fzw:url:shipin/} order by paixu desc,id asc" id="p1"}{fzw:p1:shipindizhi/}{/fzw:sql}',
+    c:0,
+    p:1,
+    b:0,
+    h:4,
+    loaded:'loadedHandler'
+  };
+  var video=['{fzw:sql="select * from sl_jie where id={fzw:url:shipin/} order by paixu desc,id asc" id="p1"}{fzw:p1:shipindizhi/}{/fzw:sql}->video/mp4']
+  var support=['all'];
+  	var params = { bgcolor: '#000', allowFullScreen: true, allowScriptAccess: 'always', wmode: 'transparent' };
+  	CKobject.embed('/template/default/ckplayer/ckplayer.swf', 'classvideo', 'ckplayer_a1', '100%', '100%', true, flashvars, video);
+
+  	/*var isNumber=true;//定义只判断一次
+	var video=['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
+	function loadedHandler(){
+		CKobject.getObjectById('ckplayer_a1').addListener('time','timeHandler');
+	}
+	function timeHandler(t){
+		if(t>300 && isNumber){
+			CKobject.getObjectById('ckplayer_a1').videoPause();//暂停播放
+			CKobject.getObjectById('ckplayer_a1').removeListener('time','timeHandler');
+			isNumber=false;
+			alert('这里的弹出提示代码可以改成执行其它动作的代码');
+			//判断时间是否购买
+		    video_Load("{fzw:cookie name="user_name"/}", "{fzw:url:shipin/}", {fzw:sql="select * from sl_jie where id={fzw:url:shipin/} order by paixu desc,id asc" id="p1"}"{fzw:p1:jiage/}","{fzw:p1:shipindizhi/}"{/fzw:sql},'{fzw:url:id/}');
+		    //end
+			
+		}
+	}*/
+  	var alltime = 0;
+  	function alltime(t){
+  	    alltime = t;
+  	    console.log(t)
+  	    $("#totaltime").val(parseInt(t))
+  	}
+  	function playtime(t){
+  	    var total = alltime;
+  	    var bilie = t/alltime;
+  	    if(bilie>0.7){
+  	        $("#playtime").val(parseInt(t))
+  	        editplaytime();
+  	    }
+  	}
+  	
+  	{if value1="{fzw:sql="select * from sl_playtime where laiyuanbianhao={fzw:url:shipin/} and yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}{fzw:p1:id/}{/fzw:sql}" value2="" bi="=="}
+  	playtimeadd();
+  	{else}
+  	
+  	{/if}
+  	//添加播放学习时间
+  	function playtimeadd(){
+  	    $.ajax({
+  	        type: "POST",
+  	        url: "/Execution.aspx?t=playtime&type=add",
+  	        data: "&yonghuming={fzw:cookie:name="user_name"/}&laiyuanbianhao={fzw:url:shipin/}&wancheng=否",
+  	        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+  	    success: function(data) {
+  	        console.log('y')	
+  	    }
+  	});
+  	}
+  	//修改播放学习时间
+  	
+  	function getplaytimeid(){
+  	    $.ajax({
+  	        type: "get",
+  	        url: "/single.aspx?m=ajax_huoquplaytime&laiyuanbianhao={fzw:url:shipin/}",
+  	        success: function(data) {
+  	            $("#playtimeid").val(data);
+  	            console.log(data)
+  	        }
+  	    });
+  	    $("#playtimeid").val(playtimeid);
+  	}
+  	function editplaytime(){
+  	    var id = $("#playtimeid").val()
+  	    var formData = $("#playtime-form").serialize();
+  	    $.ajax({
+  	        type: "POST",
+  	        url: "/Execution.aspx?t=playtime&type=edit&id="+id,
+  	        data: formData,
+  	        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+  	        success: function(data) {
+  	            console.log('y')	
+  	        }
+  	    });
+  	}
+  	getplaytimeid();
+</script>
+<form id="playtime-form">
+    <input type="hidden" name="id" id="playtimeid"/>
+    <input type="hidden" name="playtime" id="playtime"/>
+    <input type="hidden" name="wancheng" value="是"/>
+    <input type="hidden" name="totaltime" id="totaltime"/>
+</form>
+<script type="text/javascript">
+	$('#classvideo-detail-top-word-rating').raty({ 
+		starType: 'i',
+		readOnly: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$('#classvideo-detail-left-rating').raty({ 
+		starType: 'i',
+		readOnly: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$("#classplay-user-rating").raty({
+		starType: 'i',
+		hints: ['1', '2', '3', '4', '5'],
+		half: true,
+		score: function() {
+    		return $(this).attr('data-score');
+  		}
+	})
+	$(".classvideo-detail-user-list .user-rating").each(function(){
+		$(this).raty({ 
+			starType: 'i',
+			readOnly: true,
+			score: function() {
+	    		return $(this).attr('data-score');
+	  		}
+		})
+	})
+</script>
+<script type="text/javascript">
+function dyniframesize(down) { 
+var pTar = null; 
+if (document.getElementById){ 
+pTar = document.getElementById(down); 
+} 
+else{ 
+eval('pTar = ' + down + ';'); 
+} 
+if (pTar && !window.opera){ 
+//begin resizing iframe 
+pTar.style.display="block" 
+if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){ 
+//ns6 syntax 
+pTar.height = pTar.contentDocument.body.offsetHeight +20; 
+pTar.width = pTar.contentDocument.body.scrollWidth+20; 
+} 
+else if (pTar.Document && pTar.Document.body.scrollHeight){ 
+//ie5+ syntax 
+pTar.height = pTar.Document.body.scrollHeight; 
+pTar.width = pTar.Document.body.scrollWidth; 
+} 
+} 
+} 
+</script>
+<script type="text/javascript">  
+    //剩余字数计算  
+    function checkMaxInput(obj, maxLen) {  
+        if (obj == null || obj == undefined || obj == "") {  
+                return;  
+            }  
+        if (maxLen == null || maxLen == undefined || maxLen == "") {  
+            maxLen = 100;  
+        }  
+      	var strResult;  
+        var $obj = $(obj);  
+        var newid = $obj.attr("id") + 'msg';  
+        if (obj.value.length > maxLen) { //如果输入的字数超过了限制  
+            obj.value = obj.value.substring(0, maxLen); //就去掉多余的字
+            $(obj).parent().children("span").html(obj.value.length+"/"+maxLen);  
+        }  
+        else {  
+            $(obj).parent().children("span").html(obj.value.length+"/"+maxLen);  
+        }    
+        var $msg = $("#" + newid);  
+        if ($msg.length == 0) {  
+            $obj.after(strResult);  
+        }  
+        else {  
+            $msg.html(strResult);  
+        }  
+    }  
+</script>
+<script type="text/javascript">
+    //记录学习时间
+	var yonghuming='{fzw:cookie:name="user_name"}';
+	var id = '{fzw:url:id/}';
+	function xuexishijian(){
+		$.ajax({
+			type: "POST",
+			url: "/Execution.aspx?t=time&type=add",
+			data: "&laiyuanbianhao="+id+"&leixing=课程视频&yonghuming="+yonghuming,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				console.log(1);
+			}
+		});
+	}
+	setInterval("xuexishijian()",60000);
+</script>
+    <script type="text/javascript">
+        var editor = new wangEditor('neirong');
+    editor.config.menus = [
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        'eraser',
+        'quote',
+        'undo',
+        'redo',
+        'emotion',
+    ];
+    editor.config.emotions = {
+        // 支持多组表情
+
+        // 第一组，id叫做 'default' 
+        'default': {
+            title: '默认',  // 组名称
+            data: 'http://www.wangeditor.com/wangEditor/test/emotions.data'  // 服务器的一个json文件url
+        },
+    };
+    //editor.onchange = function () {
+    //    // 编辑区域内容变化时，实时打印出当前内容
+    //    checkMaxInput($("#neirong"),300)
+    //};
+
+    editor.create();
+    </script>
+</body>
+</html>

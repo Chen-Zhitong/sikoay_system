@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		{fzw:sql="select top 5 * from sl_history where yonghuming='18381067436' and leixing='视频学习' order by dtime desc" id="p1"}{fzw:p1:laiyuanbianhao/}<br />{/fzw:sql}
+		{fzw:for:sql="select top 5 * from sl_history where yonghuming='18381067436' and leixing='视频学习' order by dtime desc" id="p1"}
+		    	{fzw:for:sql="select * from sl_kecheng where id={fzw:p1:laiyuanbianhao/}  order by paixu desc,id desc" id="p2"}
+		        <li>
+		        	<a href='{pageurl id="{fzw:p2:id/}" classid="{fzw:p2:classid/}"/}'>
+		        		<img src="{fzw:p2:suoluetu/}" width="100%" height="128"/>
+		        		<p class="title">{fzw:p2:biaoti size="32"/}</p>
+		        	</a>
+		        	<span class="icon_user color_gray fr">{fzw:p2:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='视频学习'|count"/}人在学</span>
+		        	<span class="price_sm">￥{fzw:p2:jiage string="￥"/}</span>
+		        </li>
+		        {/fzw:for:sql}
+		        {/fzw:for:sql}
+	</body>
+</html>

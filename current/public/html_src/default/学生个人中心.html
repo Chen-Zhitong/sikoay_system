@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>个人中心</title>
+        <link href="css/teacher.css" rel="stylesheet">
+<style type="text/css">
+	.class-text a:first-child {
+	    line-height: 20px;
+	    color: #4f4f4f;
+	    font-size: 20px;
+	    font-weight: 500;
+	    margin-bottom: 10px;
+	    margin-top: 0;
+	}
+	.class-text a:hover{
+		color: #1dbca6;
+	}
+	.class-box{
+		width: 934px;
+	}
+	.class-text{
+		width: 580px;
+	}
+	.kc_list{
+		zoom: 1;
+		margin-left: -20px;
+	}
+	.kc_list li{
+		display: inline;
+		float: left;
+		width: 218px;
+		margin-left: 20px;
+		margin-bottom: 20px;
+	}
+	.kc_list li .title{
+		display: block;
+		font-size: 14px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding: 5px 0;
+	}
+	.mart_30{
+		margin-top: 30px;
+	}
+	.price_sm{
+		color: #d03924;
+		font-size: 14px;
+	}
+	.home_gg{
+		border: 1px solid #ecebeb;
+		padding: 10px;
+	}
+	.s_tab{
+		margin-left: 215px;
+	}
+	 .s_tab li{
+	 	float: left;
+	 	padding:0 1.5em 12px 1.5em;
+	 	font-size: 16px;
+	 	color: #949494;
+	 	cursor: pointer;
+	 }
+	  .s_tab li.on{
+	  	border-bottom: 2px solid #1DBCA6;
+	  	margin-bottom: -1px;
+	  }
+	.icon_user{
+		background: url(./images/icon_user.png) left center no-repeat;
+		padding-left: 20px;
+	}
+	.color_gray{
+		color: #b0b0b0;
+	}
+	.fr {
+    	float: right;
+	}
+	.kc_list li .title span {
+	    float: right;
+	}
+	.guess-like-title{
+		font-size: 22px;
+		color: #6a7177;
+		padding-bottom: 9px;
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.guess-like-title a{
+		float: right;
+		color: #828282;
+		font-size: 15px;
+		margin-top: 8px;
+	}
+	.guess-like-title a img{
+		width: 21px;
+		height: 19px;
+		margin-left: 8px;
+	}
+	.guess-like-title a:hover{
+		text-decoration: none;
+		color: #1dbca6;
+	}
+</style>        
+    </head>
+	<body>
+		
+		<div class="content">
+			<!--左侧菜单栏-->
+			<div class="content-left">
+				<div class="menu-box">
+					<h4><nobr>▪</nobr>用户中心</h4>
+				</div>
+				<div class="menu-box">
+					<h5>课程管理</h5>
+					<a href=""><p><nobr>▪</nobr>视频管理</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>交易管理</h5>
+					<a href=""><p><nobr>▪</nobr>订单管理</p></a>
+					<a href=""><p><nobr>▪</nobr>学生管理</p></a>
+					<a href=""><p><nobr>▪</nobr>评价管理</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>个人设置</h5>
+					<a href=""><p><nobr>▪</nobr>认证设置</p></a>
+					<a href=""><p><nobr>▪</nobr>个人资料</p></a>
+					<a href=""><p><nobr>▪</nobr>我的相册</p></a>
+					<a href=""><p><nobr>▪</nobr>我的视频</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>资料管理</h5>
+					<a href=""><p><nobr>▪</nobr>资料库</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>圈子管理</h5>
+					<a href=""><p><nobr>▪</nobr>圈子设置</p></a>
+					<a href=""><p><nobr>▪</nobr>成员管理</p></a>
+					<a href=""><p><nobr>▪</nobr>帖子管理</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>账户管理</h5>
+					<a href=""><p><nobr>▪</nobr>我的钱包</p></a>
+					<a href=""><p><nobr>▪</nobr>兑换券</p></a>
+					<a href=""><p><nobr>▪</nobr>充值卡</p></a>
+					<a href=""><p><nobr>▪</nobr>邀请码</p></a>
+					<a href=""><p><nobr>▪</nobr>数据统计</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>分销管理</h5>
+					<a href=""><p><nobr>▪</nobr>分销明细</p></a>
+					<a href=""><p><nobr>▪</nobr>分销成员</p></a>
+				</div>
+				<div class="menu-box">
+					<h5>个人动态</h5>
+					<a href=""><p><nobr>▪</nobr>我的动态</p></a>
+					<a href=""><p><nobr>▪</nobr>我的消息</p></a>
+				</div>			
+			</div>
+			<!--左侧菜单栏 END-->
+			
+			<!--右侧内容栏-->
+			<div class="content-right">
+				
+				<div class="info-top">
+					<div class="userpic">
+						<img src="img/tc1.png"/>
+					</div>
+					<div class="username">
+						<h4>致青春~Smile</h4>
+						<img src="img/woman.png"/>
+						<div class="clear"></div>
+						<a href="">修改账号资料</a>
+						<a href="">查看个人主页</a>
+					</div>
+					<div class="opera">
+						<a href=""><img src="img/tc2.png"/><p>发布通知</p></a>
+						<a href=""><img src="img/tc3.png"/><p>系统消息</p></a>
+						<a href=""><img src="img/tc4.png"/><p>我的私信</p></a>
+					</div>
+				</div>
+				
+				<div class="info-mid">
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href=""><p>20</p>课程收藏</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href=""><p>4</p>我的订单</a>
+					</div>
+					<div class="info-box" style="border-right: 1px solid #e8e8e8;">
+						<a href=""><p>28</p>课程数量</a>
+					</div>
+					<div class="info-box">
+						<a href=""><p>500</p>账户余额</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+			
+				<div class="dongtai" style="margin-top: 20px;">
+					<div class="dt-title">
+						<img src="img/tc6.png"/>
+						<h4>我的动态</h4>
+						<a href="">更多 》</a>
+					</div>
+					<div class="clear"></div>
+					<div class="dt-box">
+						<div class="dt-date">
+							<p>08-04</p>
+						</div>
+						<div class="dt-time">
+							<img src="img/tc66.png"/>
+							<label>10:22</label>
+						</div>
+						<div class="dt-user">
+							<p>我</p>
+						</div>
+						<div class="dt-what">
+							<p>学习了视频</p>
+						</div>
+						<div class="dt-from">
+							<p>来自视频：华予教育学院资格护士执业考试高级教程（二）</p>
+						</div>
+						<div class="dt-more">
+							<a href="">查看详情</a>
+						</div>
+					</div>
+					<div class="dt-box">
+						<div class="dt-date">
+							<p>08-04</p>
+						</div>
+						<div class="dt-time">
+							<img src="img/tc66.png"/>
+							<label>10:22</label>
+						</div>
+						<div class="dt-user">
+							<p>我</p>
+						</div>
+						<div class="dt-what">
+							<p>学习了视频</p>
+						</div>
+						<div class="dt-from">
+							<p>来自视频：华予教育学院资格护士执业考试高级教程（二）</p>
+						</div>
+						<div class="dt-more">
+							<a href="">查看详情</a>
+						</div>
+					</div>
+					<div class="dt-box">
+						<div class="dt-date">
+							<p>08-04</p>
+						</div>
+						<div class="dt-time">
+							<img src="img/tc66.png"/>
+							<label>10:22</label>
+						</div>
+						<div class="dt-user">
+							<p>我</p>
+						</div>
+						<div class="dt-what">
+							<p>学习了视频</p>
+						</div>
+						<div class="dt-from">
+							<p>来自视频：华予教育学院资格护士执业考试高级教程（二）</p>
+						</div>
+						<div class="dt-more">
+							<a href="">查看详情</a>
+						</div>
+					</div>
+					
+					<div class="quanz">
+						<div class="qz-title">
+							<img src="img/tc5.png"/>
+							<h4>我的视频</h4>
+							<a href="">更多 》</a>
+						</div>
+						<div class="class-info">
+				
+							<div class="classtime-line"></div>
+							<div class="class-box">
+								<div class="class-time">
+									<p>2016/07/21<img src="img/circle.png"></p>
+
+								</div>
+								<div class="class-pic">
+									<img src="img/tc75.png"/>
+								</div>
+								<div class="class-text">
+									<a href="">2016护士资格基础护理知识与技能公开课</a><br>
+									<label>已学2%</label>
+									<span>用时<nobr>3小时27分</nobr></span>
+									<span> 学习至2-1 语义化，让你的理想更好的被搜索引擎理解</span>
+									<br />
+									<a href="">笔记（1）</a>
+									<a href="">提问（1）</a>
+									<a href="">评论（1）</a>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="class-box">
+								<div class="class-time">
+									<p>2016/07/21<img src="img/circle.png"></p>
+
+								</div>
+								<div class="class-pic">
+									<img src="img/tc75.png"/>
+								</div>
+								<div class="class-text">
+									<a href="">2016护士资格基础护理知识与技能公开课</a><br>
+									<label>已学2%</label>
+									<span>用时<nobr>3小时27分</nobr></span>
+									<span> 学习至2-1 语义化，让你的理想更好的被搜索引擎理解</span>
+									<br />
+									<a href="">笔记（1）</a>
+									<a href="">提问（1）</a>
+									<a href="">评论（1）</a>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="guess-like clear">
+								<div class="qz-title">
+									<img src="img/tc87.png"/>
+									<h4>推荐课程</h4>
+									<a href="">换一换<img src="img/check-icon.png"></a>
+								</div>
+								
+								<ul class="kc_list mart_30 h_content clear">
+								    <li>
+								       	<a href="#">
+								        	<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">华予高级营养师培养课程...</p>
+								       	</a>
+								      	<span class="icon_user color_gray fr">20人在学</span>
+								       	<span class="price_sm">￥99.00</span>
+								   	</li>
+								    <li>
+								       	<a href="#">
+								        	<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">华予高级营养师培养课程...</p>
+								       	</a>
+								        <span class="icon_user color_gray fr">20人在学</span>
+								        <span class="price_sm">￥99.00</span>
+								    </li>
+								    <li>
+								        <a href="#">
+								        	<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">华予高级营养师培养课程...</p>
+								        </a>
+								       	<span class="icon_user color_gray fr">20人在学</span>
+								       	<span class="price_sm">￥99.00</span>
+								    </li>
+								    <li>
+								       	<a href="#">
+								       		<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">华予高级营养师培养课程...</p>
+								       	</a>
+								       	<span class="icon_user color_gray fr">20人在学</span>
+								       	<span class="price_sm">￥99.00</span>
+								    </li>
+								   <div class="clear"></div>
+							 	</ul>
+							</div>
+							<div class="guess-like clear">
+								<div class="qz-title">
+									<img src="img/tc88.png"/>
+									<h4>推荐老师</h4>
+									<a href="">换一换<img src="img/check-icon.png"></a>
+								</div>
+								
+								<ul class="kc_list mart_30 h_content clear">
+								    <li>
+								       	<a href="#">
+								        	<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">朱玉<span>10年教龄</span></p>
+								       	</a>
+								      	<span class=" color_gray fr">28课时</span>
+								       	<span class="price_sm">心理咨询师</span>
+								   	</li>
+								    <li>
+								       	<a href="#">
+								        	<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">朱玉<span>10年教龄</span></p>
+								       	</a>
+								        <span class=" color_gray fr">28课时</span>
+								        <span class="price_sm">心理咨询师</span>
+								    </li>
+								    <li>
+								        <a href="#">
+								        	<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">朱玉<span>10年教龄</span></p>
+								        </a>
+								       	<span class=" color_gray fr">28课时</span>
+								       	<span class="price_sm">心理咨询师</span>
+								    </li>
+								    <li>
+								       	<a href="#">
+								       		<img src="images/img2.jpg" width="100%" height="128"/>
+								        	<p class="title">朱玉<span>10年教龄</span></p>
+								       	</a>
+								       	<span class=" color_gray fr">28课时</span>
+								       	<span class="price_sm">心理咨询师</span>
+								    </li>
+								   <div class="clear"></div>
+							 	</ul>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/circle.js" ></script>
+        <script type="text/javascript">
+			var x = $(".class-info").children(".class-box").length;
+			var y = (x-1)*145;
+			$(".classtime-line").css("height",y);
+		</script>	
+	</body>
+</html>

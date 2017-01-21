@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<title>资料中心_{fzw:key:sitename/}</title>
+		<style type="text/css">
+		.classhome-tab-list li i{
+			display: none;
+		}
+		.classhome-tab-list li:first-child i{
+			display: block;
+		}
+	</style>
+	</head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		
+		<!--banner-->
+		<div class="banner" style="height: auto">
+			{fzw:sql="select * from sl_banner where classid=59 order by paixu desc,id desc" id="p1"}
+		    <img src="{fzw:p1:u3/}" style="width:100%;">{/fzw:sql}
+		</div>
+		
+		<!--banner end-->
+		<!-- datacenter-top -->
+		<div class="datacenter-top">
+			<ul>
+				<li>
+					<img src="img/datacenter-icon1.png">
+					<span>名师课堂</span>
+					名师把关，题题讲解
+				</li>
+				<li>
+					<img src="img/datacenter-icon2.png">
+					<span>笔记互动</span>
+					解你所迷，答他所问
+				</li>
+				<li>
+					<img src="img/datacenter-icon3.png">
+					<span>智能统计</span>
+					能力测评，智能分析
+				</li>
+				<li>
+					<img src="img/datacenter-icon4.png">
+					<span>试题解析</span>
+					详细解析，强化学习
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<!--热门资料-->
+		<div class="home_section wrap">
+		    <div class="section_content hoverslide" style="margin-top: 10px">
+		        <div class="section_h">
+		            <span class="name">热门资料</span>
+		            <ul class="s_tab h_tab">
+		            	<li class="on">精品资料</li>
+		            	<li>热门资料</li>
+		            	<li>新资料</li>
+		            	<li>我的观看记录</li>
+		            </ul>
+		            <p class="clear"></p>
+		        </div>
+		        <ul class="kc_list mart_30 h_content">
+		        	{fzw:sql="select top 4 * from sl_wendang where classid=55 and prope like '%精品%' order by paixu desc,id desc" id="p1"}
+		        	<li>
+		        		<a href="{fzw:pageurl/}">
+		        			<img src="{fzw:p1:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p1:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p1:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='课件浏览'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p1:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p1:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:sql}
+		        </ul>
+		    	<ul class="kc_list mart_30 h_content">
+		        	{fzw:sql="select top 4 * from sl_wendang where classid=55 order by renqi desc,id desc" id="p1"}
+		        	<li>
+		        		<a href="{fzw:pageurl/}">
+		        			<img src="{fzw:p1:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p1:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p1:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='课件浏览'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p1:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p1:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:sql}
+		        </ul>
+		    	<ul class="kc_list mart_30 h_content">
+		        	{fzw:sql="select top 4 * from sl_wendang where classid=55 order by paixu desc,id desc" id="p1"}
+		        	<li>
+		        		<a href="{fzw:pageurl/}">
+		        			<img src="{fzw:p1:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p1:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p1:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='课件浏览'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p1:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p1:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:sql}
+		        </ul>
+		    	<ul class="kc_list mart_30 h_content">
+		        	{fzw:sql="select top 4 * from sl_kecheng,sl_history where sl_history.laiyuanbianhao=sl_kecheng.id and sl_history.leixing='课件浏览' and sl_history.yonghuming='{fzw:cookie name="user_name"/}' and sl_kecheng.classid=55" id="p1"}
+		        	<li>
+		        		<a href="{fzw:pageurl/}">
+		        			<img src="{fzw:p1:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p1:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p1:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='课件浏览'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p1:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p1:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:sql}
+		        </ul>
+		    
+		    </div>
+		    <script type="text/javascript">
+		    	jQuery(".hoverslide").slide({targetCell:".h_content",titCell:".h_tab li"})
+		    </script>
+		    <div class="section_side">
+		        <div class="datacenter-user">
+		        	{if value1="{fzw:cookie:name="user_name"/}" value2="" bi="=="}
+		        	<div class="datacenter-user-top">	
+		        		<img src="img/lingshitouxiang.png">
+		        		您还没登录<br>
+		        		欢迎来到华予教育学院
+		        		<div class="datacenter-user-top-a">
+		        			<a href="single.aspx?m=xueshengzhuce">学生注册</a>
+		        			<a href="single.aspx?m=laoshizhuce">老师入驻</a>
+		        		</div>
+		        		
+		        	</div>
+		        	{else}
+		        	<div class="datacenter-user-top">
+		        		{fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}
+		        		<img src="{fzw:p1:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'">
+		        		hi，{fzw:p1:nicheng/}{/fzw:sql}<br>
+		        		欢迎来到华予教育学院
+		        		<div class="datacenter-user-top-a">
+		        			
+		        		</div>
+		        	</div>	
+			        <div class="datacenter-user-bottom">
+			        	<a href="/search.aspx?m=stucuoti"><img src="img/datacenter-icon5.png">我的收藏库</a>
+			        	<a href="/search.aspx?m=stutimushoucang"><img src="img/datacenter-icon6.png">我的错误库</a>
+			        	<div class="clear"></div>
+			        </div>
+		        	{/if}
+		        </div>
+		    </div>
+		</div>
+		<div class="clear"></div>
+		<!--热门资料 end-->
+
+		<!--练习题库-->
+		<div class="home_section wrap">
+		    <div class="section_content hoverslide" style="margin-top: 20px">
+		        <div class="section_h">
+		            <span class="name">练习题库</span>
+		            <ul class="s_tab h_tab">
+		            	{fzw:sql="select * from sl_Parameter where classid=322 order by id asc" id="p1"}
+		            	<li>{fzw:p1:u1/}</li>
+		            	{/fzw:sql}
+		            </ul>
+		            <script type="text/javascript">
+		            	$(".s_tab").children("li").eq(0).addClass("on")
+		            </script>
+		            <a href="/search.aspx?m=tiku" class="fr" style="color: #9e9e9e;font-size: 12px;margin-top: 3px;">更多>></a>
+		            <p class="clear"></p>
+		        </div>
+		        {fzw:for:sql="select * from sl_Parameter where classid=322 order by id asc" id="p1"}
+		        <ul class="kc_list mart_30 h_content">
+		        	<li><a href="/search.aspx?m=tiku&fenlei={fzw:p1:id/}"><img src="{fzw:p1:u2/}" style="width:100%;height: 387px;"></a></li>
+		        	{fzw:for:sql="select top 6 * from sl_tiku where fenlei={fzw:p1:id/} order by dtime desc" id="p2"}
+		        	<li>
+		        		<a href="/single.aspx?m=tiku_show&id={fzw:p2:id/}">
+		        			<img src="{fzw:p2:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p2:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p2:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='题目练习'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p2:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p2:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:for:sql}
+		        </ul>
+		    	{/fzw:for:sql}
+		    </div>
+		    <script type="text/javascript">
+		    	jQuery(".hoverslide").slide({targetCell:".h_content",titCell:".h_tab li"})
+		    </script>
+		    <div class="section_side">
+		        <div class="home_gg hoverslide homepage-recommand">
+		            <div class="section_h home-right-title">
+		           	 	<span class="name">热门习题</span>
+		           	 	<a href="/search.aspx?m=tiku">更多>></a>
+		            	<p class="clear"></p>
+		        	</div>
+		        	<ul class="classhome-tab-list" style="border:1px solid #e5e5e5;padding-top: 0;padding-bottom:0;height: auto">
+						{fzw:sql="select top 12 *,(select count(id) from sl_tiku_timu as ti where ti.laiyuanbianhao=tk.timu) as tishu from sl_tiku as tk order by tk.renqi desc" id="p1"}
+						<li>
+							<a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}"><span></span>{fzw:p1:biaoti size="20"/}</a>
+							<i style="font-style: normal;width: 100%"><a href="/single.aspx?m=tiku_show&id={fzw:p1:id/}"><img src="{fzw:p1:suoluetu/}"></a>
+							<span class="number">{fzw:p1:renqi/}</span><span class="playtimes">次做题</span><br><br>
+							共{fzw:p1:tishu/}道题</i>
+							<div class="clear"></div>
+						</li>
+						{/fzw:sql}
+					</ul>	
+		        	<div class="clear"></div>
+		        </div>
+		    </div>
+		    <div class="clear"></div>
+		</div>
+		<!--练习题库 end-->
+
+		<!--课件阅览-->
+		<div class="home_section wrap">
+		    <div class="section_content hoverslide" style="margin-top: 20px">
+		        <div class="section_h">
+		            <span class="name">课件阅览</span>
+		            <ul class="s_tab h_tab">
+		            	{fzw:sql="select * from sl_Parameter where classid=261 order by id asc" id="p1"}
+		            	<li>{fzw:p1:u1/}</li>
+		            	{/fzw:sql}
+		            </ul>
+		            <a href="/search.aspx?m=kejianyuelan" class="fr" style="color: #9e9e9e;font-size: 12px;margin-top: 3px;">更多>></a>
+		            <p class="clear"></p>
+		        </div>
+		        {fzw:for:sql="select * from sl_Parameter where classid=261 order by id asc" id="p1"}
+		        <ul class="kc_list mart_30 h_content">
+		        	<li><a href='/search.aspx?m=kejianyuelan&classid=55&suoshukecheng={fzw:p1:id/}'><img src='{fzw:p1:u2/}' style="width:100%;height: 387px;"></a></li>
+		        	{fzw:for:sql="select top 6 * from sl_wendang where suoshukecheng={fzw:p1:id/} and classid=55 and shenhe='已发布' order by dtime desc" id="p2"}
+		        	<li>
+		        		<a href="/page.aspx?id={fzw:p2:id/}&classid={fzw:p2:classid/}">
+		        			<img src="{fzw:p2:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p2:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p2:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='课件浏览'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p2:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p2:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:for:sql}
+		        </ul>
+		        {/fzw:for:sql}
+		    </div>
+		    <script type="text/javascript">
+		    	jQuery(".hoverslide").slide({targetCell:".h_content",titCell:".h_tab li"})
+		    </script>
+		    <div class="section_side">
+		        <div class="home_gg hoverslide homepage-recommand">
+		            <div class="section_h home-right-title">
+		           	 	<span class="name">热门课件</span>
+		           	 	<a href="/search.aspx?m=kejianyuelan&classid=55">更多>></a>
+		            	<p class="clear"></p>
+		        	</div>
+		        	<ul class="classhome-tab-list" style="border:1px solid #e5e5e5;padding-top: 0;padding-bottom:0;height: auto">
+						{fzw:sql="select top 12 * from sl_wendang where classid=55 and shenhe='已发布' order by renqi desc" id="p1"}
+						<li>
+							<a href="/page.aspx?id={fzw:p1:id/}&classid=55"><span></span>{fzw:p1:biaoti size="20"/}</a>
+							<i style="font-style: normal;width: 100%"><a href="/page.aspx?id={fzw:p1:id/}&classid=55"><img src="{fzw:p1:suoluetu/}"></a>
+							<span class="number">{fzw:p1:renqi/}</span><span class="playtimes">次浏览</span><br><br>
+							</i>
+							<div class="clear"></div>
+						</li>
+						{/fzw:sql}
+					</ul>	
+		        	<div class="clear"></div>
+		        </div>
+		    </div>
+		    <div class="clear"></div>
+		</div>
+		<!--课件阅览 end-->
+
+		<!--科普知识-->
+		<div class="home_section wrap">
+		    <div class="section_content hoverslide" style="margin-top: 20px">
+		        <div class="section_h">
+		            <span class="name">科普知识</span>
+		            <ul class="s_tab h_tab">
+		            	{fzw:sql="select * from sl_Parameter where classid=312 order by id asc" id="p1"}
+		            	<li>{fzw:p1:u1/}</li>
+		            	{/fzw:sql}
+		            </ul>
+		            <a href="/search.aspx?m=kepuzhishi" class="fr" style="color: #9e9e9e;font-size: 12px;margin-top: 3px;">更多>></a>
+		            <p class="clear"></p>
+		        </div>
+		        {fzw:for:sql="select * from sl_Parameter where classid=312 order by id asc" id="p1"}
+		        <ul class="kc_list mart_30 h_content">
+		        	<li><a href='/search.aspx?m=kepuzhishi&classid=69&fenlei={fzw:p1:id/}'><img src='{fzw:p1:u2/}' style="width:100%;height: 387px;"></a></li>
+		        	{fzw:for:sql="select top 6 * from sl_kepuzhishi where fenlei like '%{fzw:p1:id/}%' and classid=69 and shenhe='已发布' order by dtime desc" id="p2"}
+		        	<li>
+		        		<a href="/page.aspx?id={fzw:p2:id/}&classid={fzw:p2:classid/}">
+		        			<img src="{fzw:p2:suoluetu/}" width="100%" height="128"/>
+		        			<p class="title">{fzw:p2:biaoti size="30"/}</p>
+		        		</a>
+		        		<span class="icon_user color_gray fr">{fzw:p2:id sql="sl_history|where&nbsp;laiyuanbianhao=&dangqian&nbsp;and&nbsp;leixing='科普知识'|count"/}人在学</span>
+		        		<span class="price_sm">{if value1="{fzw:p2:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p2:jiage string="￥"/}{/if}</span>
+		        	</li>
+		        	{/fzw:for:sql}
+		        </ul>
+		        {/fzw:for:sql}
+		    </div>
+		    <script type="text/javascript">
+		    	jQuery(".hoverslide").slide({targetCell:".h_content",titCell:".h_tab li"})
+		    </script>
+		    <div class="section_side">
+		        <div class="home_gg hoverslide homepage-recommand">
+		            <div class="section_h home-right-title">
+		           	 	<span class="name">热门知识</span>
+		           	 	<a href="/search.aspx?m=kepuzhishi">更多>></a>
+		            	<p class="clear"></p>
+		        	</div>
+		        	<ul class="classhome-tab-list" style="border:1px solid #e5e5e5;padding-top: 0;padding-bottom:0;height: auto">
+						{fzw:sql="select top 12 * from sl_kepuzhishi where classid=69 and shenhe='已发布' order by renqi desc" id="p1"}
+						<li>
+							<a href="{fzw:pageurl/}"><span></span>{fzw:p1:biaoti size="20"/}</a>
+							<i style="font-style: normal;width: 100%"><a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}"></a>
+							<span class="number">{fzw:p1:renqi/}</span><span class="playtimes">次浏览</span><br><br>
+							</i>
+							<div class="clear"></div>
+						</li>
+						{/fzw:sql}
+					</ul>	
+		        	<div class="clear"></div>
+		        </div>
+		    </div>
+		    <div class="clear"></div>
+		</div>
+		<!--科普知识 end-->
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+		$(".classhome-tab-list").each(function(){
+			var a = $(this).children("li").length;
+			for(var i = 0;i<a;i++){
+				$(this).children("li").eq(i).children("a").children("span").html(i+1)
+			}
+		})
+		$(".classhome-tab-list").children("li").mouseover(function(){
+			$(this).parent().children("li").children("i").stop().slideUp(100);
+			$(this).children("i").stop().slideDown(80);
+		})
+		
+	</script>		
+	</body>
+</html>

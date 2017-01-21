@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" href="css/jquery.raty.css">
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<style type="text/css">
+			.bottom-2{
+				margin-top: 0;
+			}
+		</style>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+		<script src="js/jquery.raty.js" type="text/javascript"></script>
+		<title>会员视频_{fzw:key:sitename/}</title>
+	</head>
+	<body>
+        {fzw:inside src="顶部.html"/}
+		<!-- student-vip -->
+		<div class="student-top">
+			<div class="max-width">
+                {fzw:inside src="usertop.html"/}
+                <ul class="student-top-menu">
+                    <li><a href="/single.aspx?m=user-homepage&id={fzw:url:id/}"><img src="img/student3.png">主页</a></li>
+                    <li><a href="/single.aspx?m=user-shuoshuo&id={fzw:url:id/}"><img src="img/student4.png">说说</a></li>
+                    <li><a href="/single.aspx?m=user-tiezi&id={fzw:url:id/}"><img src="img/student5.png">帖子</a></li>
+                    <li class="studentpage-on"><a href="/single.aspx?m=user-video&id={fzw:url:id/}"><img src="img/student6-on.png">视频</a></li>
+                    <li><a href="/single.aspx?m=user-xiangche&id={fzw:url:id/}"><img src="img/student7.png">相册</a></li>
+                    <li><a href="/single.aspx?m=user-info&id={fzw:url:id/}"><img src="img/student8.png">个人信息</a></li>
+                </ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="student-container">
+			<div class="max-width">
+				<div class="student-title">
+					<img src="img/student9.png">视频
+				</div>
+				<div class="teacher-video">
+					<ul>
+                        {fzw:sql="select * from sl_xiangche where yonghuming in (select yonghuming from sl_user where id={fzw:url:id/}) and leixing='视频' order by dtime desc,id desc" id="p1"}
+						<li><a href="javascript:void(0)" onclick="play('{fzw:p1:wenjiandizhi/}')"><img src="{fzw:p1:suoluetu/}">{fzw:p1:biaoti/}<span class="teacher-video-shadow"><img src="img/teacher-icon7.png"></span></a></li>
+						{/fzw:sql}
+						<div class="clear"></div>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+        {fzw:inside src="底部.html"/}
+        {fzw:inside src="右侧.html"/}	
+        <script src="js/layer.js"></script>
+        <div style="display:none" id="videobox">
+            <video id="video" controls autoplay width="100%" height="100%"></video>
+        </div>
+
+        <script>
+            function play(url) {
+                $("#video").attr("src", url);
+                var a = $("#videobox").html();
+                layer.open({
+                    type: 1,
+                    title:'',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 0, //不显示关闭按钮
+                    anim: 2,
+                    shadeClose: true, //开启遮罩关闭
+                    area: ['720px', '480px'], //宽高
+                    content: a
+                });
+            }
+        </script>
+	</body>
+</html>

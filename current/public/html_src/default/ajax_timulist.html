@@ -1,0 +1,17 @@
+﻿{if value1="{fzw:url:id/}" value2="" bi="=="}
+{fzw:sql="select * from sl_tiku_timu where laiyuanbianhao={fzw:url:timu/} order by id desc" id="p1"}
+<div class="section clear zhangjie">
+    <div class="zhang-title" data-zhangid="{fzw:p1:id/}">
+        <img src="img/tc78.png"><!-- 第<i></i>章 --><input type="text" name="zhang" placeholder="请输入长度在20字以内的课程标题" readonly="readonly" value="{fzw:p1:biaoti/}"><span style="margin:0 25px">{fzw:p1:fenzhi/} 分</span><span style="margin:0 25px">{fzw:p1:leixing/}</span><button class="delzhang2" onclick="deltimu(this,{fzw:p1:id/})">删除</button><button style="margin-top:13px;background-color:transparent;border:0;cursor:pointer" onclick="addtimu({fzw:p1:laiyuanbianhao/},{fzw:p1:id/})">修改</button>
+    </div>
+</div>
+{/fzw:sql}
+{else}
+{fzw:sql="select * from sl_tiku_timu where laiyuanbianhao in (select timu from sl_tiku where id={fzw:url:id/}) order by id desc" id="p1"}
+<div class="section clear zhangjie">
+    <div class="zhang-title" data-zhangid="{fzw:p1:id/}">
+        <img src="img/tc78.png"><!-- 第<i></i>章 --><input type="text" name="zhang" placeholder="请输入长度在20字以内的课程标题" readonly="readonly" value="{fzw:p1:biaoti/}"><span style="margin:0 25px">{fzw:p1:fenzhi/} 分</span><span style="margin:0 25px">{fzw:p1:leixing/}</span><button class="delzhang2" onclick="deltimu(this,{fzw:p1:id/})">删除</button><button style="margin-top:13px;background-color:transparent;border:0;cursor:pointer" onclick="addtimu({fzw:p1:laiyuanbianhao/},{fzw:p1:id/})">修改</button>
+    </div>
+</div>
+{/fzw:sql}
+{/if}

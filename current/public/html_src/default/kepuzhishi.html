@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>科普知识</title>	
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="css/class.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/class.js"></script>
+</head>
+<body>
+{fzw:inside src="顶部.html"/}
+<!-- classhome -->
+<div class="max-width">
+<!-- classhome-left -->
+
+<div class="classhome-right" style="float:left">
+	<div class="datacenter-class-top">
+		<ul>
+			<li>内容分类</li>
+			{fzw:sql="select * from sl_Parameter where classid=312 order by u3 asc,id asc" id="p1"}
+			<li><a href="/search.aspx?m=kepuzhishi&classid={fzw:url:classid/}&fenlei={fzw:p1:id/}">{fzw:p1:u1/}</a></li>
+			{/fzw:sql}
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="datacenter-class-search">
+		<form>
+			<input type="text" name="search" placeholder="搜索内容，回车跳转" onkeydown="onKeyDown_kepuzhishi()" id="sousuo">
+			<button onclick="return fromSubmit_kepuzhishi()"><img src="img/search.png"></button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		function fromSubmit_kepuzhishi() {
+			if (document.getElementById("sousuo").value=='') {
+				layer.alert("请输入搜索内容!");
+				return false
+			}
+		    window.location.href = "/search.aspx?m=kepuzhishi&classid={fzw:url:classid/}&biaoti=" + document.getElementById("sousuo").value;
+		    return false;
+		}
+		function onKeyDown_kepuzhishi() {
+		    var code = event.keyCode;
+		    if (code == 13) {
+		        fromSubmit_kepuzhishi();
+		        return false;
+		    }
+		}
+	</script>
+	<div class="classhome-right-nav" style="width:665px;">
+		<ul>
+			<li>
+				<a href="/search.aspx?m=kepuzhishi&classid={fzw:url:classid/}">全部课程</a>
+			</li>
+			<li>
+				<a >最新&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide">
+					<a href="/search.aspx?m=kepuzhishi&ordertype=renqi&orderby=desc">最热</a>
+					<a href="/search.aspx?m=kepuzhishi&ordertype=dtime&orderby=desc">最新</a>
+					<a href="/search.aspx?m=kepuzhishi&ordertype={fzw:url:ordertype/}&orderby=desc&classid={fzw:url:classid/}&jiage=0between0">免费</a>
+				</div>
+			</li>
+			<li>
+				<a >价格区间&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+				<div class="classhome-right-hide">
+					{fzw:sql="select * from sl_Parameter where classid=282 order by id asc" id="p1"}
+					<a href="/search.aspx?m=kepuzhishi&classid={fzw:url:classid/}&jiage={fzw:p1:u2/}">{fzw:p1:u1/}</a>
+                    {/fzw:sql}
+				</div>
+			</li>
+			<div class="clear"></div>
+		</ul>
+	</div>
+	<div class="datacenter-class-list">
+		<ul>
+			{fzw:search table="sl_kepuzhishi" sqlvalue="shenhe='已发布'" number="6" order="{fzw:url:ordertype/}" orderby="{fzw:url:orderby/}" id="p1"}
+			<li>
+				<a href="{fzw:pageurl/}"><img src="{fzw:p1:suoluetu/}"></a>
+				<a href="{fzw:pageurl/}">{fzw:p1:biaoti size="60"/}</a>
+				<p>{fzw:p1:jianjie size="260"/}</p>
+				老师：{fzw:p1:yonghuming sql="sl_user|where&nbsp;yonghuming='&dangqian'|xingming"/}<span>{if value1="{fzw:p1:jiage/}" value2="0" bi="=="}免费{else}￥{fzw:p1:jiage string="￥"/}{/if}</span>
+			</li>
+			{/fzw:search}
+		</ul>
+	</div>
+	<div class="classhome-right-page">
+		{fzw:search:page id="p1" size="8"/}
+	</div>
+</div>
+<div class="clear"></div>
+</div>
+{fzw:inside src="底部.html"/}{fzw:inside src="右侧.html"/}
+</body>
+</html>

@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>成员管理_圈子管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+<style type="text/css">
+	.fenx-text1 img{
+		margin: 0 5px;
+	}
+	.sousuo{
+		opacity: 0;
+		position: absolute;
+		z-index: 99;
+		display: inline-block !important;
+		cursor: pointer;
+		width: 25px;
+		height: 34px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		left: 385px;
+	}
+</style>      
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>  
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>成员管理</p>
+					<div class="clear"></div>
+				</div>
+				<div class="creatxy">
+                    {fzw:sql="select * from sl_bbs where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}
+					<a href="/search.aspx?m=teachertianjiachengyuan" data-id="{fzw:p1:id/}">＋ 添加成员</a>
+					<form style="position: relative;" onkeydown="if(event.keyCode==13){fromSubmit();return false;}">
+					<input type="text" name="" class="txt3 search" placeholder="搜索学员，回车跳转" id="key_value"/>
+					<input type="button" name="" class="txt4 sousuo" value="" onclick="fromSubmit()" onkeydown="if(event.keyCode==13){fromSubmit();}"/>
+					</form>
+					<script type="text/javascript">
+						function fromSubmit() {
+						   // alert(document.getElementById("key_value").value);
+						   if (document.getElementById("key_value").value==''){
+								layer.alert("请输入关键字!");
+								return false;
+						   }
+						    window.location.href = "/search.aspx?m=teacherchengyuansearch&nicheng=" + document.getElementById("key_value").value;
+						    return false;
+						}
+					</script>
+                    {/fzw:sql}
+				</div>
+				{fzw:search table="sl_history" sqlvalue="leixing='加入圈子'&nbsp;and&nbsp;laiyuanbianhao&nbsp;in&nbsp;(select&nbsp;id&nbsp;from&nbsp;sl_bbs&nbsp;where&nbsp;yonghuming='{fzw:cookie:name="user_name"}')&nbsp;and&nbsp;zhuangtai='有效'" number="20" order="dtime" orderby="desc" id="p1"}
+				<div class="fenx-box">
+					<input type="checkbox" name="check" class="mycheck user" data-id="{fzw:p1:id/}">
+					{fzw:sql="select * from sl_user where yonghuming='{fzw:p1:yonghuming/}'" id="p2"}
+					<div class="fenx-pic1">
+						<img src="{fzw:p2:touxiang/}" onerror="this.src='/template/default/img/lingshitouxiang.png'"/>
+					</div>
+					<div class="fenx-text1">
+						<span>{if value1="{fzw:p2:nicheng/}" value2="" bi="=="}{fzw:p2:yonghuming/}{else}{fzw:p2:nicheng/}{/if}</span>
+						<a href="/single.aspx?m=teacherchengyuanguanlita&id={fzw:p2:id/}"><img src="img/tc76.png"/>管理TA</a>
+						<div class="clear"></div>
+					</div>
+					{/fzw:sql}							
+					<p>购买课程：华予学院码农资格证书高级培训课程</p>
+					<div class="clear"></div>
+				</div>
+				{/fzw:search}
+				<!--页码-->
+				<div class="footpage clear">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+				<div class="checkall">
+					<input type="checkbox" name="myall" class="mycheck" id="myall" onclick="checkAll(this.checked)"  />
+					<label for="myall" onselectstart="return false;">全选</label>
+					<a href="javascript:void(0)" onclick="del()">移除学员</a>
+				</div>
+				
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<form id="del-form">
+			<input type="hidden" name="id" value="7">
+			<input type="hidden" name="zhuangtai" value="无效">
+		</form>
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有任何成员'));
+			function del(){
+				var x = 0;
+				$(".user").each(function(){
+					if ($(this).prop("checked")==true) {
+						var a = $(this).data("id");
+						
+						var formData = $("#del-form").serialize();
+						$.ajax({
+							type: "POST", 
+							url: "/Execution.aspx?t=history&type=edit&tip_string=提交成功！&tipurl=/",
+							data: formData,
+							contentType: "application/x-www-form-urlencoded; charset=utf-8",
+							success: function(data) {
+								layer.msg("删除成功！");
+								
+							},error: function(data){
+								layer.msg("删除失败！请重试");
+								return false;
+							}
+						});
+						x++;
+					}
+				})
+				if (x==0) {
+					layer.msg("请选择成员");
+					return false;
+				}else{
+					location.reload(true);
+				}
+			}
+		</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

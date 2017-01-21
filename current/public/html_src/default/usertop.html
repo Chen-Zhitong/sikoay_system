@@ -1,0 +1,31 @@
+﻿{fzw:for:sql="select *,(select count(id) from sl_history as h where h.leixing='关注' and h.laiyuanbianhao=u.id) as guanzhushu,(select count(id) from sl_history as h where h.leixing='视频学习' and h.yonghuming=u.yonghuming) as kechengshu from sl_user as u where u.id={fzw:url:id/}" id="p1"}
+<img src="{fzw:p1:touxiang/}" class="student-touxiang" onerror="this.src='/template/default/img/lingshitouxiang.png'">
+<p class="student-name">{if value1="{fzw:p1:nicheng/}" value2="" bi="=="}{fzw:p1:yonghuming/}{else}{fzw:p1:nicheng/}{/if}</p>
+<p class="student-biaoqian">{fzw:p1:zuoyouming/}</p>
+<p class="student-top-info">
+    <span style="margin-left: -25px">年龄：<i style="font-style: normal;" id="nianling">{fzw:p1:shengri datetime="yyyy"/}</i></span><span>课程数：{fzw:p1:kechengshu/}</span><span>关注：{fzw:p1:guanzhushu/}人</span>
+    {if value1="{fzw:for:sql="select count(id) as shu from sl_history where laiyuanbianhao={fzw:p1:id/} and leixing='关注' and yonghuming='{fzw:cookie:name="user_name"/}'" id="p2"}{fzw:p2:shu/}{/fzw:for:sql}" value2="0" bi="=="}
+    <a href="javascript:void(0)" onclick="guanzhu({fzw:p1:id/})" class="guanzhu"><img src="img/student1.png">关注TA</a>
+    {else}
+    <a class="guanzhu"><img src="img/student1.png">已关注</a>
+    {/if}
+    <a href="javascript:void(0)" class="siliao" onclick="sixin({fzw:url:id/})"><img src="img/student2.png">私聊TA</a>
+</p>
+<script type="text/javascript">
+    var myDate = new Date();
+    var year = myDate.getFullYear();
+    var shengri = $("#nianling").html();
+    var nianling = year - shengri;
+    $("#nianling").html(nianling);
+</script>
+            {/fzw:for:sql}
+<script>
+    function sixin(id){
+        layer.open({
+            type: 2,
+            skin: 'layui-layer-rim', 
+            area: ['800px', '600px'], 
+            content: '/single.aspx?m=ajax_sixin&id=&userid='+id
+        });
+    }
+</script>

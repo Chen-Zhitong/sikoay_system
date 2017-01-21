@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>视频管理_课程管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<div class="content">
+			{fzw:inside src="老师左侧.html"/}
+			<script>
+                $(".kcguanli").addClass("lefton");
+            </script>
+			<!--右侧内容栏-->
+			<div class="content-right2">
+				<div class="right-title">
+					<p>视频管理</p>
+					<a href="/search.aspx?m=teachershipinguanli&lingshi1=5&shenhe=已发布">已发布（{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}' and shenhe='已发布'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teachershipinguanli&lingshi1=4&shenhe=待审核">待发布（{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}' and shenhe='待审核'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teachershipinguanli&lingshi1=3&jiage=0between0">免费课程（{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}' and jiage=0" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teachershipinguanli&lingshi1=2&jiage=0between99999">付费课程（{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}' and jiage<>0" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<a href="/search.aspx?m=teachershipinguanli&lingshi1=1">全部课程（{fzw:sql="select count(id) as count_id from sl_kecheng where yonghuming='{fzw:cookie:name="user_name"}'" id="p1"}{fzw:p1:count_id/}{/fzw:sql}）</a>
+					<div class="clear"></div>
+				</div>
+				<script type="text/javascript">
+					var a = '{fzw:url:lingshi1/}';
+					if (a==1) {
+						$(".right-title").children("a").eq(4).addClass("on");
+					}else if (a==2) {
+						$(".right-title").children("a").eq(3).addClass("on");
+					}else if (a==3) {
+						$(".right-title").children("a").eq(2).addClass("on");
+					}else if (a==4) {
+						$(".right-title").children("a").eq(1).addClass("on");
+					}else if (a==5) {
+						$(".right-title").children("a").eq(0).addClass("on");
+					}
+				</script>
+				<div class="creatsp">
+					<a href="/single.aspx?m=teacherchuangjiankecheng">＋ 创建课程</a>
+					<form>
+					<input type="text" name="" class="txt3 search" placeholder="搜索内容，回车跳转" style="float: right;margin-top: 3px;" />
+					<input type="submit" name="" class="txt4" value="" />
+					</form>
+				</div>
+				<div class="clear"></div>
+				<!--创建课程-->
+				{fzw:search table="sl_kecheng" sqlvalue="yonghuming='{fzw:cookie:name="user_name"}'" number="8" order="dtime" orderby="desc" id="p1"}
+				<div class="ship-box">
+					<div class="ship-pic">
+						<a href="/page.aspx?id={fzw:p1:id/}&classid=37"><img src="{fzw:p1:suoluetu/}" /></a>
+					</div>
+					<div class="ship-text">
+						<h4><a href="/page.aspx?id={fzw:p1:id/}&classid=37">{fzw:p1:biaoti/}</a></h4>
+						<h5>{fzw:p1:shenhe/}</h5>
+						<div class="clear"></div>
+						<span>{fzw:p1:kechengjianjie size="80"/}</span><div class="clear"></div>
+						<p>课程有效期：<nobr>{fzw:p1:daoqishijian/}</nobr></p>
+						<p>学费：<nobr style="color: #fe835a;">¥{fzw:p1:jiage string="￥"/}</nobr></p>
+						<p>更新日期：<nobr>{fzw:p1:dtime datetime="yyyy-MM-dd"/}</nobr></p>						
+						<p>标签：<nobr>{fzw:p1:kechengbiaoqian/}</nobr></p>
+						<div class="clear"></div>
+					</div>
+					<div class="ship-change">
+						<a href="/single.aspx?m=teacherbianjikecheng&id={fzw:p1:id/}">编辑</a>
+						<a href="javascript:void(0)" onclick="del({fzw:p1:id/})">删除</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				{/fzw:search}
+				<!--创建课程 END-->
+				<!--页码-->
+				<div class="footpage">
+					{fzw:search:page id="p1" size="5"/}
+				</div>
+			</div>
+				
+				
+			</div>
+			
+		</div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<script type="text/javascript">
+			var el = $('.content-right2'); 
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有任何课程'));
+			function del(id){
+				layer.confirm('确定要删除该课程吗？', {icon: 3, title:'提示'}, function(index){
+				  	$.ajax({
+						type: "POST",
+						url: "/Execution.aspx?t=kecheng&type=del&id="+id,
+						success: function(data) {
+							layer.msg("删除成功！");
+							location.reload(true);
+						},error: function(data){
+							layer.msg("删除失败！请重试");
+						}
+					});
+				  	layer.close(index);
+				});
+				return false;
+			}
+		</script>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

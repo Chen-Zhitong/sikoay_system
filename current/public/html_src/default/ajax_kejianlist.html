@@ -1,0 +1,18 @@
+<ul style="margin:10px 67px" class="kejianlist">
+    {fzw:sql="select * from sl_wendang_wenjian where laiyuanbianhao={fzw:url:laiyuanbianhao/}" id="p1"}
+    <form>
+        <li style="line-height:36px;">
+            <input type="hidden" name="id" value="{fzw:p1:id/}" />
+            <input type="text" name="biaoti" value="{fzw:p1:biaoti/}" class="txt1 bordernone">
+            <div class="fr" style="margin-left: 20px;">
+                <a href="javascript:;" onclick="editkj({fzw:p1:id/},{fzw:p1:laiyuanbianhao/},this)" style="color: #1dbca6;margin:0 10px">修改</a>
+                <a href="javascript:;" onclick="delkj({fzw:p1:id/},{fzw:p1:laiyuanbianhao/})" style="color: #1dbca6;margin:0 10px">删除</a>
+            </div>
+            <div class="fr">
+                <input type="text" name="jine" placeholder="价格" class="txt1 bordernone" style="text-align:right;width:50px;margin-bottom:0;padding-right:10px;" value="{fzw:p1:jine/}">&nbsp;/元
+            </div>
+            <div class="clear"></div>
+        </li>
+    </form>
+{/fzw:sql}
+</ul>

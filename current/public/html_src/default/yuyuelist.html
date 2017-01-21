@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>预约进度</title>
+    <link href="css/teacher.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/class.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    {fzw:inside src="顶部.html"/}
+    <div class="content">
+        {fzw:sql="select * from sl_user where yonghuming='{fzw:cookie:name="user_name"/}'" id="p1"}
+        {if value1="{fzw:p1:leixing/}" value2="老师" bi="=="}
+        {fzw:inside src="老师左侧.html"/}
+        {else}
+        {/if}
+        {if value1="{fzw:p1:leixing/}" value2="会员" bi="=="}
+        {fzw:inside src="会员左侧.html"/}
+        {else}
+        {/if}
+        {if value1="{fzw:p1:leixing/}" value2="代理" bi="=="}
+        {fzw:inside src="代理左侧.html"/}
+        {else}
+        {/if}
+        {/fzw:sql}
+        <script>
+            $(".yuyueguanli").addClass("lefton");
+        </script>
+        <!--右侧内容栏-->
+        <div class="content-right2">
+            <div class="right-title">
+                <p>预约进度</p>
+            </div>
+            <div class="clear"></div>
+            <!--创建课程-->
+            {fzw:search table="sl_appointment" sqlvalue="yonghuming='{fzw:cookie:name="user_name"}'" number="8" order="dtime" orderby="desc" id="p1"}
+            <div class="ship-box">
+                <div class="ship-text">
+                    {fzw:sql="select * from sl_Parameter where id={fzw:p1:kemujibie/}" id="p2"}
+                    <h4>科目级别：{fzw:p2:u1/}</h4>
+                    {/fzw:sql}
+                    <div class="clear"></div>
+                    <span>考试地区：{fzw:p1:diqu/}</span>
+                    <div class="clear"></div>
+                    <span>考试时间：{fzw:p1:kaoshishijian/}</span><div class="clear"></div>
+                    <p>进度：<nobr style="color: #fe835a;">{fzw:p1:jindu/}</nobr></p>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            {/fzw:search}
+            <!--创建课程 END-->
+            <!--页码-->
+            <div class="footpage">
+                {fzw:search:page id="p1" size="5"/}
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+    {fzw:inside src="底部.html"/}
+    {fzw:inside src="右侧.html"/}
+    <script type="text/javascript">
+			var el = $('.content-right2');
+			el.html(el.html().replace(/您搜索的信息不存在/ig, '您还没有任何预约'));
+			function del(id){
+				layer.confirm('确定要删除该课件吗？', {icon: 3, title:'提示'}, function(index){
+				  	$.ajax({
+						type: "POST",
+						url: "/Execution.aspx?t=wendang&type=del&id="+id,
+						success: function(data) {
+							layer.msg("删除成功！");
+							location.reload(true);
+						},error: function(data){
+							layer.msg("删除失败！请重试");
+						}
+					});
+				  	layer.close(index);
+				});
+				return false;
+			}
+    </script>
+    <script type="text/javascript" src="js/teacher.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<div class="teacher-video max-width">
+			<p class="teacher-photo-title"><img src="img/teacher-icon6.png">视频展示<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=xiangcheA">更多>></a></p>
+			<ul>
+				{fzw:sql="select top 2 * from sl_xiangche where leixing='视频' and yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/}) order by id desc" id="p1"}
+				<li><a><video src="{fzw:p1:wenjiandizhi/}" controls="controls" width="100%" height="380">您的浏览器不支持 video 标签。</video>{fzw:p1:biaoti size="40"/}<!-- <span class="teacher-video-shadow"><img src="img/teacher-icon7.png"></span> --></a></li>
+				{/fzw:sql}
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="teacher-photo max-width">
+			<p class="teacher-photo-title"><img src="img/teacher-icon5.png">相册展示<a href="/single.aspx?m=teacher_detail&id={fzw:url:id/}&leixing=xiangcheB">更多>></a></p>
+			<ul>
+				{fzw:sql="select top 4 * from sl_xiangche where leixing='照片' and yonghuming in (select yonghuming from sl_laoshi where id={fzw:url:id/}) order by id desc" id="p1"}
+				<li><a href="javascript:void"><img src="{fzw:p1:suoluetu/}" height="210">{fzw:p1:biaoti size="34"/}</a></li>
+				{/fzw:sql}
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="clear"></div>

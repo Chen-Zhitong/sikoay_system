@@ -1,0 +1,1111 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>创建课程_视频管理</title>
+        <link href="css/teacher.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/class.js"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+i{
+	font-style: normal;
+}
+b{
+	font-weight: 500;
+}
+.dd-handle b{
+	max-width: 280px;
+	display: inline-block;
+}
+.edui-body-container b{
+	font-weight: 600;
+}
+.edui-body-container i{
+	font-style: italic;
+}
+.jie img{
+	vertical-align: middle;
+}
+.zhangjie img{
+	margin-right: 20px;
+	vertical-align: middle;
+}
+.zhang-title{
+	color: #313131;
+	font-size: 16px;
+}
+.zhangjie input{
+	width: 357px;
+	padding: 10px;
+	border: 1px solid transparent;
+	outline: medium;
+	font-size: 16px;
+	font-family: "微软雅黑";
+	margin: auto 20px;
+}
+.section .changetitle{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+	margin-top: 14px;
+}
+.zhang-title .addvideo{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+	margin-top: 14px;
+}
+.zhang-title .delzhang{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+	margin-top: 14px;
+}
+.jie .changejie{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+	margin-top: 43px;
+}
+.jie .deljie{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+	margin-top: 43px;
+}
+.dd-dragel .changejie{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+    float: right;
+    margin: auto 40px;
+    margin-top: 43px;
+}
+.dd-dragel .deljie{
+	background-color: #fff;
+	border: 0;
+	outline: medium;
+	font-size: 13px;
+	color: #646464;
+	cursor: pointer;
+    float: right;
+    margin: auto 40px;
+    margin-top: 43px;
+}
+.jie i{
+	margin-right: 10px;
+}
+.dd-dragel i{
+	margin-right: 10px;
+}
+.section button{
+	float: right;
+	margin: auto 30px;
+}
+.section button:hover{
+	color: #1dbca6;
+}
+.zhangjie .jie img{
+	vertical-align: middle;
+	width: 150px;
+	height: 100px;
+}
+.dd-dragel img{
+	vertical-align: middle;
+	width: 150px;
+	height: 100px;
+	margin-right: 20px;
+}
+.jie span{
+	float: right;
+	margin-right: 53px;
+	margin-top: 40px;
+}
+.dd-dragel span{
+	float: right;
+	margin-right: 53px;
+	margin-top: 40px;
+}
+.jie span g{
+	color: #1dbca6;
+}
+.dd-dragel span g {
+    color: #1dbca6;
+}
+.dd-dragel{
+	color: #1dbca6;
+}
+.cf:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+* html .cf { zoom: 1; }
+*:first-child+html .cf { zoom: 1; }
+
+html { margin: 0; padding: 0; }
+/* body { font-size: 100%; margin: 0; padding: 1.75em; font-family: 'Helvetica Neue', Arial, sans-serif; } */
+
+h1 { font-size: 1.75em; margin: 0 0 0.6em 0; }
+
+/* a { color: #2996cc; } */
+a:hover { text-decoration: none; }
+
+/* p { line-height: 1.5em; } */
+.small { color: #666; font-size: 0.875em; }
+.large { font-size: 1.25em; }
+
+/**
+ * Nestable
+ */
+
+.dd { position: relative; display: block; margin: 0; padding: 0; max-width: 850px; list-style: none; font-size: 13px; line-height: 20px; }
+
+.dd-list { display: block; position: relative; margin: 0; padding: 0; list-style: none; }
+.dd-list .dd-list { padding-left: 30px; }
+.dd-collapsed .dd-list { display: none; }
+
+.dd-item,
+.dd-empty,
+.dd-placeholder { display: block; position: relative; margin: 0; padding: 0; min-height: 20px; font-size: 13px; line-height: 20px; }
+
+.dd-handle { display: block; /* height: 30px; */ margin: 5px 0; padding: 5px 10px; text-decoration: none; font-weight: bold; border: 1px solid transparent;
+    background: #fff;
+    /* background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
+    background:    -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
+    background:         linear-gradient(top, #fafafa 0%, #eee 100%); */
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
+    box-sizing: border-box; -moz-box-sizing: border-box;
+    color: #666666;
+    font-size: 14px;
+    font-weight: 500;
+}
+.dd-handle:hover { color: #2ea8e5; background: #fff; }
+
+.dd-item > button { display: block; position: relative; cursor: pointer; float: left; width: 25px; height: 20px; margin: 5px 0; padding: 0; text-indent: 100%; white-space: nowrap; overflow: hidden; border: 0; background: transparent; font-size: 12px; line-height: 1; text-align: center; font-weight: bold; }
+.dd-item > button:before { content: '+'; display: block; position: absolute; width: 100%; text-align: center; text-indent: 0; }
+.dd-item > button[data-action="collapse"]:before { content: '-'; }
+
+.dd-placeholder,
+.dd-empty { margin: 5px 0; padding: 0; min-height: 30px; background: #f2fbff; border: 1px dashed #b6bcbf; box-sizing: border-box; -moz-box-sizing: border-box; }
+.dd-empty { border: 1px dashed #bbb; min-height: 100px; background-color: #e5e5e5;
+    background-image: -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff),
+                      -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+    background-image:    -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff),
+                         -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+    background-image:         linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff),
+                              linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+}
+
+.dd-dragel { position: absolute; pointer-events: none; z-index: 9999; }
+.dd-dragel > .dd-item .dd-handle { margin-top: 0; }
+.dd-dragel .dd-handle {
+    -webkit-box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+            box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+}
+
+/**
+ * Nestable Extras
+ */
+
+.nestable-lists { display: block; clear: both; padding: 30px 0; width: 100%; border: 0; border-top: 2px solid #ddd; border-bottom: 2px solid #ddd; }
+
+#nestable-menu { padding: 0; margin: 20px 0; }
+
+#nestable-output,
+#nestable2-output { width: 100%; height: 7em; font-size: 0.75em; line-height: 1.333333em; font-family: Consolas, monospace; padding: 5px; box-sizing: border-box; -moz-box-sizing: border-box; }
+
+#nestable2 .dd-handle {
+    color: #fff;
+    border: 1px solid #999;
+    background: #bbb;
+    background: -webkit-linear-gradient(top, #bbb 0%, #999 100%);
+    background:    -moz-linear-gradient(top, #bbb 0%, #999 100%);
+    background:         linear-gradient(top, #bbb 0%, #999 100%);
+}
+#nestable2 .dd-handle:hover { background: #bbb; }
+#nestable2 .dd-item > button:before { color: #fff; }
+
+@media only screen and (min-width: 700px) {
+
+    .dd { float: left; width: 100%; }
+    .dd + .dd { margin-left: 2%; }
+
+}
+
+.dd-hover > .dd-handle { background: #2ea8e5 !important; }
+
+/**
+ * Nestable Draggable Handles
+ */
+
+.dd3-content { display: block; height: 30px; margin: 5px 0; padding: 5px 10px 5px 40px; color: #333; text-decoration: none; font-weight: bold; border: 1px solid #ccc;
+    background: #fafafa;
+    background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
+    background:    -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
+    background:         linear-gradient(top, #fafafa 0%, #eee 100%);
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
+    box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.dd3-content:hover { color: #2ea8e5; background: #fff; }
+
+.dd-dragel > .dd3-item > .dd3-content { margin: 0; }
+
+.dd3-item > button { margin-left: 30px; }
+
+.dd3-handle { position: absolute; margin: 0; left: 0; top: 0; cursor: pointer; width: 30px; text-indent: 100%; white-space: nowrap; overflow: hidden;
+    border: 1px solid #aaa;
+    background: #ddd;
+    background: -webkit-linear-gradient(top, #ddd 0%, #bbb 100%);
+    background:    -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
+    background:         linear-gradient(top, #ddd 0%, #bbb 100%);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.dd3-handle:before { content: '≡'; display: block; position: absolute; left: 0; top: 3px; width: 100%; text-align: center; text-indent: 0; color: #fff; font-size: 20px; font-weight: normal; }
+.dd3-handle:hover { background: #ddd; }
+
+/**
+ * Socialite
+ */
+
+.socialite { display: block; float: left; height: 35px; }
+
+    </style>
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+        <script type="text/javascript" src="js/jquery.nestable.js" ></script>
+        <script type="text/javascript" src="js/num2CN.js" ></script>
+    </head>
+	<body>
+		{fzw:inside src="顶部.html"/}
+		<!--创建章模块-->
+		<div class="crtsec">
+			<div class="crtsec-box" style="height: auto;padding-bottom: 25px;">
+					<div class="add-title">
+						<p>创建章</p>
+						<img src="img/tc56.png"/>
+					</div>
+					<form class="zhangtitle-form">
+					<input type="text" name="biaoti" class="txt5" placeholder="请输入长度在20字以内的课程标题"/>
+					<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"/}'>
+					<input type="hidden" name="laiyuanbianhao" value="" class="zhanglaiyuanbianhao">
+					<input type="hidden" name="paixu" value="0">
+					<div class="clear"></div>
+					</form>
+					<input type="button" class="crtsec-btn save-zhang" value="保存" onclick="addzhang(this)"/>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function addzhang(e){
+				var count = 0;
+				$(e).parent().children(".zhangtitle-form").children("input").each(function(){
+					if ($(this).val()=='') {
+						count++;
+					}
+				})
+				if (count>0) {
+					layer.msg("请输入标题！");
+					return false;
+				}
+				
+			}
+		</script>
+		<div class="crtsec2">
+			<div class="crtsec-box" style="height: auto;padding-bottom: 25px;">
+				<form id="jietitle-form">
+					<div class="add-title">
+						<p>创建节</p>
+						<img src="img/tc56.png"/>
+					</div>
+					<input type="text" name="biaoti" class="txt5" placeholder="请输入长度在20字以内的标题" maxlength="40" style="display: none;" />
+					<input type="text" name="url" class="txt5" placeholder="请输入外部视频地址" id="waibudizhi" />
+					<button type="button" class="crtsec-btn" id="waibuurl">提交外部视频</button><br>
+					或者您也可以点击下面图标选择自己上传一个或多个视频
+					<div class="shangc-box1">
+						<img src="img/tc81.png"/>
+						<p>上传视频</p>
+						<input type="button" name="" class="uppic" onclick="window.open('/inc/webuploader/videouploader.aspx?type=soft&editname=shipindizhi&Extension=','','status=no,scrollbars=no,top=20,left=110,width=800,height=500')" id="shangchuan"/>
+					</div>
+					<div class="shagnc-tips" style="display: none;">
+						<p>请上传本节视频</p>
+						<p>价格：<input type="text" name="jiage" style="width: 40px;color: #1dbca6;"> 元/节</p>
+					</div>
+				</form>
+					<div class="clear"></div>
+					<!-- <input type="button" class="crtsec-btn save-jie" value="保存"/> -->
+				
+			</div>
+		</div>
+		<div class="crtsec3">
+			<div class="crtsec-box" style="height: auto;padding-bottom: 25px;">
+				<form>
+					<div class="add-title">
+						<p>编辑节</p>
+						<img src="img/tc56.png"/>
+					</div>
+					<input type="text" name="biaoti" class="txt5" placeholder="请输入长度在20字以内的标题" maxlength="40"/>
+					<!-- <div class="shangc-box1">
+						<img src="img/tc81.png"/>
+						<p>上传视频</p>
+						<input type="button" name="" class="uppic" onclick="window.open('/inc/webuploader/videouploader.aspx?type=soft&editname=shipindizhi&Extension=','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')" id="shangchuan"/>
+					</div> -->
+					<div class="shagnc-tips" style="margin: 0;float: none;height: auto;">
+						<p>请输入本节的价格</p>
+						<p>价格：<input type="text" name="jiage" style="width: 40px;color: #1dbca6;"> 元/节</p>
+					</div>
+				</form>
+					<div class="clear"></div>
+					<input type="button" class="crtsec-btn change-jie" value="保存"/>
+				
+			</div>
+		</div>
+		<!--创建章模块 END-->
+		
+		<div class="content3">
+			{fzw:inside src="老师左侧.html"/}
+			
+			<!--右侧内容栏-->
+			<div class="content-right5">
+				<div class="right-title">
+					<p>创建课程</p>
+				</div>
+				<form class="kecheng-info" id="kecheng-form">
+				    <div class="tz-title">
+						<p>第一步：填写通知标题和内容</p>
+					</div>
+				<div class="kc-info">
+					<span>课程封面：</span>
+					<div class="cover-box" style="background: url(template/default/img/tc13.png) no-repeat;background-position: center center;cursor: pointer;">
+						<img src="" style="position: absolute;width: 100%;height: 100%;left: 0;top: 0;margin: 0;opacity: 1;cursor: pointer;" id="touxiang-display" onclick="window.open('/inc/webuploader/FileUploader.aspx?type=img&editname=suoluetu&kuangao=623*363','','status=no,scrollbars=no,top=20,left=110,width=600,height=500')">
+						<input type="hidden" name="suoluetu" class="uppic" value="上传图片" id="suoluetu" />
+					</div>
+					<input type="hidden" name="kechengzhang" class="zhanglaiyuanbianhao">
+					<input type="hidden" name="kechengjie" class="jielaiyuanbianhao">
+					<label>图片大小不超过5M</label>
+					<div class="clear"></div>
+					<span>课程标题：</span>
+					<i style="font-style: normal"><input type="text" name="biaoti" class="txt" value="" maxlength="20" onkeydown="checkMaxInput(this,20)" onkeyup="checkMaxInput(this,20)" onfocus="checkMaxInput(this,20)" onblur="checkMaxInput(this,20)"/>
+					<label>还可以输入 <nobr>20</nobr> 字</label></i>
+					<br  clear="all"/><br />
+					<span>课程价格：</span>
+					<input type="text" name="jiage" class="txt1" value="" id="setjiage"/>
+					<input type="checkbox" name="" class="mycheck1" id="free" value="0"/><label for="free">这是免费课</label>
+					<br  clear="all"/>
+					<span>观看期限：</span>
+					<input type="text" name="daoqishijian" class="txt1" value="" onClick="WdatePicker({dateFmt:&#39;yyyy-MM-dd&#39;})" id="settime" />
+					<input type="checkbox" name="" class="mycheck1" id="forever" value="" /><label for="forever">该视频永久有效</label>
+					<br  clear="all"/>
+					<span>课程简介：</span>
+					<i style="font-style: normal"><textarea name="kechengjianjie" class="tz-text" maxlength="200" onkeydown="checkMaxInput(this,200)" onkeyup="checkMaxInput(this,200)" onfocus="checkMaxInput(this,200)" onblur="checkMaxInput(this,200)"></textarea>
+					<label>还可以输入 <nobr>200</nobr> 字</label></i>
+					<br  clear="all"/>
+					<br />
+					<span>课程分类：</span>
+					<input name="kechengfenlei" type="hidden" id="kechengfenlei" class="yincang" /><iframe width="600px" height="60px" src="/inc/liandong_table1.aspx?classid=261&type=add&textBox=kechengfenlei" scrolling="no"  frameborder="0"></iframe>
+					<!-- <select name="">
+						<option>请选择</option>
+						<option>研究生</option>
+						<option>博士</option>
+					</select>
+					<select name="">
+						<option>请选择</option>
+						<option>研究生</option>
+						<option>博士</option>
+					</select>
+					<select name="">
+						<option>请选择</option>
+						<option>研究生</option>
+						<option>博士</option>
+					</select> -->
+					<br  clear="all"/>
+					<br />
+					<span>课程语言：</span>
+					<select name="kechengyuyan">
+						<option value="中文">中文-普通话</option>
+						<option value="英语">英语</option>
+					</select>
+					<br  clear="all"/>
+					<br />
+					<span>课程标签：</span>
+					<input type="text" name="kechengbiaoqian" class="txt" value=""/>
+					<br />
+					<label>每个标签最多 <nobr>8</nobr> 个字，用空格分隔（不能包含标点符号，且最多输入 <nobr>8</nobr>  个标签哦）</label>
+				</div>
+					<div class="clear"></div>
+				<div class="tz-title">
+					<p>第二步：课程概述<nobr>&nbsp;&nbsp;&nbsp;&nbsp;请不要在内容中留电话、QQ、和网址哦，仅支持5M以内的jpg、png、jpeg格式图片，最大宽度不要超过760像素。</nobr></p>
+				</div>
+				<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"/}'>
+				<input type="hidden" name="shenhe" value="待审核" id="kcshenhe">
+				<textarea class="textarea is_check" name="kechenggaishu" id="neirong" style="width: 100%;height: 400px;"></textarea>
+					{fzw:server type="Editor" id="neirong" user="{fzw:cookie name="user_name" /}" width="100%" height="200px" /}					
+					<!-- <input type="button" name="" class="tjrz-btn" value="保存课程信息" id="save-kecheng" style="display: none;" />
+					<input type="reset" name="" class="qxrz-btn" value="清空重填" style="display: none;" /> -->
+					<br><br>
+					<span style="line-height: 36px;float: left;color: #595959;font-size: 13px;">课程目标：</span><textarea class="tz-text" name="kechengmubiao"></textarea>
+					<div class="clear"></div><br>
+					<span style="line-height: 36px;float: left;color: #595959;font-size: 13px;">适应人群：</span><input type="text" name="shiyingrenqun" class="txt">
+				</form>
+				<div class="clear"></div>
+				<div class="tz-title">
+					<p>第三步：视频上传<nobr>&nbsp;&nbsp;&nbsp;&nbsp;上传中断时，再次选择同一文件可以从中断处续传</nobr></p>
+				</div>
+				<div class="creattz" style="margin-left: 67px">
+					<a class="addsec">＋ 创建章节</a>
+				</div>
+				<div class="chuangjian" style="margin-left: 67px">
+					<p style="font-size: 14px;color: #1dbca6;margin: 0 0 10px 0;float: right;">拖动章节即可移动，上传完视频后请记得修改标题哦！</p>
+					
+					
+				</div>
+				<!-- <button style="width: 86px;height: 38px;background-color: #fe835a;border: 0;outline: medium;cursor: pointer;font-size: 13px;color: #fff;font-family: '微软雅黑';margin: 10px 0 0 67px;">保存课节</button> -->
+				<div class="clear"></div>
+				<br><br>
+				<p style="font-size: 14px;color: #1dbca6;margin: 0 0 10px 0;">确认无误后请点击下面按钮进行课程的保存和发布，所有未保存的课程将不会被创建！</p>
+				<button style="background-color: #fe835a;border: 0;outline: medium;font-size: 13px;color: #fff;width: 110px;height: 38px;cursor: pointer;font-family: '微软雅黑';margin-right: 20px;margin-left: 67px" id="fabu">立即发布课程</button>
+				<button style="background-color: #1dbca6;border: 0;outline: medium;font-size: 13px;color: #fff;width: 80px;height: 38px;cursor: pointer;font-family: '微软雅黑';margin-right: 20px;" id="baocun">保存</button>
+				<button style="background-color: #1dbca6;border: 0;outline: medium;font-size: 13px;color: #fff;width: 80px;height: 38px;cursor: pointer;font-family: '微软雅黑';margin-right: 20px;" id="quxiao">取消</button>
+			</div>
+			
+		</div>
+		<div class="clear"></div>
+		{fzw:inside src="底部.html"/}
+		{fzw:inside src="右侧.html"/}
+		<form id="zhangxiugai-form">
+			<input type="hidden" name="id" class="zhangid">
+			<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+			<input type="hidden" name="biaoti">
+			<input type="hidden" name="paixu">
+			<input type="hidden" name="laiyuanbianhao" value="" class="zhanglaiyuanbianhao">
+		</form>
+		<form id="zhangadd-form">
+			<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+			<input type="hidden" name="biaoti">
+			<input type="hidden" name="paixu" value="0">
+			<input type="hidden" name="laiyuanbianhao" value="" class="zhanglaiyuanbianhao">
+		</form>
+		<form id="jieadd-form">
+			<input type="hidden" name="biaoti">
+			<input type="hidden" name="shipindizhi" id="shipindizhi">
+			<input type="hidden" name="laiyuanbianhao" value="" class="jielaiyuanbianhao">
+			<input type="hidden" name="zhangbiaoti">
+			<input type="hidden" name="jiage">
+			<input type="hidden" name="suoluetu">
+			<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+		</form>
+		<form id="xiugaijie-form">
+			<input type="hidden" name="biaoti">
+			<input type="hidden" name="id" class="jieid">
+			<input type="hidden" name="jiage">
+			<input type="hidden" name="yonghuming" value='{fzw:cookie:name="user_name"}'>
+		</form>
+		<form id="jiepaixu-form">
+			<input type="hidden" name="id" class="jieid">
+			<input type="hidden" name="paixu" id="jiepaixu">
+		</form>
+		<div>
+			<input type="hidden" name="laiyuanbianhaozhang" id="lingshizhangbianhao">
+			<input type="hidden" name="laiyuanbianhaojie" id="lingshijiebianhao">
+		</div>
+		<script type="text/javascript">
+			var zhangbianhao = {fzw:key:bianhao/};
+			var jiebianhao = zhangbianhao;
+			$("#lingshizhangbianhao").val(zhangbianhao);
+			$("#lingshijiebianhao").val(jiebianhao);
+			$(".zhanglaiyuanbianhao").val(zhangbianhao);
+			$(".jielaiyuanbianhao").val(jiebianhao);
+		</script>
+		<script type="text/javascript">
+			function savekecheng(){
+				var count = 0;
+				if ($("#free").prop("checked")==true) {
+					$("#setjiage").val("0");
+					count--;
+				}
+				if($("#forever").prop("checked")==true){
+					$("#settime").val("3000-01-01");
+				}
+				$("#kecheng-form input[type=text]").each(function(){
+					if ($(this).val()=='') {
+						count++;
+					}
+				})
+				$("#kecheng-form input[type=hidden]").each(function(){
+					if ($(this).val()=='') {
+						count++;
+					}
+				})
+				$("#kecheng-form textarea").each(function(){
+					if ($(this).val()=='') {
+						count++;
+					}
+				})
+				if (count > 0) {
+					layer.alert('请完整填写信息');
+					return false;
+				}
+				var formDatakc = $("#kecheng-form").serialize();
+				$.ajax({
+					type: "POST",
+					url: "/Execution.aspx?t=kecheng&type=add&classid=37",
+					data: formDatakc,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						layer.msg("保存成功！");
+					},error:function(data){
+						layer.msg("保存失败！请重试");
+						return false;
+					}
+				});
+				/*var biaoti = $("#kecheng-form input[name=biaoti]").val();
+				var kechengjianjie = $("#kecheng-form input[name=kechengjianjie]").val();
+				var kechenggaishu = $("#kecheng-form input[name=kechenggaishu]").val();
+				$.ajax({
+					type: "GET",
+					async:false,
+					url: "/single.aspx?m=ajax_huoqukechengid&biaoti="+biaoti,
+					success: function(data) {
+						
+					}
+				});*/
+				return true;
+			}
+		</script>
+		<script type="text/javascript">
+			//剩余字数计算  
+    function checkMaxInput(obj, maxLen) {  
+        if (obj == null || obj == undefined || obj == "") {  
+                return;  
+            }  
+        if (maxLen == null || maxLen == undefined || maxLen == "") {  
+            maxLen = 100;  
+        }  
+      	var strResult;  
+        var $obj = $(obj);  
+        var newid = $obj.attr("id") + 'msg';  
+        if (obj.value.length > maxLen) { //如果输入的字数超过了限制  
+            obj.value = obj.value.substring(0, maxLen); //就去掉多余的字
+            var rest = parseInt(maxLen) - parseInt(obj.value.length);
+            $(obj).parent().children("label").html("还可以输入 <nobr>"+ rest +"</nobr> 字");  
+        }  
+        else {  
+            var rest = parseInt(maxLen) - parseInt(obj.value.length);
+            $(obj).parent().children("label").html("还可以输入 <nobr>"+ rest +"</nobr> 字");   
+        }    
+        var $msg = $("#" + newid);  
+        if ($msg.length == 0) {  
+            $obj.after(strResult);  
+        }  
+        else {  
+            $msg.html(strResult);  
+        }  
+    }
+    $(".qxrz-btn").click(function(){
+    	$(".tz-text").each(function(){
+    		$(this).parent().children("label").html("还可以输入 <nobr>"+ 200 +"</nobr> 字"); 
+    	})
+    	$(".txt").each(function(){
+    		$(this).parent("i").children("label").html("还可以输入 <nobr>"+ 20 +"</nobr> 字"); 
+    	})
+    })
+
+    function change() {
+	  this.init.apply(this, arguments);
+	}
+	change.prototype = _change;
+    function autotitle(){
+    	var i,j = 0;
+    	var x = $(".chuangjian").children(".zhangjie").length;
+    	for(i=1;i<=x;i++){
+    		var i1 = new change(i.toString());
+    		var zhang = i1.pri_ary();
+    		$(".chuangjian").children(".zhangjie").eq(i-1).children(".jie").data("zhangjie",i);
+    		$(".chuangjian").children(".zhangjie").eq(i-1).children(".zhang-title").children("i").html(zhang);
+    	}
+    	$(".zhangjie .jie").each(function(){
+    		var y = $(this).children().children(".dd-item").length;
+    		for(j=1;j<=y;j++){
+    			var zhang2 = $(this).data("zhangjie");
+    			$(this).children().children(".dd-item").eq(j-1).children(".dd-handle").children("i").html(zhang2+"-"+j);
+    		}
+    	})
+    }
+    	autotitle();
+	    $('.dd').nestable({
+	    	maxDepth:1,
+	    	group:1,
+	    	expandBtnHTML   : '',
+	        collapseBtnHTML : '',
+	    });
+	    $('.dd').on('change', function() {
+    		autotitle();
+		});
+		</script>
+<script type="text/javascript">
+	function removeEvent() {
+        var inputs = document.querySelectorAll(".text");
+        for(var i = 0, length = inputs.length; i < length; i++) {
+            inputs[i].removeEventListener("mousedown", showDetail);
+            inputs[i].removeEventListener("mouseout", hideDetail);
+        }
+    }
+	function bind(){
+		$(".changetitle").each(function(){
+			var x = 0;
+			var originbiaoti;
+			$(this).click(function(){
+				
+				if(x%2==0){
+					$(this).parent().children("input").removeAttr("readonly");
+					$(this).parent().children("input").css("border-color","#e5e5e5");
+					$(this).html("确定修改");
+					originbiaoti = $(this).parent().children("input").val();
+				}else{
+					
+					var zhangxuhao = $(this).parent().children("i").html();
+					var biaoti = $(this).parent().children("input").val();
+					/*var xuhao2 = new change(xuhao.toString());
+    				var zhangxuhao = xuhao2.pri_ary();*/
+    				var biaoti2 = "第"+zhangxuhao+"章 "+originbiaoti;
+    				var laiyuanbianhao = $("#zhangxiugai-form input[name=laiyuanbianhao]").val();
+    				console.log(biaoti2,laiyuanbianhao)
+					if (biaoti=='') {
+						layer.msg("请输入标题！");
+						return false;
+					}
+					var xiugaizhangid;
+					$.ajax({
+						type: "GET",
+						async:false,
+						url: "/single.aspx?m=ajax_huoquzhangid&biaoti="+biaoti2+"&laiyuanbianhao="+laiyuanbianhao,
+						success: function(data) {
+							$(".zhangid").val(data);
+							xiugaizhangid=data;
+						}
+					});
+					$("#zhangxiugai-form input[name=biaoti]").val("第"+zhangxuhao+"章 "+biaoti);
+					var formData = $("#zhangxiugai-form").serialize();
+					$.ajax({
+						type: "POST",
+						async:false,
+						url: "/Execution.aspx?t=zhang&type=edit&id="+xiugaizhangid,
+						data: formData,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							layer.msg("修改成功！");
+						},error:function(data){
+							layer.msg("修改失败！请重试");
+							return false;
+						}
+					});
+					$(this).parent().children("input").attr("readonly","readonly");
+					$(this).parent().children("input").css("border-color","transparent");
+					$(this).html("修改标题");
+				}
+				x++;
+			})
+		})
+		$(".addvideo").bind("click",function(){
+			$(".crtsec2").show();
+			$(".zhang-title").children("button").removeClass("addthis")
+			$(this).addClass("addthis");
+		})
+		$(".changejie").mousedown(function(event){
+			event.stopPropagation();
+			return false;
+		})
+		$(".changejie").bind("click",function(event){
+			event.stopPropagation();
+			removeEvent();
+			$(".crtsec3").show();
+			$(".dd-list").find("button").removeClass("changethis")
+			$(this).addClass("changethis");
+			var a = $(this).parent().children("b").html();
+			var b = $(this).parent().find("g").html();
+			$(".crtsec3 .crtsec-box input[name='biaoti']").val(a);
+			$(".crtsec3 .crtsec-box input[name='jiage']").val(b);
+		})
+	}
+	bind();
+	$(".save-zhang").bind("click",function(){
+		var xuhao = $(".chuangjian").children(".zhangjie").length;
+		xuhao++;
+		var xuhao2 = new change(xuhao.toString());
+    	var zhangxuhao = xuhao2.pri_ary();
+		var count = 0;
+		var biaoti = $(this).parent().children().children("input[name=biaoti]").val();
+		$(this).parent().children(".zhangtitle-form").children("input").each(function(){
+			if ($(this).val()=='') {
+				count++;
+			}
+		})
+		if (count>0) {
+			return false;
+		}
+		var x = $(".crtsec .crtsec-box input[name='biaoti']").val();
+		$(".chuangjian").append('<div class="section clear zhangjie"><div class="zhang-title"><img src="img/tc78.png">第<i></i>章<input type="text" name="zhang" placeholder="请输入长度在20字以内的课程标题" readonly="readonly" value="'+x+'"><button class="delzhang">删除</button><button class="addvideo">添加视频</button><button class="changetitle">修改标题</button></div><div class="dd jie" data-zhangjie><div class="dd-empty"></div></div></div>')
+		autotitle();
+		$(".crtsec").hide();
+		$(".crtsec .crtsec-box input[name='biaoti']").val("");
+		bind();
+		$('.dd').nestable({
+	    	maxDepth:1,
+	    	group:1,
+	    	expandBtnHTML   : '',
+	        collapseBtnHTML : '',
+	    });
+	    $('.dd').on('change', function() {
+    		autotitle();
+		});
+		$("#zhangadd-form input[name=biaoti]").val("第"+zhangxuhao+"章 "+biaoti);
+		var formData = $("#zhangadd-form").serialize();
+		$.ajax({
+			type: "POST",
+			async:false,
+			url: "/Execution.aspx?t=zhang&type=add",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.alert("章节创建成功！")
+			}
+		});
+		del();
+	})
+	function jiename(src){
+		var a = new Array();
+		var b = new Array();
+		a = src.split("/");
+		b = src.split(".");
+		return b[0];
+	}
+	function savejie(src,i,spurl,name){
+		var dom = $(".addthis").parent().parent(".zhangjie");
+		var zhangxuhao = $(dom).index();
+		console.log(zhangxuhao)
+		var zhangxuhao2 = new change(zhangxuhao.toString());
+    	var zhangxuhao3 = zhangxuhao2.pri_ary();
+    	var zhangbiaoti = $(".addthis").parent().children("input").val();
+    	var zhangbiaoti2 = "第"+zhangxuhao3+"章 "+zhangbiaoti;
+    	var jiexuhao = $(".addthis").parent().parent().find(".dd-item").length;
+    	jiexuhao++;
+		/*var x = $(".crtsec2 .crtsec-box input[name='biaoti']").val();*/
+		var y = $(".crtsec2 .crtsec-box input[name='jiage']").val();
+		var z = $("#shipindizhi").val();
+		var a = $(".addthis").parent().parent().children(".jie").find(".dd-empty").length;
+		/*if(x==''||y==''){
+			layer.msg("请输入完整！");
+			return false;
+		}
+		if (z=='') {
+			layer.msg("请上传视频!");
+			return false;
+		}*/
+
+		console.log(a)
+		var x = jiename(name);
+		$(".crtsec2").hide();
+		$(".crtsec2 .crtsec-box input[name='biaoti']").val("");
+		$(".crtsec2 .crtsec-box input[name='jiage']").val("");
+		$("#jieadd-form input[name=suoluetu]").val(src);
+		$("#jieadd-form input[name=biaoti]").val(zhangxuhao+"-"+jiexuhao+" "+x);
+		$("#jieadd-form input[name=jiage]").val(y);
+		$("#jieadd-form input[name=zhangbiaoti]").val(zhangbiaoti2);
+		var formData = $("#jieadd-form").serialize();
+		$.ajax({
+			type: "POST",
+			async:false,
+			url: "/Execution.aspx?t=jie&type=add",
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				alert(i+1+"个上传成功")
+			},error: function(data) {
+				alert("第"+i+1+"个上传失败！请重新上传该视频！");
+				return false;
+			}
+		});
+		if (y=='') {
+			y='0.00';
+		}
+		if (a==0) {
+			$(".addthis").parent().parent().children(".jie").children(".dd-list").append("<li class=\"dd-item\" data-id=\"\"><div class=\"dd-handle\"><img src='"+src+"' class=\"jiesuoluetu\"><i></i><b>"+x+"</b><button style=\"margin-right: 17px;\" class=\"deljie\">删除</button><button class=\"changejie\" data-spurl='"+spurl+"'>编辑</button><span>价格：<g>"+y+"</g> 元/节</span></div></li>");
+		}else{
+			$(".addthis").parent().parent().children(".jie").html("<ol class=\"dd-list\"><li class=\"dd-item\" data-id=\"\"><div class=\"dd-handle\"><img src='"+src+"' class=\"jiesuoluetu\"><i></i><b>"+x+"</b><button style=\"margin-right: 17px;\" class=\"deljie\">删除</button><button class=\"changejie\" data-spurl='"+spurl+"'>编辑</button><span>价格：<g>"+y+"</g> 元/节</span></div></li></ol>");
+		}
+		autotitle();
+		bind();
+		$('.dd').nestable({
+	    	maxDepth:1,
+	    	group:1,
+	    	expandBtnHTML   : '',
+	        collapseBtnHTML : '',
+	    });
+	    $('.dd').on('change', function() {
+    		autotitle();
+		});
+		del();
+	}
+	$(".change-jie").bind("click",function(){
+		var x = $(".crtsec3 .crtsec-box input[name='biaoti']").val();
+		var y = $(".crtsec3 .crtsec-box input[name='jiage']").val();
+		
+		$(".crtsec3").hide();
+		$(".crtsec3 .crtsec-box input[name='biaoti']").val("");
+		$(".crtsec3 .crtsec-box input[name='jiage']").val("");
+		var src = $(".changethis").data("spurl");
+		var id;
+		$.ajax({
+			type: "GET",
+			async:false,
+			url: "/single.aspx?m=ajax_huoqujieid&url="+src,
+			success: function(data) {
+				$(".jieid").val(data);
+				id = data;
+			},error: function(data) {
+				layer.alert("网络错误请重试！");
+				return false;
+			}
+		});
+		var x2 = $(".changethis").parent().children("i").html();
+		var jiebiaoti = x2+" "+x;
+		$("#xiugaijie-form input[name=biaoti]").val(jiebiaoti);
+		$("#xiugaijie-form input[name=jiage]").val(y);
+		var formData = $("#xiugaijie-form").serialize();
+		$.ajax({
+			type: "POST",
+			async:false,
+			url: "/Execution.aspx?t=jie&type=edit&id="+id,
+			data: formData,
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success: function(data) {
+				layer.msg("修改成功！");
+			},error:function(data){
+				layer.msg("修改失败！请重试");
+				return false;
+			}
+		});
+		$(".changethis").parent().children("b").html(x);
+		var y2 = parseInt(y).toFixed(2);
+		$(".changethis").parent().find("g").html(y2);
+	})
+	function tupian(id,url){
+		document.getElementById(id).value=url;
+		$('#touxiang-display').attr('src',url);
+		$('#touxiang-display').css('opacity','1');
+	}
+	function videoadress(id,url,name){
+		var dizhi = new Array;
+		dizhi = url.split("|");
+		var title = new Array();
+		title = name.split("|");
+		alert("点击确定开始上传视频，请勿关闭窗口！")
+		for (var i = 0; i < dizhi.length; i++) {
+			document.getElementById(id).value=dizhi[i];
+			var tusrc = get_video_img(dizhi[i]);
+			
+			savejie(tusrc,i,dizhi[i],title[i]);
+		}
+		$(".jiesuoluetu").attr("onerror","this.src='/template/default/img/datacenter-icon5.png'");
+	}
+	function get_video_img(imgurl){
+		var src;
+		/*$.ajax({
+			type: "get",
+			url: "/inc/tool/comment.aspx?fileurl=" + imgurl + "",
+			async:false,
+			success: function (data) {
+				src = data;
+			},error:function(data){
+				alert("未能获取视频截图")
+			}
+		});*/
+		return src;
+	}
+	$("#waibuurl").click(function(){
+		var waibuurl = $("#waibudizhi").val();
+		if (waibuurl=='') {
+			layer.msg("请输入外部视频地址！");
+			return false;
+		}
+		$("#shipindizhi").val(waibuurl);
+		var tusrc = get_video_img(waibuurl);
+		savejie(tusrc,0,waibuurl);
+		$(".jiesuoluetu").attr("onerror","this.src='/template/default/img/datacenter-icon5.png'");
+		$("#waibudizhi").val("");
+	})
+	function del(){
+		$(".delzhang").click(function(){
+			$(this).addClass("delnow")
+			var r=layer.confirm("您确定要删除本章吗？",function(index){
+				var zhangxuhao = $(".delnow").parent().children("i").html();
+				var biaoti = $(".delnow").parent().children("input").val();
+	    		var biaoti2 = "第"+zhangxuhao+"章 "+biaoti;
+				var laiyuanbianhao = $("#zhangxiugai-form input[name=laiyuanbianhao]").val();
+				var delzhangid;
+				$.ajax({
+					type: "GET",
+					async:false,
+					url: "/single.aspx?m=ajax_huoquzhangid&biaoti="+biaoti2+"&laiyuanbianhao="+laiyuanbianhao,
+					success: function(data) {
+						delzhangid=data;
+					},error: function(data) {
+						layer.alert("网络错误请重试！");
+						$(".delzhang").removeClass("delnow");
+						return false;
+					}
+				});
+				$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=zhang&type=del&id="+delzhangid,
+					success: function(data) {
+						layer.msg("删除成功！");
+						$(".delnow").parent().parent(".zhangjie").remove();
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+						$(".delzhang").removeClass("delnow");
+						return false;
+					}
+				});
+				$(".delzhang").removeClass("delnow");
+				return false;
+				layer.close(index);
+			},function(index){
+				$(".delzhang").removeClass("delnow");
+			    return false;
+			    layer.close(index);	
+			});
+		})
+ 		$(".deljie").click(function(){
+ 			event.stopPropagation();
+			removeEvent();
+			$(this).addClass("delnow");
+			layer.confirm("您确定要删除本节吗？",function(index){
+				var src = $(".delnow").parent().children(".changejie").data("spurl");
+				var jieid;
+				$.ajax({
+					type: "GET",
+					async:false,
+					url: "/single.aspx?m=ajax_huoqujieid&url="+src,
+					success: function(data) {
+						$(".jieid").val(data);
+						jieid = data;
+					},error: function(data) {
+						layer.alert("网络错误请重试！");
+						$(".deljie").removeClass("delnow");
+						return false;
+					}
+				});
+				$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=jie&type=del&id="+jieid,
+					success: function(data) {
+						layer.msg("删除成功！");
+						$(".delnow").parent().parent(".dd-item").remove();
+						$('.dd').nestable({
+					    	maxDepth:1,
+					    	group:1,
+					    	expandBtnHTML   : '',
+					        collapseBtnHTML : '',
+					    });
+					    $(".deljie").removeClass("delnow");
+					},error: function(data){
+						layer.msg("删除失败！请重试");
+						$(".deljie").removeClass("delnow");
+						return false;
+					}
+				});
+				$(".deljie").removeClass("delnow");
+				layer.close(index);
+				return false;
+			},function(index){
+				$(".deljie").removeClass("delnow");
+			    layer.close(index);	
+			    return false;
+			});	
+		})
+		$(".deljie").mousedown(function(event){
+			event.stopPropagation();
+			return false;
+		})
+	}
+	$("#fabu").click(function(){
+		var cuowu = savekecheng();
+		if (!cuowu) {
+			return false;
+		}
+		var x = $(".chuangjian").children(".zhangjie").length;
+		for(var i = 0;i<x;i++){
+			var y = $(".chuangjian").children(".zhangjie").eq(i).find(".changejie").length;
+			for(var j = 0;j<y;j++){
+				var src = $(".chuangjian").children(".zhangjie").eq(i).find(".changejie").eq(j).data("spurl");
+				var eachjieid;
+				$.ajax({
+					type: "GET",
+					async:false,
+					url: "/single.aspx?m=ajax_huoqujieid&url="+src,
+					success: function(data) {
+						eachjieid = data;
+					},error: function(data) {
+						layer.alert("网络错误请重试！");
+						return false;
+					}
+				});
+				$("#jiepaixu-form").children(".jieid").val(eachjieid);
+				$("#jiepaixu").val(j);
+				var formData = $("#jiepaixu-form").serialize();
+				$.ajax({
+					type: "POST",
+					async:false,
+					url: "/Execution.aspx?t=jie&type=edit&id="+eachjieid,
+					data: formData,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						console.log("y",$("#jiepaixu").val(),eachjieid);
+					},error:function(data){
+						console.log("n");
+					}
+				});
+			}	
+		}
+		window.location.href="/search.aspx?m=teachershipinguanli&lingshi1=1";
+	})
+	$("#baocun").click(function(){
+		$("#kcshenhe").val("未发布");
+		$("#fabu").click();
+	})
+	$("#quxiao").click(function(){
+		layer.confirm('本课程尚未保存，您确定要离开吗？', function(index){
+			window.location.href="/search.aspx?m=teachershipinguanli&lingshi1=1";
+  			layer.close(index);
+		});	
+	})
+</script>		
+		<script type="text/javascript" src="js/teacher.js" ></script>
+	</body>
+</html>

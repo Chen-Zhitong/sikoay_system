@@ -1,0 +1,283 @@
+
+    
+     
+
+<div class="practice-container">
+	
+	
+	<div class="practice-title">
+		<span class="dangqianNo"></span>.{fzw:for:sql="select * from sl_tiku_timu where id={fzw:url:timubianhao/}" id="p1"}【{fzw:p1:leixing/}】
+		
+	</div>
+	<div class="practice-row">
+		<div class="practice-question">{fzw:p1:biaoti/}</div>
+		<input type="hidden" name="fenzhi" id="fenzhi" value="{fzw:p1:fenzhi/}"/>
+	
+		<div class="practice-answer">
+			<form id="daan_list">
+				{fzw:for:sql="select * from sl_tiku_daan where laiyuanbianhao=(select daan from sl_tiku_timu where id={fzw:url:timubianhao/}) order by id asc" id="p2"}
+				  
+				  {if value1="{fzw:p2:zhengque/}" value2="是" bi="=="}
+        			<input type="hidden" class="rightanswer" value="{fzw:p2:id/}" />
+			        {else}
+			        
+			        {/if}
+				  
+				   {if value1="{fzw:p1:leixing/}" value2="单选" bi="=="}  
+				      <label>
+						<input type="radio" name="answer" value="{fzw:p2:id/}" id="answer_{fzw:p2:id/}">
+						<span></span>
+						{fzw:p2:biaoti/}
+						</label><br>
+						
+				      {else}
+				      
+				      {/if}
+				      
+				     {if value1="{fzw:p1:leixing/}" value2="多选" bi="=="}
+				        <label>
+						<input type="checkbox" name="answer" value="{fzw:p2:id/}" id="answer_{fzw:p2:id/}">
+						<span></span>
+						{fzw:p2:biaoti/}
+						</label><br>
+				        {else}
+				        
+				        {/if}
+				        
+				         {if value1="{fzw:p1:leixing/}" value2="填空" bi="=="}
+				            <input type="hidden" id="tiankong_daan" value="{fzw:p2:biaoti/}" />
+				            {else}
+				            
+				            {/if}
+				         {if value1="{fzw:p1:leixing/}" value2="问答" bi="=="}
+				            <input type="hidden" id="wenda_daan" value="{fzw:p2:biaoti/}" />
+				            {else}
+				            
+				            {/if}
+				      
+				{/fzw:for:sql}
+					{if value1="{fzw:p1:leixing/}" value2="填空" bi="=="}
+				       <p>请回答：<input type="text" id="tiankong_userdaan"/></p>
+				          {else}
+				          {/if}
+					{if value1="{fzw:p1:leixing/}" value2="问答" bi="=="}
+				       <p>请回答：<textarea id="wenda_userdaan" style="width: 300px;vertical-align: middle;" rows="4"></textarea></p>
+				          {else}
+				          {/if}
+				
+				<script type="text/javascript">
+							var daan_xuhao = '';
+							if('{fzw:p1:leixing/}'=='单选'||'{fzw:p1:leixing/}'=='多选')
+							$("#daan_list label").each(function(i){
+								switch (i){
+									case 0:daan_xuhao = 'A';
+										break;
+									case 1:daan_xuhao = 'B';
+										break;
+									case 2:daan_xuhao = 'C';
+										break;
+									case 3:daan_xuhao = 'D';
+										break;
+									case 4:daan_xuhao = 'E';
+										break;
+									case 5:daan_xuhao = 'F';
+										break;
+									default:daan_xuhao = 'z';
+										break;
+								}
+								
+								$(this).find("span").html(daan_xuhao);
+							})
+						</script>
+				
+				<input type="hidden" name="dingdanhao" id="dingdanhao" value="{fzw:url:dingdanhao/}" />
+				<input type="hidden" name="yonghuming" id="yonghuming" value="{fzw:cookie name="user_name" /}" />
+				<input type="hidden" name="tikubianhao" id="tikubianhao" value="{fzw:url:id/}" />
+				<input type="hidden" name="timubianhao" id="timubianhao" value="{fzw:url:timubianhao/}" />
+				<input type="hidden" name="leixing" id="leixing" value="测试" />
+				<input type="hidden" name="zhengque" id="zhengque"/>
+				<input type="hidden" name="daan" id="daan" value="" />
+				<input type="hidden" name="defen" id="defen" value="" />
+				<input type="hidden" name="kaishishijian" id="kaishishijian" value="" />
+				<input type="hidden" name="kaoshizhuangtai" id="kaoshizhuangtai" value="未完成" />
+				
+			</form>
+		</div>
+		
+		{/fzw:for:sql}
+		<div class="practice-tip"></div>
+		<div class="practice-button">
+			<div class="practice-button-left">
+				<button id="btn_tijiao">提交</button>
+				<button class="sm" onclick="goto('{fzw:sql="select top 1 id from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) and id<{fzw:url:timubianhao/} order by id desc" id="p1"}{fzw:p1:id/}{/fzw:sql}')">上一题</button>
+				<button class="sm" onclick="goto('{fzw:sql="select top 1 id from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) and id>{fzw:url:timubianhao/} order by id asc" id="p1"}{fzw:p1:id/}{/fzw:sql}')">下一题</button>
+			</div>
+			
+			<div class="clear"></div>
+			
+			 
+			
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+			
+
+		$("#kaishishijian").val(startTime);
+		var dangqianNo = '{fzw:sql="select count(id) as cid from sl_tiku_timu where id<={fzw:url:timubianhao/} and laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/})" id="p1"}{fzw:p1:cid/}{/fzw:sql}';//当前题目的序号
+		$(".dangqianNo").html(dangqianNo);
+		
+		var zq = {fzw:sql="select count(id) as cid from sl_zuotijilu where dingdanhao={fzw:url:dingdanhao/} and yonghuming='{fzw:cookie name="user_name" /}' and zhengque='是' " id="p1"}{fzw:p1:cid/}{/fzw:sql}; //正确的数量
+		var t = {fzw:sql="select count(id) as cid from sl_zuotijilu where dingdanhao={fzw:url:dingdanhao/} and yonghuming='{fzw:cookie name="user_name" /}'" id="p1"}{fzw:p1:cid/}{/fzw:sql};  //做题的数量
+		t = t==0?t+1:t;
+		 var zql = parseFloat(zq/t*100).toFixed(2);
+		$("#zhengquelv").html(zql+"%");
+		
+		var timuType = '{fzw:sql="select * from sl_tiku_timu where id={fzw:url:timubianhao/}" id="p1"}{fzw:p1:leixing/}{/fzw:sql}'; //当前题目的类型
+		var rightanswer ='';
+		var rightanswerNo = '';
+		if(timuType=='单选'||timuType=='多选'){
+			if($(".rightanswer").length>0){
+				$(".rightanswer").each(function(i){//将正确答案用","拼接
+					var val = $(this).val();
+					rightanswer=rightanswer==''?val:rightanswer+','+val;
+					rightanswerNo=rightanswerNo==''? $("#answer_"+val).siblings("span").html():rightanswerNo+','+$("#answer_"+val).siblings("span").html();
+				})
+				
+			}
+		}
+		
+		
+		var addOredit = {fzw:sql="select count(id) as cid from sl_zuotijilu where dingdanhao={fzw:url:dingdanhao/} and timubianhao={fzw:url:timubianhao/}" id="p1"}{fzw:p1:cid/}{/fzw:sql};  //为0，添加；大于0，修改
+		var jiluId = '{fzw:sql="select top 1 id from sl_zuotijilu where dingdanhao={fzw:url:dingdanhao/} and timubianhao={fzw:url:timubianhao/}" id="p1"}{fzw:p1:id/}{/fzw:sql}';  //本题做题记录的id
+		
+				function showanalyze(){
+					$(".practice-analyze").fadeIn();
+					$(".classvideo-note").fadeIn();
+				}
+				function checkanswer(){ //提交答案
+					
+					var useranswer = '';
+					
+					if(timuType=='单选'){
+						useranswer = $("input[name='answer']:checked").val();
+						if(useranswer==undefined){
+							alert("请选择答案！");
+							return false;
+						}
+					    	
+					}
+					if(timuType=='多选'){
+						$("input[name='answer']:checked").each(function(i){
+							useranswer = useranswer==''?$(this).val():useranswer+','+$(this).val();
+						})
+						if(useranswer==''){
+							alert("请选择答案！");
+							return false;
+						}
+					}
+					if(timuType=='填空'){
+						useranswer = $("#tiankong_userdaan").val();
+						rightanswer = rightanswerNo = $("#tiankong_daan").val();
+						if(useranswer==''){
+							alert("请填写答案！");
+							return false;
+						}
+					}
+					if(timuType=='问答'){
+						useranswer = $("#wenda_userdaan").val();
+						rightanswer = rightanswerNo = $("#wenda_daan").val();
+						if(useranswer==''){
+							alert("请填写答案！");
+							return false;
+						}
+					}
+					$("#daan").val(useranswer);
+					if(timuType!='问答'){
+						if(rightanswer==useranswer){
+							$("#defen").val($("#fenzhi").val());
+							$("#zhengque").val("是");
+						}
+						if(rightanswer!=useranswer){
+							$("#defen").val(0);
+							$("#zhengque").val("否");
+						}
+						tijiaoTimu();
+					}
+					if(timuType=='问答'){
+						$.ajax({
+							type:"get",
+							url:"/tiku_load.aspx?id={fzw:url:timubianhao/}&biaoti="+useranswer,
+							async:true,
+							success:function(data){
+								if(data>=0&&data<$("#fenzhi").val()){
+									$("#zhengque").val("否");
+								}
+								if(data==$("#fenzhi").val()){
+									$("#zhengque").val("是");
+								}
+								$("#defen").val(data);
+								tijiaoTimu();
+								
+							}
+						});
+					}
+					
+						
+					
+					
+				}
+				function tijiaoTimu(){  //ajax提交
+					var nextTimu = '{fzw:sql="select top 1 id from sl_tiku_timu where laiyuanbianhao=(select timu from sl_tiku where id={fzw:url:id/}) and id>{fzw:url:timubianhao/} order by id asc" id="p1"}{fzw:p1:id/}{/fzw:sql}';
+					var formData = $("#daan_list").serialize();
+						
+						if(addOredit==0){  //新加记录
+			    			$.ajax({
+							type:"post",
+							url:"/Execution.aspx?t=zuotijilu&type=add&tip_string=资料修改成功！",
+							data:formData,
+							success:function(){
+								addOredit=1;
+								$(".timu_{fzw:url:timubianhao/}").addClass("done");
+								
+								if(nextTimu==''){
+									$(".timuNolist li").removeClass("on");
+									return false;
+								}
+								goto(nextTimu);//下一题
+							}
+							});
+						 }else{
+						 	//修改记录
+						    	$.ajax({
+								type:"post",
+								url:"/Execution.aspx?t=zuotijilu&type=edit&id="+jiluId,
+								data:"daan="+$("#daan").val()+"&zhengque="+$("#zhengque").val()+"&defen="+$("#defen").val(),
+								success:function(data){
+									alert($("#defen").val());
+									console.log(data);
+									if(nextTimu==''){
+									$(".timuNolist li").removeClass("on");
+									return false;
+									}
+									goto(nextTimu);//下一题
+									}
+								});
+						 }
+				}
+				
+				
+				$(document).ready(function(){
+					$("#btn_tijiao").click(function(){
+						checkanswer();
+					})
+					
+					$(".practice-analyze .cancle").click(function(){
+						$(".practice-analyze").hide();
+					})
+					
+					
+				})
+			</script>

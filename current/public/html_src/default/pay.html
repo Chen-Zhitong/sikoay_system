@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/class.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery.unveil.min.js"></script>
+		<script type="text/javascript" src="js/class.js"></script>
+        <title>网上支付_{fzw:key:sitename/}</title>
+        {if value1="{fzw:cookie name="user_name" /}" value2="" bi="=="}
+        <script type="text/javascript">
+    		window.location.href = "/single.aspx?m=login&tipurl={fzw:key:siteurl/}";
+    		window.event.returnValue = false;
+        </script>
+        {else}
+        {/if}
+        <style type="text/css">
+        	.waytopay{
+        		margin: 0 -10px;
+        	}
+        	.waytopay label{
+        		width: 18.3%;
+        		float: left;
+        		border: 1px solid #e9e9e9;
+        		text-align: left;
+        		padding: 16px 10px;
+        		margin: 10px;
+        		-webkit-box-sizing: border-box;
+        		-moz-box-sizing: border-box;
+        		box-sizing: border-box;
+				height: 75px;
+				cursor: pointer;
+        	}
+        	.waytopay label input{
+        		vertical-align: middle;
+        		margin-right: 10px;
+        	}
+        	.waytopay label img{
+        		max-width: 100%;
+        		max-height: 100%;
+        		display: inline-block;
+        		vertical-align: middle;
+        	}
+        </style>
+	</head>
+	<body>
+		<!--top-->
+        {fzw:inside src="top.html"/}
+		<!--top end-->
+		<!--header-->
+		<div class="header">
+		    <div class="wrap">
+		        <div class="fl">
+		            <a href="/"><img src="images/logo.png" height="84"/></a>
+		        </div>
+		        <div class="pay-state">
+		        	<ul>
+		        		<li class="pay-before">
+		        			<span>1</span>
+		        			<div class="pay-state-line"></div>
+		        			选择课程
+		        		</li>
+		        		<li class="pay-on">
+		        			<span>2</span>
+		        			<div class="pay-state-line"></div>
+		        			网上支付
+		        		</li>
+		        		<li>
+		        			<span>3</span>
+		        			<div class="pay-state-line"></div>
+                            购买成功
+		        		</li>
+		        	</ul>
+		        </div>
+		        
+		        <p class="clear"></p>
+		    </div>
+		</div>
+		<!--header end-->
+		<!-- payment -->
+        <form class="waytopay" method="post" id="ffxx" action="/pay/orderok.aspx?type=pay&dingdanhao={fzw:url:dingdanhao/}&tablename={fzw:url:tablename/}&tipurl=/single.aspx?m=orderok">
+            <div class="payment payol max-width ">
+                <p>网上支付</p>
+                <p>
+                    请于 <span id="t_m">30分</span><span id="t_s"> 00秒</span>内， 点击确认下单，在后续页面完成支付。<br>
+                    请尽快付款，以免链接失效！
+                </p>
+
+               
+                <div class="clear"></div>
+                <label>
+                    <input type="radio" name="zhifufangshi" checked="checked" value="支付宝" style="width: 18px;height: 18px;">
+                    <img src="img/alipay.gif">
+                </label>
+                <label>
+                    <input type="radio" name="zhifufangshi" value="微信支付" style="width: 18px;height: 18px;">
+                    <img src="img/weixin.jpg">
+                </label>
+                <div class="clear"></div>
+                <label style="width: auto;font-size: 16px;font-weight: 500;">
+                    <input type="checkbox"  onclick="set_order()" name="yue" id="yue" value="{fzw:sql=" select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie name="user_name" /}' and leixing <>'领取' and zhuangtai='已付款'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id/}{/if}{/fzw:sql}" style="width: 18px;height: 18px;">
+                    <img src="img/zhanghaoyue2.png" style="margin-right: 10px;">
+                    当前账户余额：￥{fzw:sql="select sum(jine) as count_id from sl_caiwu where yonghuming='{fzw:cookie name="user_name" /}'  and zhuangtai='已付款'" id="p1"}{if value1="{fzw:p1:count_id/}" value2="" bi="=="}0{else}{fzw:p1:count_id string="￥"/}{/if}{/fzw:sql}
+                </label>
+
+                <div class="clear"></div>
+                {fzw:for:sql="select top 1 * from sl_{fzw:url:tablename/} where dingdanhao='{fzw:url:dingdanhao/}'" id="p1"}
+                <img src="img/dingdan.png">&nbsp;订单号：{fzw:p1:dingdanhao/}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/jine.png">&nbsp;价格：￥{fzw:p1:chanpinjine string="￥"/}元
+                {fzw:for:sql="select top 1 * from sl_kc_cart where dingdanhao='{fzw:url:dingdanhao/}'" id="p2"}
+            <p>购买《{fzw:p2:biaoti/}》</p>
+                {/fzw:for:sql}
+                <p class="payol-cost">应付金额：<span id="yingfujine">￥{fzw:p1:jine string="￥"/}</span></p>
+                <script type="text/javascript">
+                if("{fzw:p1:zhuangtai/}"!="未付款")
+                {
+                    window.location = "/";
+                }
+                //var dangqianshijian = new Date();
+                //var gengxinshijian = new Date("{fzw:p1:dtime/}");
+                //gengxinshijian.setMinutes(date.setMinutes() + 30)
+                //alert(gengxinshijian);
+                //if (dangqianshijian > gengxinshijian) {
+                //    window.location = "/pay/orderok.aspx?type=chaoshi&tablename={fzw:url:tablename/}&dingdanhao={fzw:url:dingdanhao/}";
+                //}
+                </script>
+
+                {/fzw:for:sql}
+
+
+                <input type="submit" id="buy-now" value="确认支付"  />
+            </div>
+        </form>
+		
+		<div class="clear"></div>
+        <!-- pay-bottom -->
+        <div class="pay-bottom">
+            {fzw:sql="select top 1 * from sl_banner where classid=42 order by id desc" id="p1"}{fzw:p1:u4/}{/fzw:sql}
+        </div>
+        <script type="text/javascript">
+                function set_order()
+                {
+              
+                    document.getElementById("buy-now").value = "计算中";
+               
+                    var yue = "0";
+                    if (document.getElementById("yue").checked)
+                    {
+                        yue = "1";
+                    }
+                    var jifen = "0";
+                    if (document.getElementById("jifen"))
+                    {
+                        if (document.getElementById("jifen").checked) {
+                            jifen = "1";
+                        }
+                    }
+                 
+                    $.ajax({
+                        type: 'get',
+                        url: '/pay/orderok.aspx?type=zongjia&dingdanhao={fzw:url:dingdanhao/}&tablename={fzw:url:tablename/}&jifen=' + jifen + '&yue=' + yue + '',
+                        success: function (data) {
+                      
+                            document.getElementById("yingfujine").innerHTML = "￥"+data+"元";
+                            if (parseFloat(data) > 0) {
+                                document.getElementById("buy-now").value = "去付款（" + data + "元）";
+                            }
+                            else {
+                                document.getElementById("buy-now").value = "确认支付";
+                            }
+                        }
+                    })
+                }
+                set_order();
+        </script>
+        <!-- bottom-end -->
+        {fzw:inside src="右侧.html"/}	
+<script type="text/javascript">
+    var t =30*60*1000;
+    function GetRTime(){
+        var EndTime= new Date();
+        var NowTime = new Date();
+        t = t-1000;
+        var h=0;
+        var m=0;
+        var s=0;
+        if(t>=0){
+            h=Math.floor(t/1000/60/60%24);
+            m=Math.floor(t/1000/60%60);
+            s=Math.floor(t/1000%60);
+        }
+        
+        document.getElementById("t_m").innerHTML = m + "分 ";
+        document.getElementById("t_s").innerHTML = s + "秒";
+    }
+    setInterval("GetRTime()",1000);
+</script>        	
+	</body>
+</html>

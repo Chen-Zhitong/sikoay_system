@@ -6,40 +6,78 @@ require 'vendor/autoload.php';
 
 abstract class DomainObject
 {
-    //领域模型虚基类
-    private $id;
+    /*
+      领域模型虚基类
+      1.finder() 返回对应Mapper对象
+      2.collection() 返回对应collection对象
+      3.添加工作单元模式,与ObjectWatcher类配合
+     */
+    private $id = -1;
 
-    function __construct($id=null)
+    function __construct(?int $id)
     {
-        $this->id = $id;
+        if(is_null($id)){
+            $this -> markNew();
+        } else {
+            $this->id = $id;
+        }
     }
 
-    function getId()
+    function markNew() : void
+    {
+        \root\logic\domain\ObjectWatcher::addNew($this);
+    }
+
+    function markDeleted() : void
+    {
+        \root\logic\domain\ObjectWatcher::addDelete($this);
+    }
+
+    function markDirty() : void
+    {
+        \root\logic\domain\ObjectWatcher::addDirty($this);
+    }
+
+    function markClean() : void
+    {
+        \root\logic\domain\ObjectWatcher::addClean($this);
+    }
+
+    function getId() : int
     {
         return $this->id;
     }
 
-    function setId($id)
+    function setId($id) : void
     {
         $this->id = $id;
     }
 
-    static function getCollection($type)
+    function finder() : \root\database\DomainObjectAssembler
     {
-        return \root\logic\domain\HelperFactory::getCollection($type);
-        //对于HelperFactory的调用可以用于获得集合或者映射器
-    }
-
-    function collection()
-    {
-        // int preg_match ( string $pattern , string $subject [, array &$matches [, int $flags = 0 [, int $offset = 0 ]]] )
-        // 如果提供了参数matches，它将被填充为搜索结果。 $matches[0]将包含完整模式匹配到的文本， $matches[1] 将包含第一个捕获子组匹配到的文本，以此类推。
-
         $subject = get_class($this);
         $pattern = '/[A-Za-z]+$/';
         preg_match($pattern, $subject, $matches);
-        //        throw new \Exception($matches[0]);
+        return self::getFinder($matches[0]);
+    }
+
+    static function getFinder(string $type) : \root\database\DomainObjectAssembler
+    {
+        return \root\logic\domain\HelperFactory::getFinder($type);
+    }
+
+    function collection() : \root\database\collection\Collection
+    {
+        $subject = get_class($this);
+        $pattern = '/[A-Za-z]+$/';
+        preg_match($pattern, $subject, $matches);
         return self::getCollection($matches[0]);
+    }
+
+    static function getCollection(string $type) : \root\database\collection\Collection
+    {
+        return \root\logic\domain\HelperFactory::getCollection($type);
+        //对于HelperFactory的调用可以用于获得集合或者映射器
     }
 
 }

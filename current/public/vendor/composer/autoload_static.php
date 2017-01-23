@@ -58,6 +58,10 @@ class ComposerStaticInitecd451bb16190e1d53329118cea384ab
         array (
             'GuzzleHttp\\Psr7\\' => 16,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -153,6 +157,10 @@ class ComposerStaticInitecd451bb16190e1d53329118cea384ab
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

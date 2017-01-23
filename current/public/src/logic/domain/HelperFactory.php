@@ -10,22 +10,24 @@ class HelperFactory
 
     private function __construct() {}
 
-    public static function getCollection($type)
+    public static function getCollection(string $type,array $raw) : \root\database\collection\Collection
     {
-        //用于获取不同类型的collection
-        //获取对应的Mapper传递给collection，再返回collection
-        $mappername = "\\root\\database\\mapper\\{$type}Mapper";
-        $mapper = new $mappername;
+        $dofact = self::getDofact($type);
         $collectionName = "\\root\\database\\collection\\{$type}Collection";
-        return new $collectionName(null,$mapper);
+        return new $collectionName($raw,$dofact);
     }
 
-    public static function getMapper($type)
+    public static function getFinder(string $type) : \root\database\DomainObjectAssembler
     {
-        //用于获取不同类型的collection
-        //获取对应的Mapper传递给collection，再返回collection
-        $mappername = "\\root\\database\\mapper\\{$type}Mapper";
-        return new $mappername();
+        $PersistenceFactory = new \root\database\PersistenceFactory($type);
+        return $PersistenceFactory->getFinder();
     }
+
+    public static function getDofact(string $type) : \root\database\domainobjectfactory\DomainObjectFactory
+    {
+        $dofactname = "\\root\\database\\domainobjectfactory\\{$type}ObjectFactory";
+        return new $dofactname();
+    }
+
 }
 ?>

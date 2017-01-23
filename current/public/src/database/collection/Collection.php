@@ -24,7 +24,7 @@ abstract class Collection implements \Iterator
     //$collection -> add (new \root\logic\domain\News(3));
 
     //需要在每个领域类提供一个特定的实现
-    protected $mapper;
+    protected $dofact;
     protected $total = 0;
     protected $raw = array();
 
@@ -32,18 +32,18 @@ abstract class Collection implements \Iterator
     private $pointer = 0;
     private $objects = array();
 
-    function __construct(array $raw = null,\root\database\mapper\Mapper $mapper=null)
+    function __construct(array $raw = null,\root\database\domainobjectfactory\DomainObjectFactory $dofact=null)
     {
         //调用构造方法时可以不使用参数，也可以使用两个参数（最终被转化为一组对象的原始数据和一个映射器的引用）
         //如果没有传递参数给构造方法，那么类的数据为空，但可以使用add()方法添加数据到集合中
-        if(!is_null($raw) && !is_null($mapper)) {
+        if(!is_null($raw) && !is_null($dofact)) {
             $this->raw = $raw;
             $this->total = count($raw);
         }
-        $this->mapper =$mapper;
+        $this->dofact =$dofact;
     }
 
-    function add (\root\logic\domain\DomainObject $object)
+    function add (\root\logic\domain\DomainObject $object) : void
     {
         $class = $this->targetClass();
         if(!($object instanceof $class)) {
@@ -64,12 +64,12 @@ abstract class Collection implements \Iterator
         //在延迟加载模式中
     }
 
-    private function getRow($num)
+    private function getRow($num) : ?\root\logic\domain\DomainObject
     {
         //类中有两个数组：$objects和$raw.
         //如果客户需要一个特定的元素，getRow()方法先在$objects中查找是否被实例化，如果是返回它
         //否则，getRow()方法在$raw中查找原始数据。
-        //只有Mapper对象存在时,才会显示$raw数据，所以相应的行数可以传递给之前遇到的Mapper::createobject()方法
+        //只有Dofact对象存在时,才会显示$raw数据，所以相应的行数可以传递给之前遇到的Dofact::createobject()方法
         //它返回一个缓存在$objects数组中具有相应索引的DomainObject对象.最新创建的DomainObject对象被返回给用户
         $this->notifyAccess();
         if ($num >= $this->total || $num < 0) {
@@ -79,40 +79,40 @@ abstract class Collection implements \Iterator
             return $this->objects[$num];
         }
         if(isset($this->raw[$num])) {
-            $this -> objects[$num] = $this->mapper->createObject($this->raw[$num]);
+            $this -> objects[$num] = $this->dofact->createObject($this->raw[$num]);
             return $this->objects[$num];
         }
     }
 
-    public function rewind()
+    public function rewind() : void
     {
         $this->pointer=0;
     }
 
-    public function current()
+    public function current() : ?\root\logic\domain\DomainObject
     {
         //将获取数据对象的职责委托给getRow完成
         return $this->getRow($this->pointer);
     }
 
-    public function key()
+    public function key() : int
     {
         return $this->pointer;
     }
 
-    public function next()
+    public function next() : ?\root\logic\domain\DomainObject
     {
         $row = $this->getRow($this->pointer);
         if($row) {$this->pointer++;}
         return $row;
     }
 
-    public function valid()
+    public function valid() : bool
     {
-        return(!is_null($this->current()));
+        return (!is_null($this->current()));
     }
 
-    public function getTotal()
+    public function getTotal() : int
     {
         $this->notifyAccess();
         return $this->total;

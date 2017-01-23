@@ -6,7 +6,7 @@ require 'vendor/autoload.php';
 
 class Controller
 {
-    //前端控制器的核心部分
+    //控制器的核心部分
 
     private $applicationHelper; //应用助手
     private function __construct() {}
@@ -28,16 +28,14 @@ class Controller
     {
         //处理请求的方法
         $request = new \root\logic\controller\Request();
-        //$cmd_r = new \root\logic\command\CommandResolver();
-        //$cmd = $cmd_r -> getCommand($request);
-        //$cmd->execute($request);
-        //上面为前端控制器，下面为应用控制器
         $app_c = \root\logic\base\ApplicationRegistry::appController();
         while($cmd = $app_c -> getCommand($request)) {
             //重复执行请求直到获取到forward,转向到最后
             $cmd-> execute($request);
         }
         //等Command处理完毕，没有转向之后
+        // 调用
+        \root\logic\domain\ObjectWatcher::instance() -> performOperations();
         //调用AppController来获取视图
         $this-> invokeView ($app_c -> getView($request));
     }

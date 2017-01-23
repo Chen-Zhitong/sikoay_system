@@ -3,6 +3,13 @@ author:chen-sikora
 
 email:Chen-Zhitong@outlook.com
 
+PHP版本最低要求:PHP7.1.0
+
+******2017年01月22日更新*****
+1.HelperFactory中添加getFinder(mapperFactory),用于按对应type返回mapper
+2.DomainObject中添加finder()方法,调用HelperFactory::getFinder返回对应的mapper
+3.ObjcetWatcher中添加工作单元(Unit of Work)实现,DomainObject配合修改
+******
 =======================    总工作区架构     =====================
 
 /current    :当前工作区域
@@ -26,7 +33,16 @@ email:Chen-Zhitong@outlook.com
 
 /database                 ：数据层文件夹
 /database/collection      ：数据采集器文件夹
-/database/mapper          :数据管理器文件夹
+-------/database/mapper          :数据管理器文件夹(已弃用,将其分解成为下面几个对象)
+/database/domainobjectfactory :领域工厂模式文件夹(从之前的mapper类之中分离出来)
+/database/identityobject  :标识对象文件夹
+/database/deletefactory   :删除工厂文件夹
+/database/updatefactory   :更新/插入工厂文件夹
+/database/selectionfactory:选择工厂文件夹
+/database/PersistenceFactory.php :固定工厂,用于将所有的数据类结合起来,提供了统一入口
+/database/DomainObjectAssembler.php :领域对象组装器,用于缓存和处理数据库连接,执行数据库操作等
+
+
 
 /logic                    :逻辑层文件夹
 /logic/base               :逻辑层注册表文件夹
@@ -48,9 +64,16 @@ email:Chen-Zhitong@outlook.com
 
 ============================2==========================
 
-/src/logic/controller/Controller.php     初始化ApplicationHelper，之后再调用handleRequest()方法处理请求。
+/src/logic/controller/Controller.php
+初始化ApplicationHelper，之后再调用handleRequest()方法处理请求。
 
-Controller -> handleRequest():实例化\root\logic\controller\Request()来获取请求，再调用\root\logic\base\ApplicationRegistry::appController()获取一个AppController对象，再用该对象的$cmd = getCommand($request)，将刚刚获取的请求作为参数传递，再重复执行刚获得的$cmd -> excute($request),直到获取到forward转向直到最后的目标页面，等command处理完毕,调用$this->invokeView($app_c -> getView($request))来获取视图
+Controller -> handleRequest():实例化\root\logic\controller\Request()来获取请求，
+再调用\root\logic\base\ApplicationRegistry::appController()获取一个AppController对象，
+再用该对象的$cmd = getCommand($request)，
+将刚刚获取的请求作为参数传递，再重复执行刚获得的$cmd -> excute($request),直到获取到forward转向直到最后的目标页面，
+等command处理完毕,
+调用ObjectWatcher::instance()->performOperations()执行工作单元的操作,
+调用$this->invokeView($app_c -> getView($request))来获取视图
 最后$this->invokeView：用于转向到目标页面
 
 
@@ -96,20 +119,30 @@ DomainObject类
 
 2.持有其他对象，但其他对象为单个对象:
 
-        $address_mapper = new \root\database\mapper\ClientAddressMapper();
-        $this -> address = $address_mapper -> find($chooseAddress);
+*        $address_mapper = new \root\database\mapper\ClientAddressMapper();
+*        $this -> address = $address_mapper -> find($chooseAddress);
 
-        $details_mapper = new \root\database\mapper\DetailsMapper();
-        $this -> details = $details_mapper -> findByClient($id);
+*        $details_mapper = new \root\database\mapper\DetailsMapper();
+*        $this -> details = $details_mapper -> findByClient($id);
 
-        $money_mapper = new \root\database\mapper\ClientMoneyMapper();
-        $this -> money = $money_mapper -> findByClient($id);
+*        $money_mapper = new \root\database\mapper\ClientMoneyMapper();
+*        $this -> money = $money_mapper -> findByClient($id);
 
 3.以其他对象集合器的形式（这个对象持有多个其他对象）:
 
         $this -> addresses = self::getCollection("ClientAddress");
         $this -> familys = self::getCollection("ClientFamily");
 此时的集合器中是空的
+
+4.finder()函数:返回对象对应的mapper对象
+    $obj->finder()->insert($obj);
+
+5.查找一个对象方法,例:
+
+$factory = new \root\database\PersistenceFactory('News');
+$idobj = $factory -> getIdentityObj() -> field('id') -> eq(15);
+$finder = $factory -> getFinder();
+$finder->find($idobj)
 
 
 self::getCollection在虚基类中定义
@@ -121,23 +154,60 @@ $clientaddresscollection = $addresses_mapper -> findByclient($client->getId());
 $client -> setCollection($clientaddresscollection);
 然后才可以使用该collection
 
-
-———————————————————————————————————————————————————————
-Mapper类(数据映射器)
-———————————————————————————————————————————————————————
-
-1.提供PDO连接（在基类中指定）,直接讲PDO连接的dsn user password硬编码进Mapper基类
-2.调用ObjectWatcher
-3.主要作用为操作数据库,可以实现对象在数据库中增删查改的操作
-4.查询数据库之后，按照查询结果创建对象，如果查询结果为多个对象则返回collection对象
-5.如果该对象被其他对象持有多个,则通过其他对象查询该对象是返回一个延迟加载数据集合器
-6.需要为每一个领域类提供一个特定实现
-
 ———————————————————————————————————————————————————————
 ObjectWatcher类(标识映射类)
 ———————————————————————————————————————————————————————
 
-作用在于将对象按照引用传递，而不是每个都实例化一个新的对象
+1.作用在于将对象按照引用传递，而不是每个都实例化一个新的对象
+2.工作单元(Unit of Work):
+function:
+    addDelete()
+    addDirty()
+    addNew()
+    addClean()
+    performOperations()    // 运行标识操作
+    (调用方法: \root\logic\domain\ObjectWatcher::instance() -> performOperations();)
+    (系统中在Conteroller::handleRequest(),调用)
+———————————————————————————————————————————————————————
+PersistenceFactory(固定工厂)
+———————————————————————————————————————————————————————
+1.用于将其他database相关类组合生成
+
+查询方法:
+$factory = new \root\database\PersistenceFactory('News');
+$idobj = $factory -> getIdentityObj() -> field('id') -> eq(15);
+$finder = $factory -> getFinder();
+$finder->find($idobj);      //return collection
+
+插入方法:
+$news = new \root\logic\domain\News(null,'title','name','text','image','notice');
+
+更新方法:
+$
+———————————————————————————————————————————————————————
+DomainObjectAssembler类(领域对象组装器)
+———————————————————————————————————————————————————————
+1.用于缓存和处理数据库连接,执行数据库操作等
+
+———————————————————————————————————————————————————————
+DomainObjectFactory类(领域对象生成工厂)
+———————————————————————————————————————————————————————
+1.需要为每一个领域类提供一个特定实现
+
+———————————————————————————————————————————————————————
+IdentityObject类(标识对象)
+———————————————————————————————————————————————————————
+1.辅助类Field(接受保存字段名,通过addTest()创建operator和value的元素数组)
+2.IdentityObject类作用在于组装并存储Sql语句
+
+———————————————————————————————————————————————————————
+UpdateFactory类和SelectionFactory类和DeleteFactory类
+———————————————————————————————————————————————————————
+1.可以更加动态地生成查询语句
+2.UpdateFactory输入为DomainObject
+3.SelectionFactory输入为IdentityObject
+4.两个类的输出都为array($stmt,$values)
+(输出为组装好的Sql语句和值)
 
 ———————————————————————————————————————————————————————
 Collection类(数据集合器)
@@ -148,6 +218,7 @@ Collection类(数据集合器)
 3.有一个add（），方法可以向其中追加领域对象
 4.在基类各操作调用notifyAccess()，实现延迟加载
 5.需要为每一个领域类提供一个特定实现
+7.调用DomainObjectFactory生成对象
 
 Collection的派生类   DeferredCollection (延迟加载类)
 构造函数为（Mapper，PDOStatement，PDOValurArray）。
